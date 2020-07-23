@@ -1,0 +1,11 @@
+<AccessControll>
+    <RoleMapping>
+        <RoleID></RoleID>
+        <UrlMapping>
+            <URL value="" permission="">
+                <Include></Include>
+                <Exclude></Exclude>
+            </URL>
+        </UrlMapping>
+    </RoleMapping>
+</AccessControll>
