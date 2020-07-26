@@ -12,7 +12,6 @@ import java.util.Map;
 public final class ORMEntity {
 
     private String tableName;
-    private String auditTableName;
     private String whereClause;
     private boolean auditColumns;
     private Map<String, String> fieldColumnMap;
@@ -31,7 +30,6 @@ public final class ORMEntity {
             if (entityClass.isAnnotationPresent(Persistant.class)) {
                 Persistant persistant = entityClass.getAnnotation(Persistant.class);
                 tableName = persistant.tableName().toUpperCase();
-                auditTableName = persistant.auditTableName().toUpperCase();
                 auditColumns = persistant.auditColumns();
                 whereClause = persistant.whereClause();
                 for(Field field : allFields) {
@@ -63,14 +61,6 @@ public final class ORMEntity {
 
     public void setTableName(String tableName) {
         this.tableName = tableName;
-    }
-
-    public String getAuditTableName() {
-        return auditTableName;
-    }
-
-    public void setAuditTableName(String auditTableName) {
-        this.auditTableName = auditTableName;
     }
 
     public String getWhereClause() {

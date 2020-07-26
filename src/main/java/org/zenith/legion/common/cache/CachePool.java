@@ -15,7 +15,7 @@ public class CachePool {
             try {
                 Class.forName(key);
                 classList.add(key);
-            } catch (ClassNotFoundException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }

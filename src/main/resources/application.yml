@@ -51,33 +51,35 @@ spring:
 #        max-wait: 100
 #        max-idle: 90
 #        min-idle: 0
-  data:
-    mongodb:
-      uri: mongodb://localhost:27017/legion
+#  data:
+#    mongodb:
+#      uri: mongodb://localhost:27017/legion
+
+  quartz:
+    properties:
+      org:
+        quartz:
+          scheduler:
+            instanceName: clusteredScheduler
+            instanceId: AUTO
+          jobStore:
+            class: org.quartz.impl.jdbcjobstore.JobStoreTX
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+            tablePrefix: QRTZ_
+            isClustered: true
+            clusterCheckinInterval: 10000
+            useProperties: false
+            acquireTriggersWithinLock: true
+          threadPool:
+            class: org.quartz.simpl.SimpleThreadPool
+            threadCount: 10
+            threadPriority: 5
+    job-store-type: jdbc
+    auto-startup: true
+    startup-delay: 5s
+    wait-for-jobs-to-complete-on-shutdown: true
 
 
-
-#  quartz:
-#    properties:
-#      org:
-#        quartz:
-#          scheduler:
-#            instanceName: clusteredScheduler
-#            instanceId: AUTO
-#          jobStore:
-#            class: org.quartz.impl.jdbcjobstore.JobStoreTX
-#            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
-#            tablePrefix: QRTZ_
-#            isClustered: true
-#            clusterCheckinInterval: 10000
-#            useProperties: false
-#          threadPool:
-#            class: org.quartz.simpl.SimpleThreadPool
-#            threadCount: 10
-#            threadPriority: 5
-#    job-store-type: jdbc
-#    auto-startup: false
-#    startup-delay: 30s
 
 mybatis:
   mapper-locations: classpath*:sql/*.xml

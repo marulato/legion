@@ -17,9 +17,9 @@ CREATE TABLE AC_USER_ACCT
     LAST_LOGIN_IP         VARCHAR(32),
     LOGIN_FAILED_TIMES    INT,
     CREATED_AT            DATETIME           NOT NULL,
-    CREATED_BY            VARCHAR(24)        NOT NULL,
+    CREATED_BY            VARCHAR(32)        NOT NULL,
     UPDATED_AT            DATETIME           NOT NULL,
-    UPDATED_BY            VARCHAR(24)        NOT NULL,
+    UPDATED_BY            VARCHAR(32)        NOT NULL,
     INDEX ID_NO_IDX (ID_NO),
     INDEX PHONE_NO_IDX (PHONE_NO)
 );
@@ -46,9 +46,9 @@ CREATE TABLE AC_USER_ACCT_H
     LAST_LOGIN_IP         VARCHAR(32),
     LOGIN_FAILED_TIMES    INT,
     CREATED_AT            DATETIME,
-    CREATED_BY            VARCHAR(24),
+    CREATED_BY            VARCHAR(32),
     UPDATED_AT            DATETIME,
-    UPDATED_BY            VARCHAR(24)
+    UPDATED_BY            VARCHAR(32)
 );
 
 DELIMITER ##

@@ -26,9 +26,9 @@ CREATE TABLE STU_STUDENT_FAMILY_PF
     RAISED_BY_OTHER              VARCHAR(500),
     OTHER_GUARDIANS              VARCHAR(500),
     CREATED_AT                   DATETIME    NOT NULL,
-    CREATED_BY                   VARCHAR(24) NOT NULL,
+    CREATED_BY                   VARCHAR(32) NOT NULL,
     UPDATED_AT                   DATETIME    NOT NULL,
-    UPDATED_BY                   VARCHAR(24) NOT NULL
+    UPDATED_BY                   VARCHAR(32) NOT NULL
 );
 
 ALTER TABLE STU_STUDENT_FAMILY_PF
@@ -65,9 +65,9 @@ CREATE TABLE STU_STUDENT_FAMILY_PF_H
     RAISED_BY_OTHER              VARCHAR(500),
     OTHER_GUARDIANS              VARCHAR(500),
     CREATED_AT                   DATETIME,
-    CREATED_BY                   VARCHAR(24),
+    CREATED_BY                   VARCHAR(32),
     UPDATED_AT                   DATETIME,
-    UPDATED_BY                   VARCHAR(24)
+    UPDATED_BY                   VARCHAR(32)
 );
 
 

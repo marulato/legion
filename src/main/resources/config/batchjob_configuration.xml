@@ -1,0 +1,43 @@
+<batchJobConfiguration>
+    <batchJob>
+        <batchJobId>test</batchJobId>
+        <fullName>Test</fullName>
+        <group>test</group>
+        <description>aa</description>
+        <class>org.test.TestJob</class>
+        <cron>0/1 * * * * ? </cron>
+        <startAt>2020-01-01 00:00:00</startAt>
+        <endAt>2021-01-01 00:00:00</endAt>
+        <dependencies>
+            <dependency>1</dependency>
+        </dependencies>
+        <parameters>
+            <param>
+                <key>2</key>
+                <value>3</value>
+            </param>
+        </parameters>
+        <missFireStatus>Y</missFireStatus>
+    </batchJob>
+    <batchJob>
+        <batchJobId>test</batchJobId>
+        <fullName>Test</fullName>
+        <group>test</group>
+        <description>bb</description>
+        <class>org.test.TestJob</class>
+        <cron>0/1 * * * * ? </cron>
+        <startAt>2020-01-01 00:00:00</startAt>
+        <endAt>2021-01-01 00:00:00</endAt>
+        <dependencies>
+            <dependency>ftr</dependency>
+        </dependencies>
+        <parameters>
+            <param>
+                <key>rt</key>
+                <value>wer</value>
+            </param>
+        </parameters>
+        <missFireStatus>N</missFireStatus>
+    </batchJob>
+
+</batchJobConfiguration>

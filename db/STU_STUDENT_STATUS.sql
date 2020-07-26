@@ -28,9 +28,9 @@ CREATE TABLE STU_STUDENT_STATUS
     IS_EXPELLED                 CHAR(1),
     IS_RECOMMENDED_MASTER       CHAR(1),
     CREATED_AT                  DATETIME    NOT NULL,
-    CREATED_BY                  VARCHAR(24) NOT NULL,
+    CREATED_BY                  VARCHAR(32) NOT NULL,
     UPDATED_AT                  DATETIME    NOT NULL,
-    UPDATED_BY                  VARCHAR(24) NOT NULL
+    UPDATED_BY                  VARCHAR(32) NOT NULL
 );
 
 ALTER TABLE STU_STUDENT_STATUS ADD CONSTRAINT STATUS_STU_NO_FK FOREIGN KEY (STU_NO) REFERENCES STU_STUDENT (STU_NO);
@@ -68,9 +68,9 @@ CREATE TABLE STU_STUDENT_STATUS_H
     IS_EXPELLED                 CHAR(1),
     IS_RECOMMENDED_MASTER       CHAR(1),
     CREATED_AT                  DATETIME,
-    CREATED_BY                  VARCHAR(24),
+    CREATED_BY                  VARCHAR(32),
     UPDATED_AT                  DATETIME,
-    UPDATED_BY                  VARCHAR(24)
+    UPDATED_BY                  VARCHAR(32)
 );
 
 
