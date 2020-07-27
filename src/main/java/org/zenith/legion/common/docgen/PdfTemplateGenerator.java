@@ -50,6 +50,9 @@ public abstract class PdfTemplateGenerator implements IDocGenerator {
         FileInputStream inputStream = new FileInputStream(cssPath);
         XMLWorkerHelper.getInstance().parseXHtml(pdfWriter, document,
                 new ByteArrayInputStream(content), inputStream, StandardCharsets.UTF_8, fontProvider);
+        inputStream.close();
+        outputStream.close();
+        pdfWriter.close();
         document.close();
         return outputStream.toByteArray();
     }
@@ -109,6 +112,7 @@ public abstract class PdfTemplateGenerator implements IDocGenerator {
         Template template = config.getTemplate(fileName);
         StringWriter writer = new StringWriter();
         template.process(getParameters(), writer);
+        writer.close();
         return generatePdf(writer.toString().getBytes(StandardCharsets.UTF_8));
     }
 

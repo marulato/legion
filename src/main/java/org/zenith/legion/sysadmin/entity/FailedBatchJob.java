@@ -2,11 +2,14 @@ package org.zenith.legion.sysadmin.entity;
 
 import org.zenith.legion.common.base.BasePO;
 import org.zenith.legion.common.persistant.annotation.Persistant;
+import org.zenith.legion.common.persistant.annotation.PrimaryKey;
+
 import java.util.Date;
 
 @Persistant(tableName = "SA_FAILED_BATCH_JOB")
 public class FailedBatchJob extends BasePO {
 
+    @PrimaryKey(autoIncrement = true)
     private Long failedBatchJobId;
     private String batchJobId;
     private Date startAt;
