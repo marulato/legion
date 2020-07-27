@@ -38,6 +38,7 @@ spring:
       max-file-size: -1
       max-request-size: -1
 
+
 #  redis:
 #    database: 0
 #    timeout: 1000
@@ -79,9 +80,17 @@ spring:
     startup-delay: 5s
     wait-for-jobs-to-complete-on-shutdown: true
 
+  mail:
+    host: smtp.qq.com
+    username: 351975711@qq.com
+    password: 123456
+    default-encoding: UTF-8
+    port: 80
+
 
 
 mybatis:
   mapper-locations: classpath*:sql/*.xml
   configuration:
     map-underscore-to-camel-case: true
+
