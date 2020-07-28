@@ -1,6 +1,6 @@
 <batchJobConfiguration>
     <batchJob>
-        <batchJobId>test</batchJobId>
+        <batchJobId>testBatchJob</batchJobId>
         <fullName>Test</fullName>
         <group>test</group>
         <description>aa</description>
@@ -8,6 +8,7 @@
         <cron>0/1 * * * * ? </cron>
         <startAt>2020-01-01 00:00:00</startAt>
         <endAt>2021-01-01 00:00:00</endAt>
+        <interval unit="D">1</interval>
         <dependencies>
             <dependency>1</dependency>
         </dependencies>
@@ -28,6 +29,7 @@
         <cron>0/1 * * * * ? </cron>
         <startAt>2020-01-01 00:00:00</startAt>
         <endAt>2021-01-01 00:00:00</endAt>
+        <interval unit="D">1</interval>
         <dependencies>
             <dependency>ftr</dependency>
         </dependencies>

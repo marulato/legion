@@ -12,6 +12,8 @@ public class BatchJob {
     private String cron;
     private Date startAt;
     private Date endAt;
+    private String intervalUnit;
+    private int interval;
     private List<String> dependencies;
     private Map<String, String> parameterMap;
     private String missFireStatus;
@@ -83,6 +85,22 @@ public class BatchJob {
 
     public void setEndAt(Date endAt) {
         this.endAt = endAt;
+    }
+
+    public String getIntervalUnit() {
+        return intervalUnit;
+    }
+
+    public void setIntervalUnit(String intervalUnit) {
+        this.intervalUnit = intervalUnit;
+    }
+
+    public int getInterval() {
+        return interval;
+    }
+
+    public void setInterval(int interval) {
+        this.interval = interval;
     }
 
     public List<String> getDependencies() {
