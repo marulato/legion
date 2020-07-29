@@ -22,6 +22,18 @@ public class CachePool {
         return (T) cachePool.get(key);
     }
 
+    public static ICache getCache(String key) {
+        if (!classList.contains(key)) {
+            try {
+                Class.forName(key);
+                classList.add(key);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return cachePool.get(key);
+    }
+
     public static void setCache(String key, ICache<?, ?> cache) {
         cachePool.put(key, cache);
     }

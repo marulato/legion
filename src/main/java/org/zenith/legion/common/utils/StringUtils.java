@@ -101,4 +101,13 @@ public class StringUtils {
         return fragment.toString().split("_");
     }
 
+    public static boolean isInteger(String integer) {
+        try {
+            Integer.parseInt(integer);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
 }
