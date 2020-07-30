@@ -35,6 +35,12 @@ public final class ORMEntity {
                 }
                 auditColumns = persistant.auditColumns();
                 whereClause = persistant.whereClause();
+                if (auditColumns) {
+                    fieldColumnMap.put("createdAt", "CREATED_AT");
+                    fieldColumnMap.put("createdBy", "CREATED_BY");
+                    fieldColumnMap.put("updatedAt", "UPDATED_AT");
+                    fieldColumnMap.put("updatedBy", "UPDATED_BY");
+                }
                 decompose(entityClass, fieldColumnMap, primaryKeys);
             }
         }

@@ -13,7 +13,6 @@ import org.zenith.legion.sysadmin.service.BatchJobConfigurationService;
 import org.zenith.legion.sysadmin.service.BatchJobService;
 import java.util.List;
 
-@Component
 @Order(1)
 public class BatchJobInitializr implements ApplicationRunner {
     @Autowired

@@ -77,7 +77,7 @@ public class ExternalEmailService {
             failedEmail.setIsHasAttachment(AppConsts.YES);
         }
         saveFailedEmail(failedEmail);
-        fileNetService.saveEmailAttachmentToFileNet(failedEmail, attachment);
+        fileNetService.saveToFileNet(FileNetService.getEmailStoragePath(failedEmail.getSentFrom()), attachment);
     }
 
     public void sendEmail(String sentFrom, List<String> sentTo, List<String> cc, String subject,
