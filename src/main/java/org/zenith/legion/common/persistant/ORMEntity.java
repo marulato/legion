@@ -30,28 +30,38 @@ public final class ORMEntity {
             if (entityClass.isAnnotationPresent(Persistant.class)) {
                 Persistant persistant = entityClass.getAnnotation(Persistant.class);
                 tableName = persistant.tableName().toUpperCase();
+                if ("?".equals(tableName)) {
+                    tableName = "{0}";
+                }
                 auditColumns = persistant.auditColumns();
                 whereClause = persistant.whereClause();
-                for(Field field : allFields) {
-                    field.setAccessible(true);
-                    if (!field.isAnnotationPresent(NotColumn.class)) {
-                        if (field.isAnnotationPresent(Column.class)) {
-                            Column columnAnno = field.getAnnotation(Column.class);
-                            fieldColumnMap.put(field.getName(), columnAnno.columnName().toUpperCase());
-                        } else {
-                            fieldColumnMap.put(field.getName(), NameConvertor.getColumn(field.getName()));
-                        }
-                    }
-                    if (field.isAnnotationPresent(PrimaryKey.class)) {
-                        PrimaryKey primaryKey = field.getAnnotation(PrimaryKey.class);
-                        if (primaryKey.autoIncrement()) {
-                            primaryKeys.put(field.getName(), true);
-                        } else {
-                            primaryKeys.put(field.getName(), false);
-                        }
-                    }
+                decompose(entityClass, fieldColumnMap, primaryKeys);
+            }
+        }
+    }
+
+    private void decompose(Class cls, Map<String, String> fieldColumnMap, Map<String, Boolean> primaryKeys) {
+        Field[] allFields = cls.getDeclaredFields();
+        boolean needPK = primaryKeys.isEmpty();
+        for(Field field : allFields) {
+            field.setAccessible(true);
+            if (!field.isAnnotationPresent(NotColumn.class)) {
+                if (field.isAnnotationPresent(Column.class)) {
+                    Column columnAnno = field.getAnnotation(Column.class);
+                    fieldColumnMap.put(field.getName(), columnAnno.columnName().toUpperCase());
+                } else {
+                    fieldColumnMap.put(field.getName(), NameConvertor.getColumn(field.getName()));
                 }
             }
+            if (field.isAnnotationPresent(PrimaryKey.class) && needPK) {
+                PrimaryKey primaryKey = field.getAnnotation(PrimaryKey.class);
+                primaryKeys.put(field.getName(), primaryKey.autoIncrement());
+            } else if (field.isAnnotationPresent(PrimaryKey.class) && !needPK){
+                fieldColumnMap.remove(field.getName());
+            }
+        }
+        if (cls.getSuperclass() != BasePO.class) {
+            decompose(cls.getSuperclass(), fieldColumnMap, primaryKeys);
         }
     }
 
