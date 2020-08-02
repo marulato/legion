@@ -52,6 +52,8 @@ public class AppContext implements Serializable {
 
     public static void setWebThreadAppContext(AppContext context) {
         if (context != null) {
+            HttpSession session = SessionManager.getSession();
+            session.setAttribute(APP_CONTEXT_KEY, context);
             webThreadContext.set(context);
         }
     }

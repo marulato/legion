@@ -11,6 +11,19 @@ public class AppConsts {
     public static final String TRUE_SHORT  = "T";
     public static final String FALSE_SHORT = "F";
 
+    public static final String ACCOUNT_STATUS_ACTIVE    = "A";
+    public static final String ACCOUNT_STATUS_INACTIVE  = "I";
+    public static final String ACCOUNT_STATUS_EXPIRED   = "E";
+    public static final String ACCOUNT_STATUS_VOIDED    = "V";
+    public static final String ACCOUNT_STATUS_LOCKED    = "L";
+    public static final String ACCOUNT_STATUS_FROZEN    = "F";
+
+    public static final String RESPONSE_VALIDATION_NOT_PASS  = "221";
+    public static final String RESPONSE_ALL_PASSED           = "200";
+    public static final String RESPONSE_SERVER_ERROR         = "500";
+    public static final String RESPONSE_PERMISSION_DENIED    = "502";
+    public static final String RESPONSE_MAPPING_NOT_FOUND    = "404";
+
     public static final String BATCH_JOB_SUCCESS    = "SUCCESS";
     public static final String BATCH_JOB_PROCESSING = "PROCESSING";
     public static final String BATCH_JOB_BLOCKED    = "BLOCKED";
@@ -41,5 +54,6 @@ public class AppConsts {
     public static final String EMIAL_STATUS_SENT_FAILED    = "FAILED";
 
     public static final List<String> ALL_DOC_CATEGORIES = List.of();
+
 
 }

@@ -7,7 +7,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @SpringBootApplication
 @EnableTransactionManagement
-@EnableWebMvc
 public class LegionApplication {
 
     public static void main(String[] args) {

@@ -2,9 +2,12 @@ package org.zenith.legion.common.docgen;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
+import org.zenith.legion.sysadmin.entity.EmailEntity;
+
 import java.io.File;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 public abstract class EmailTemplateGenerator implements IDocGenerator{
 
@@ -27,5 +30,12 @@ public abstract class EmailTemplateGenerator implements IDocGenerator{
         StringWriter writer = new StringWriter();
         template.process(getParameters(), writer);
         return writer.toString().getBytes(StandardCharsets.UTF_8);
+    }
+
+    public abstract String getSubject();
+
+    public EmailEntity generateEmail(List<String> sendTo, List<String> ccTo) {
+        EmailEntity emailEntity = new EmailEntity();
+        return emailEntity;
     }
 }
