@@ -1,7 +1,7 @@
-package org.zenith.legion.sysadmin.dao;
+package org.zenith.legion.general.dao;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.zenith.legion.sysadmin.entity.BatchJobStatus;
+import org.zenith.legion.general.entity.BatchJobStatus;
 
 @Mapper
 public interface BatchJobDAO {

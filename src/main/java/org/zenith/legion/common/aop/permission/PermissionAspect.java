@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.zenith.legion.common.AppContext;
 import org.zenith.legion.sysadmin.entity.UserRole;
-import org.zenith.legion.sysadmin.ex.PermissionDeniedException;
+import org.zenith.legion.general.ex.PermissionDeniedException;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;

@@ -43,8 +43,8 @@ public class CommonValidator {
                     ValidateWithRegex anno = field.getAnnotation(ValidateWithRegex.class);
                     if (isProfileMatch(profile, anno.profile())) {
                         if (!(field.getType() == String.class)) {
-                            throw new ClassCastException("无法将" + field.getName() + "的类型: "
-                                    + field.getType() + "转换为java.lang.String");
+                            throw new ClassCastException("Can NOT convert the type of " + field.getName() + ": "
+                                    + field.getType() + " to java.lang.String");
                         }
                         Pattern pattern = Pattern.compile(anno.regex());
                         if (value != null) {
@@ -83,12 +83,10 @@ public class CommonValidator {
             return true;
         if (StringUtils.isNotEmpty(profile) && StringUtils.isNotEmpty(annoProfile))
             return profile.equals(annoProfile);
-        if (StringUtils.isEmpty(profile) && StringUtils.isNotEmpty(annoProfile))
-            return false;
-        return true;
+        return !StringUtils.isEmpty(profile) || !StringUtils.isNotEmpty(annoProfile);
     }
 
-    private static Object getValue(Field field, Class objClass, Object instance) throws Exception {
+    private static Object getValue(Field field, Class<?> objClass, Object instance) throws Exception {
         String getter = "get";
         Object value = null;
         field.setAccessible(true);
@@ -96,33 +94,31 @@ public class CommonValidator {
             getter = "is";
         }
         getter += StringUtils.capitalCharacter(field.getName(), 0);
-        Method getterMethod = objClass.getDeclaredMethod(getter, null);
-        if (getterMethod != null) {
-            int modifer = getterMethod.getModifiers();
-            if (Modifier.isPublic(modifer) && !Modifier.isAbstract(modifer)
-                    && !Modifier.isStatic(modifer) && getterMethod.getReturnType() == field.getType()) {
-                getterMethod.setAccessible(true);
-                value = getterMethod.invoke(instance, null);
-            } else {
-                value = field.get(instance);
-            }
+        Method getterMethod = objClass.getDeclaredMethod(getter);
+        int modifer = getterMethod.getModifiers();
+        if (Modifier.isPublic(modifer) && !Modifier.isAbstract(modifer)
+                && !Modifier.isStatic(modifer) && getterMethod.getReturnType() == field.getType()) {
+            getterMethod.setAccessible(true);
+            value = getterMethod.invoke(instance);
+        } else {
+            value = field.get(instance);
         }
         return value;
     }
 
     private static void checkValidateWithMethod(Field field, ValidateWithMethod anno, Object value, Object obj,
-                                                Class objClass, Map<String, List<String>> validationMap, String profile) throws Exception {
+                                                Class<?> objClass, Map<String, List<String>> validationMap, String profile) throws Exception {
         if (isProfileMatch(profile, anno.profile())) {
             String methodName = anno.method();
             Method method = objClass.getDeclaredMethod(methodName, field.getType());
-            if (method != null && (method.getReturnType() == boolean.class || method.getReturnType() == Boolean.class)) {
+            if (method.getReturnType() == boolean.class || method.getReturnType() == Boolean.class) {
                 method.setAccessible(true);
                 boolean result = (boolean) method.invoke(obj, value);
                 if (!result) {
                     validationMap.get(field.getName()).add(anno.message());
                 }
             } else {
-                throw new NoSuchMethodException("未能找到符合要求的ValidateWithMethod描述的方法");
+                throw new NoSuchMethodException("Could not find a method that meets the requirements described by '@ValidateWithMethod'");
             }
         }
     }

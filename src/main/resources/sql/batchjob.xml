@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="org.zenith.legion.sysadmin.dao.BatchJobDAO">
-    <select id="getLastRunningStatus" resultType="org.zenith.legion.sysadmin.entity.BatchJobStatus" parameterType="string">
+<mapper namespace="org.zenith.legion.general.dao.BatchJobDAO">
+    <select id="getLastRunningStatus" resultType="org.zenith.legion.general.entity.BatchJobStatus" parameterType="string">
         SELECT * FROM SA_BATCH_JOB_STATUS WHERE BATCH_JOB_ID = #{batchJobId} ORDER BY CREATED_AT DESC;
     </select>
 </mapper>

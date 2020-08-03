@@ -18,6 +18,7 @@ public class AppConsts {
     public static final String ACCOUNT_STATUS_LOCKED    = "L";
     public static final String ACCOUNT_STATUS_FROZEN    = "F";
 
+
     public static final String RESPONSE_VALIDATION_NOT_PASS  = "221";
     public static final String RESPONSE_ALL_PASSED           = "200";
     public static final String RESPONSE_SERVER_ERROR         = "500";
@@ -52,6 +53,11 @@ public class AppConsts {
     public static final String EMIAL_STATUS_READ           = "READ";
     public static final String EMIAL_STATUS_RECYCLED       = "RECYCLED";
     public static final String EMIAL_STATUS_SENT_FAILED    = "FAILED";
+
+    public static final String CM_DOC_CAT_SYS_EMAIL           = "SYS_EMAIL";
+    public static final String CM_DOC_CAT_INTERNAL_EMAIL      = "INTER_EMAIL";
+    public static final String CM_DOC_CAT_OTHER               = "OTHER";
+    public static final String CM_DOC_TYPE_USER_ATTACHMENT    = "USER_ATTA";
 
     public static final List<String> ALL_DOC_CATEGORIES = List.of();
 

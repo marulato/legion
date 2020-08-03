@@ -2,7 +2,7 @@ package org.zenith.legion.common.cache;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import org.zenith.legion.sysadmin.entity.BatchJob;
+import org.zenith.legion.general.entity.BatchJob;
 
 public class BatchJobCache implements ICache<String, BatchJob>{
 

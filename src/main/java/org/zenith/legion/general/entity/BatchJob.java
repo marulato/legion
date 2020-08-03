@@ -1,4 +1,4 @@
-package org.zenith.legion.sysadmin.entity;
+package org.zenith.legion.general.entity;
 
 import java.util.*;
 

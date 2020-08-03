@@ -24,6 +24,8 @@ public class UserAccount extends BasePO {
     private Date lastLoginAttemptDt;
     private String lastLoginIp;
     private Integer loginFailedTimes;
+    private Date activatedAt;
+    private Date deactivatedAt;
 
     public String getUserId() {
         return userId;
@@ -151,5 +153,21 @@ public class UserAccount extends BasePO {
 
     public void setLoginFailedTimes(Integer loginFailedTimes) {
         this.loginFailedTimes = loginFailedTimes;
+    }
+
+    public Date getActivatedAt() {
+        return activatedAt;
+    }
+
+    public void setActivatedAt(Date activatedAt) {
+        this.activatedAt = activatedAt;
+    }
+
+    public Date getDeactivatedAt() {
+        return deactivatedAt;
+    }
+
+    public void setDeactivatedAt(Date deactivatedAt) {
+        this.deactivatedAt = deactivatedAt;
     }
 }

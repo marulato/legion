@@ -1,4 +1,4 @@
-package org.zenith.legion.sysadmin.service;
+package org.zenith.legion.general.service;
 
 import org.dom4j.Document;
 import org.dom4j.Element;
@@ -7,8 +7,8 @@ import org.quartz.CronExpression;
 import org.springframework.stereotype.Service;
 import org.zenith.legion.common.utils.DateUtils;
 import org.zenith.legion.common.utils.StringUtils;
-import org.zenith.legion.sysadmin.entity.BatchJob;
-import org.zenith.legion.sysadmin.ex.UnsupportedXMLFormatException;
+import org.zenith.legion.general.entity.BatchJob;
+import org.zenith.legion.general.ex.UnsupportedXMLFormatException;
 
 import java.io.File;
 import java.text.ParseException;

@@ -1,11 +1,10 @@
-package org.zenith.legion.sysadmin.service;
+package org.zenith.legion.general.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.zenith.legion.sysadmin.dao.BatchJobDAO;
-import org.zenith.legion.sysadmin.entity.BatchJob;
-import org.zenith.legion.sysadmin.entity.BatchJobStatus;
+import org.zenith.legion.general.dao.BatchJobDAO;
+import org.zenith.legion.general.entity.BatchJob;
+import org.zenith.legion.general.entity.BatchJobStatus;
 
 import java.util.HashMap;
 import java.util.Map;

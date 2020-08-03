@@ -1,21 +1,17 @@
-package org.zenith.legion.sysadmin.service;
+package org.zenith.legion.general.service;
 
-import org.apache.commons.codec.cli.Digest;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 import org.zenith.legion.common.consts.AppConsts;
 import org.zenith.legion.common.consts.SystemConsts;
 import org.zenith.legion.common.persistant.exec.SQLExecutor;
 import org.zenith.legion.common.utils.FTPClients;
 import org.zenith.legion.common.utils.StringUtils;
-import org.zenith.legion.sysadmin.entity.EmailEntity;
-import org.zenith.legion.sysadmin.entity.FileNet;
-import org.zenith.legion.sysadmin.ex.FTPUploadException;
+import org.zenith.legion.general.entity.FileNet;
+import org.zenith.legion.general.ex.FTPUploadException;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.text.MessageFormat;
 import java.util.UUID;
@@ -35,14 +31,13 @@ public class FileNetService {
         return MessageFormat.format(SystemConsts.FILE_STORAGE_PATH_EMAIL_ATTACHMENT, emailAddress);
     }
 
-    public void saveToFileNet(String path, MultipartFile attachment) throws Exception {
-        if (StringUtils.isNotBlank(path) && attachment != null) {
+    public void saveToFileNet(String path, String fileName, byte[] data) throws Exception {
+        if (StringUtils.isNotBlank(path) && data != null) {
             FileNet fileNet = new FileNet();
-            byte[] data = attachment.getBytes();
             fileNet.setSha512(DigestUtils.sha512Hex(data));
-            fileNet.setSize((long) attachment.getInputStream().available());
+            fileNet.setSize((long) data.length);
             fileNet.setFileUuid(getFileUUID(data));
-            fileNet.setFileName(attachment.getOriginalFilename());
+            fileNet.setFileName(fileName);
             fileNet.setPath(path);
             fileNet.setSourceType(AppConsts.FILE_NET_SRC_TYPE_EMAIL_ATTACHMENT);
             fileNet.setStorageType(AppConsts.FILE_NET_STORAGE_TYPE_FTP);
@@ -57,8 +52,10 @@ public class FileNetService {
                 fileNet.setFileType(AppConsts.FILE_NET_FILE_TYPE_UNKNOWN);
             }
             FTPClients ftpClients = new FTPClients(true);
-            boolean isUploaded = ftpClients.upload(fileNet.getPath(), fileNet.getFileUuid(), attachment.getInputStream());
+            InputStream inputStream = new ByteArrayInputStream(data);
+            boolean isUploaded = ftpClients.upload(fileNet.getPath(), fileNet.getFileUuid(), inputStream);
             ftpClients.disConnect();
+            inputStream.close();
             if (isUploaded) {
                 SQLExecutor.save(fileNet);
             } else {

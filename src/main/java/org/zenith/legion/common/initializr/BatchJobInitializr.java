@@ -4,13 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.annotation.Order;
-import org.springframework.stereotype.Component;
 import org.zenith.legion.common.cache.BatchJobCache;
 import org.zenith.legion.common.cache.CachePool;
-import org.zenith.legion.sysadmin.entity.BatchJob;
-import org.zenith.legion.sysadmin.ex.InvalidBatchJobException;
-import org.zenith.legion.sysadmin.service.BatchJobConfigurationService;
-import org.zenith.legion.sysadmin.service.BatchJobService;
+import org.zenith.legion.general.entity.BatchJob;
+import org.zenith.legion.general.ex.InvalidBatchJobException;
+import org.zenith.legion.general.service.BatchJobConfigurationService;
+import org.zenith.legion.general.service.BatchJobService;
 import java.util.List;
 
 @Order(1)

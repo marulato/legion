@@ -1,4 +1,4 @@
-package org.zenith.legion.sysadmin.ex;
+package org.zenith.legion.general.ex;
 
 public class InvalidBatchJobException extends RuntimeException {
 

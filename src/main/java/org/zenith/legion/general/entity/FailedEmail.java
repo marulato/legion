@@ -1,6 +1,5 @@
-package org.zenith.legion.sysadmin.entity;
+package org.zenith.legion.general.entity;
 
-import org.zenith.legion.common.base.BasePO;
 import org.zenith.legion.common.persistant.annotation.Persistant;
 import org.zenith.legion.common.persistant.annotation.PrimaryKey;
 
@@ -14,6 +13,9 @@ public class FailedEmail extends EmailEntity {
     private Integer failedTimes;
     private Date lastFailedTime;
     private String failedReason;
+
+    public static final String TABLE_NAME = "SA_FAILED_EMAIL";
+
 
     public Long getFailedEmailId() {
         return failedEmailId;

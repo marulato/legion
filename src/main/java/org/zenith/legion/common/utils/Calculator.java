@@ -61,7 +61,7 @@ public class Calculator {
     public static double divide(double a, double b, int scale, RoundingMode roundingMode) {
         BigDecimal a1 = BigDecimal.valueOf(a);
         BigDecimal b1 = BigDecimal.valueOf(b);
-        BigDecimal result = a1.divide(b1).setScale(scale, roundingMode);
+        BigDecimal result = a1.divide(b1, scale, roundingMode);
         return result.doubleValue();
     }
 

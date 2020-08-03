@@ -1,9 +1,13 @@
-package org.zenith.legion.sysadmin.entity;
+package org.zenith.legion.general.entity;
 
 import org.checkerframework.checker.units.qual.A;
+import org.springframework.web.multipart.MultipartFile;
 import org.zenith.legion.common.base.BasePO;
+import org.zenith.legion.common.persistant.annotation.NotColumn;
 import org.zenith.legion.common.persistant.annotation.Persistant;
 import org.zenith.legion.common.persistant.annotation.PrimaryKey;
+
+import java.io.InputStream;
 
 @Persistant(tableName = "?")
 public class EmailEntity extends BasePO {
@@ -17,6 +21,11 @@ public class EmailEntity extends BasePO {
     private byte[] content;
     private String status;
     private String isHasAttachment;
+
+    @NotColumn
+    private String attachFileName;
+    @NotColumn
+    private byte[] attachment;
 
     public Long getEmailId() {
         return emailId;
@@ -80,5 +89,21 @@ public class EmailEntity extends BasePO {
 
     public void setIsHasAttachment(String isHasAttachment) {
         this.isHasAttachment = isHasAttachment;
+    }
+
+    public String getAttachFileName() {
+        return attachFileName;
+    }
+
+    public void setAttachFileName(String attachFileName) {
+        this.attachFileName = attachFileName;
+    }
+
+    public byte[] getAttachment() {
+        return attachment;
+    }
+
+    public void setAttachment(byte[] attachment) {
+        this.attachment = attachment;
     }
 }

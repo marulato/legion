@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.zenith.legion.sysadmin.dao.UserAccountDAO">
+
+    <select id="getUserByIdNo" parameterType="string" resultType="org.zenith.legion.sysadmin.entity.UserAccount">
+        SELECT * FROM AC_USER_ACCT WHERE USER_ID = #{idNo}
+    </select>
+
+    <select id="getUserRoleAssignment" parameterType="string" resultType="org.zenith.legion.sysadmin.entity.UserRoleAssign">
+        SELECT * FROM AC_USER_ROLE_ASSIGN WHERE USER_ID = #{idNo}
+    </select>
+
+    <select id="getActiveUserRoleAssignment" parameterType="string" resultType="org.zenith.legion.sysadmin.entity.UserRoleAssign">
+        SELECT * FROM AC_USER_ROLE_ASSIGN WHERE USER_ID = #{idNo} AND DEACTIVATED_AT >= NOW()
+    </select>
+</mapper>
