@@ -1,6 +1,8 @@
 package org.zenith.legion.routine.dto;
 
 import org.springframework.beans.BeanUtils;
+import org.zenith.legion.common.utils.DateUtils;
+import org.zenith.legion.common.utils.StringUtils;
 import org.zenith.legion.routine.entity.ScheduleEvent;
 
 import java.io.Serializable;
@@ -23,6 +25,15 @@ public class CalendarEvent implements Serializable {
         if (event != null) {
             groupId = event.getGroupId();
             title = event.getTitle();
+            content = event.getContent();
+            eventType = event.getEventType();
+            start = DateUtils.getStandardDate(event.getStart());
+            end = DateUtils.getStandardDate(event.getEnd());
+            color = event.getColor();
+            textColor = event.getTextColor();
+            backgroundColor = event.getBackgroundColor();
+            allDay = StringUtils.parseBoolean(event.getAllDay());
+            editable = StringUtils.parseBoolean(event.getEditable());
         }
     }
 
