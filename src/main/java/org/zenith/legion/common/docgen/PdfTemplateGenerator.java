@@ -43,7 +43,7 @@ public abstract class PdfTemplateGenerator implements IDocGenerator {
         XMLWorkerFontProvider fontProvider = new XMLWorkerFontProvider(XMLWorkerFontProvider.DONTLOOKFORFONTS);
         fontProvider.register(font);
         String cssPath = this.getClass().getResource("/").getPath();
-        cssPath = cssPath.substring(1).replaceAll("%20", " ") + "styles/doc.css";
+        cssPath = cssPath.replaceAll("%20", " ") + "styles/doc.css";
         if ("\\".equals(File.separator)) {
             cssPath = cssPath.replaceAll("/", "\\\\");
         }

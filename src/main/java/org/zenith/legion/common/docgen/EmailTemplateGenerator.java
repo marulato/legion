@@ -14,7 +14,7 @@ public abstract class EmailTemplateGenerator implements IDocGenerator{
     @Override
     public byte[] generate() throws Exception {
         String templatePath = this.getClass().getResource("/").getPath();
-        templatePath = templatePath.substring(1).replaceAll("%20", " ") + "emails/";
+        templatePath = templatePath.replaceAll("%20", " ") + "emails/";
         String ftl = getTemplate();
         String fileName = getTemplate();
         if (ftl.contains("/")) {

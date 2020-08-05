@@ -42,7 +42,7 @@ public class AjaxResponseBuilder {
         }
     }
 
-    public void addDataObjects(List<Object> objects) {
+    public void addDataObjects(List<?> objects) {
         if (objects != null && errorCodes.isEmpty()) {
             dataObjects.addAll(objects);
         }

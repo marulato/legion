@@ -40,12 +40,16 @@ public class LogUtils {
         return null;
     }
 
-    public static String print(String log) {
-        if (StringUtils.isNotEmpty(log)) {
-            return log.replace('\n', ' ').
+    public static String print(String... logs) {
+        if (logs != null && logs.length > 0) {
+            StringBuilder builder = new StringBuilder();
+            for (String log : logs) {
+                builder.append(log);
+            }
+            return builder.toString().replace('\n', ' ').
                     replace('\r', ' ').
                     replace('\t', ' ');
         }
-        return log;
+        return null;
     }
 }

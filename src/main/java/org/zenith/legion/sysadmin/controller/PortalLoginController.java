@@ -44,4 +44,9 @@ public class PortalLoginController {
         AjaxResponseBuilder responseBuilder = AjaxResponseBuilder.build(0);
         return responseBuilder.respond();
     }
+
+    @GetMapping("/web/index")
+    public String getLandingPage() {
+        return "sysadmin/index";
+    }
 }

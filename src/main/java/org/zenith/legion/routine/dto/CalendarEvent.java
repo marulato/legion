@@ -21,6 +21,8 @@ public class CalendarEvent implements Serializable {
     private boolean allDay;
     private boolean editable;
 
+    public CalendarEvent() {}
+
     public CalendarEvent(ScheduleEvent event) {
         if (event != null) {
             groupId = event.getGroupId();
