@@ -9,6 +9,7 @@ import java.io.Serializable;
 
 public class CalendarEvent implements Serializable {
 
+    private Long eventId;
     private Integer groupId;
     private String title;
     private String content;
@@ -25,6 +26,7 @@ public class CalendarEvent implements Serializable {
 
     public CalendarEvent(ScheduleEvent event) {
         if (event != null) {
+            eventId = event.getCalendarEventId();
             groupId = event.getGroupId();
             title = event.getTitle();
             content = event.getContent();
@@ -37,6 +39,14 @@ public class CalendarEvent implements Serializable {
             allDay = StringUtils.parseBoolean(event.getAllDay());
             editable = StringUtils.parseBoolean(event.getEditable());
         }
+    }
+
+    public Long getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(Long eventId) {
+        this.eventId = eventId;
     }
 
     public Integer getGroupId() {

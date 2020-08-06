@@ -9,6 +9,7 @@ import java.util.Date;
 @Persistant(tableName = "SKD_CALENDAR_EVENT")
 public class ScheduleEvent extends BasePO {
 
+    private Long calendarEventId;
     private String userId;
     private Integer groupId;
     private String title;
@@ -21,6 +22,14 @@ public class ScheduleEvent extends BasePO {
     private String backgroundColor;
     private String allDay;
     private String editable;
+
+    public Long getCalendarEventId() {
+        return calendarEventId;
+    }
+
+    public void setCalendarEventId(Long calendarEventId) {
+        this.calendarEventId = calendarEventId;
+    }
 
     public String getUserId() {
         return userId;
