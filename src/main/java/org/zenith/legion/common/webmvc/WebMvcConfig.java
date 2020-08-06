@@ -5,6 +5,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.zenith.legion.common.utils.ConfigUtils;
+import org.zenith.legion.common.utils.StringUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
@@ -14,13 +19,15 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(globalInterceptor).addPathPatterns("/web/**").
-                excludePathPatterns("/web/login/**").
-                excludePathPatterns("/web/events/**").
-                excludePathPatterns("/web/index/**").
-                excludePathPatterns("/static/**").
-                excludePathPatterns("/css/**").
-                excludePathPatterns("/js/**");
+        String excludePatterns = ConfigUtils.get("spring.mvc.interceptor.excludePatterns");
+        List<String> excludeList = new ArrayList<>();
+        if (StringUtils.isNotBlank(excludePatterns)) {
+            String[] patterns = excludePatterns.split(",");
+            for (String pattern : patterns) {
+                excludeList.add(pattern.trim());
+            }
+        }
+        registry.addInterceptor(globalInterceptor).addPathPatterns("/web/**").excludePathPatterns(excludeList);
     }
 
 }

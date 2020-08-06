@@ -47,15 +47,15 @@
     <div class="main-panel">
       <div class="content-wrapper">
         <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="5000" style="position: absolute; right:0; z-index: 999">
-          <div class="toast-header">
-            <strong class="mr-auto">提示</strong>
-            <small>刚刚</small>
-            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+          <div class="toast-header" id="toastHeader" style="background-color: #00bf60">
+            <strong class="mr-auto" id="hint" style="color: white">提示</strong>
+            <small id="justNow" style="color: white">刚刚</small>
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close" style="color: white">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="toast-body" id="toastContent">
-
+          <div class="toast-body" id="toastContent" style="color: white; background-color: #00bf60">
+            加载成功！&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           </div>
         </div>
           <div id="calendar"></div>
@@ -110,6 +110,7 @@
                     dataType: "json",
                     success: function (res) {
                         successCallback(res.data);
+                        $(".toast").toast('show');
                     }
                 });
             },
@@ -155,7 +156,7 @@
           <div class="col-md-12">
             <div class="form-group">
               <label for="title" class="control-label">标题</label>
-              <input type="text" class="form-control" name="title" id="title" placeholder="事件标题" style="font-size: 12px">
+              <input type="text" class="form-control" name="title" id="title" placeholder="事件标题">
             </div>
           </div>
         </div>
@@ -164,13 +165,13 @@
           <div class="col-md-6">
             <div class="form-group">
               <label for="start" class="control-label">开始时间</label>
-              <input type="text" class="form-control" name="start" id="start" placeholder="" style="font-size: 12px">
+              <input type="text" class="form-control" name="start" id="start" placeholder="">
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
               <label for="end" class="control-label">结束时间</label>
-              <input type="text" class="form-control" name="end" id="end" placeholder="" style="font-size: 12px">
+              <input type="text" class="form-control" name="end" id="end" placeholder="">
             </div>
           </div>
         </div>
@@ -178,34 +179,38 @@
           <div class="col-md-12">
             <div class="form-group">
               <label for="content" class="control-label">内容</label>
-              <textarea class="form-control" name="content" id="content" placeholder="Boston" style="font-size: 12px; height: 8em"></textarea>
+              <textarea class="form-control" name="content" id="content" placeholder="Boston" style="height: 8em"></textarea>
             </div>
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-6">
+          <div class="col-md-6">
             <div class="form-group">
               <label for="type" class="control-label">类型</label>
-              <select class="form-control" name="type" id="type" style="font-size: 12px">
-                <option style="font-size: 12px">默认</option>
+              <select class="form-control" name="type" id="type">
+                <option>默认</option>
               </select>
             </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="form-group">
-            <div class="form-group form-check">
-              <input type="checkbox" class="" id="exampleCheck1">
-              <label class="form-check-label" for="exampleCheck1">Check me out</label>
+          <div class="col-md-6">
+            <div class="form-group" style="padding-top: 1.2em; padding-left: 1em">
+              <div class="form-check form-check-flat">
+                <label class="form-check-label">
+                  <input type="checkbox" class="form-check-input"> 接收邮件通知
+                </label>
+              </div>
             </div>
           </div>
+        </div>
+        <div class="row">
+
         </div>
       </div>
 
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" style="font-size: 12px">关闭</button>
-        <button type="button" class="btn btn-danger" style="font-size: 12px">删除</button>
-        <button type="button" class="btn btn-primary" style="font-size: 12px">保存</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-danger">删除</button>
+        <button type="button" class="btn btn-primary" >保存</button>
       </div>
     </div>
   </div>

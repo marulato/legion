@@ -32,7 +32,7 @@ public class ConfigCache implements ICache<String, String> {
             public String load(String key) throws Exception {
                 if (propertyList.isEmpty()) {
                     String classPath = SystemConsts.CLASSPATH;
-                    File file = new File(classPath);
+                    File file = new File(classPath + "config");
                     File[] files = file.listFiles();
                     for (File configFile : files) {
                         String baseName = FilenameUtils.getBaseName(configFile.getName());
@@ -40,7 +40,7 @@ public class ConfigCache implements ICache<String, String> {
                                 equalsIgnoreCase(FilenameUtils.getExtension(configFile.getName()))
                                 && propertyFiles.contains(baseName)) {
                             Properties properties = new Properties();
-                            FileInputStream inputStream = new FileInputStream(file);
+                            FileInputStream inputStream = new FileInputStream(configFile);
                             properties.load(inputStream);
                             inputStream.close();
                             propertyList.put(baseName, properties);
@@ -58,7 +58,7 @@ public class ConfigCache implements ICache<String, String> {
                             propertyList.remove("prd");
                             propertyList.remove("dev");
                         } else {
-                            throw new InitializationException(LogUtils.print("Initialization FAILED: ", LogUtils.wrapVariable(mode), " NOT found"));
+                            throw new InitializationException(LogUtils.print("Initialization FAILED: server mode setting NOT found"));
                         }
                     } else {
                         throw new InitializationException("Initialization FAILED: [legion.properties] NOT found");
