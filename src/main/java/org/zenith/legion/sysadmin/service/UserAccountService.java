@@ -8,6 +8,7 @@ import org.zenith.legion.common.utils.DateUtils;
 import org.zenith.legion.common.utils.StringUtils;
 import org.zenith.legion.sysadmin.dao.UserAccountDAO;
 import org.zenith.legion.sysadmin.entity.UserAccount;
+import org.zenith.legion.sysadmin.entity.UserRole;
 import org.zenith.legion.sysadmin.entity.UserRoleAssign;
 
 import java.util.List;
@@ -61,9 +62,16 @@ public class UserAccountService {
         return null;
     }
 
-    public List<UserRoleAssign> getRoleAssignByIdNo(String idNo) {
+    public List<UserRoleAssign> getActiveRoleAssignByIdNo(String idNo) {
         if (StringUtils.isNotBlank(idNo)) {
-            return userAccountDAO.getUserRoleAssignment(idNo);
+            return userAccountDAO.getActiveUserRoleAssignment(idNo);
+        }
+        return null;
+    }
+
+    public UserRole getRoleById(String roleId) {
+        if (StringUtils.isNotBlank(roleId)) {
+            return userAccountDAO.getRoleById(roleId);
         }
         return null;
     }

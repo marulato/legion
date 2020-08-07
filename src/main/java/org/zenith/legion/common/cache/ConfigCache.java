@@ -1,5 +1,6 @@
 package org.zenith.legion.common.cache;
 
+import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
@@ -9,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.zenith.legion.common.consts.SystemConsts;
 import org.zenith.legion.common.utils.LogUtils;
 import org.zenith.legion.common.utils.SpringUtils;
+import org.zenith.legion.common.utils.StringUtils;
 import org.zenith.legion.general.ex.InitializationException;
 import org.zenith.legion.sysadmin.dao.ConfigDAO;
 import org.zenith.legion.sysadmin.entity.Config;
@@ -20,14 +22,16 @@ import java.util.concurrent.ExecutionException;
 
 public class ConfigCache implements ICache<String, String> {
 
-    private static final LoadingCache<String, String> cache;
+    private static final LoadingCache<String, String> loadingCache;
+    private static final Cache<String, String> commonCache;
     public static final String KEY = "org.zenith.legion.common.cache.ConfigCache";
     private static final Map<String, Properties> propertyList = new HashMap<>();
     private static final List<String> propertyFiles = List.of("dev", "prd", "uat", "legion", "settings");
     private static final Logger log = LoggerFactory.getLogger(ConfigCache.class);
 
     static {
-        cache = CacheBuilder.newBuilder().build(new CacheLoader<String, String>() {
+        commonCache = CacheBuilder.newBuilder().build();
+        loadingCache = CacheBuilder.newBuilder().build(new CacheLoader<String, String>() {
             @Override
             public String load(String key) throws Exception {
                 if (propertyList.isEmpty()) {
@@ -82,8 +86,11 @@ public class ConfigCache implements ICache<String, String> {
                     log.info(LogUtils.around("Properties missed, try database"));
                     ConfigDAO configDAO = SpringUtils.getBean(ConfigDAO.class);
                     Config config= configDAO.getConfig(key);
-                    if (config != null) {
+                    if (config != null && StringUtils.parseBoolean(config.getIsNeedRestart())) {
                         value = config.getConfigValue();
+                    } else if (config != null) {
+                        commonCache.put(key, config.getConfigValue());
+                        value = "";
                     }
                 }
                 return value;
@@ -97,15 +104,18 @@ public class ConfigCache implements ICache<String, String> {
     public String get(String key) {
         String value = null;
         try {
-            value = cache.get(key);
+            value = loadingCache.get(key);
         } catch (ExecutionException e) {
             log.error("", e);
+        }
+        if (value == null || value.isEmpty()) {
+            value = commonCache.getIfPresent(key);
         }
         return value;
     }
 
     @Override
     public void set(String key, String value) {
-        cache.put(key, value);
+
     }
 }

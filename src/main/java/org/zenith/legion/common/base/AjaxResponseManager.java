@@ -4,35 +4,41 @@ import org.zenith.legion.common.cache.CachePool;
 import org.zenith.legion.common.cache.ICache;
 import org.zenith.legion.common.cache.MasterCodeCache;
 import org.zenith.legion.common.utils.StringUtils;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
-public class AjaxResponseBuilder {
+import java.util.*;
+
+public class AjaxResponseManager {
 
     private final AjaxResponseBody ajaxResponseBody;
-    private final List<String> errorCodes;
+    private final Map<String, String> errorCodes;
     private final List<Object> dataObjects;
 
-    private AjaxResponseBuilder(int code){
+    private AjaxResponseManager(int code){
         ajaxResponseBody = new AjaxResponseBody();
-        ajaxResponseBody.setCode(code);
-        errorCodes = new ArrayList<>();
+        ajaxResponseBody.setStatus(code);
+        errorCodes = new HashMap<>();
         dataObjects = new ArrayList<>();
     }
 
-    public static AjaxResponseBuilder build(int responseCode) {
-        return new AjaxResponseBuilder(responseCode);
+    public static AjaxResponseManager create(int responseCode) {
+        return new AjaxResponseManager(responseCode);
     }
 
-    public void addError(String errorCode, String field) {
-        if (StringUtils.isNotBlank(errorCode)) {
-            errorCodes.add(errorCode);
+    public void addError(String field, String errorCode) {
+        errorCodes.put(StringUtils.isBlank(field) ? "default" : field, errorCode);
+    }
+    public void addErrors(Map<String, String> errorCode) {
+        if (errorCode != null) {
+            errorCodes.putAll(errorCode);
         }
     }
-    public void addErrors(List<String> errorCode) {
-        if (errorCode != null) {
-            errorCodes.addAll(errorCode);
+
+    public void addValidations(Map<String, List<String>> errorMap) {
+        if (errorMap != null && !errorMap.isEmpty()) {
+            Set<String> fieldSet = errorMap.keySet();
+            for (String field : fieldSet) {
+                addError(field, errorMap.get(field).get(0));
+            }
         }
     }
 
@@ -52,11 +58,14 @@ public class AjaxResponseBuilder {
         ajaxResponseBody.setRespondAt(new Date());
         if (!errorCodes.isEmpty()) {
             ICache<String, MasterCode> masterCodeCache = CachePool.getCache(MasterCodeCache.KEY, MasterCodeCache.class);
-            List<MasterCode> data = new ArrayList<>();
-            for (String errorCode : errorCodes) {
-                MasterCode masterCode = masterCodeCache.get(errorCode);
+            Map<String, String> data = new HashMap<>();
+            Set<String> keySet = errorCodes.keySet();
+            for (String field : keySet) {
+                MasterCode masterCode = masterCodeCache.get("cm.error:" + errorCodes.get(field));
                 if (masterCode != null) {
-                    data.add(masterCode);
+                    data.put(field, masterCode.getDescription());
+                } else {
+                    data.put(field, errorCodes.get(field));
                 }
             }
             ajaxResponseBody.setData(data);

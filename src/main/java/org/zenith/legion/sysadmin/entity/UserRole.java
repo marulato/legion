@@ -14,6 +14,7 @@ public class UserRole extends BasePO {
     private String profile;
     private String description;
     private String isSystem;
+    private String landingPage;
 
     public String getRoleId() {
         return roleId;
@@ -61,5 +62,13 @@ public class UserRole extends BasePO {
 
     public void setIsSystem(String isSystem) {
         this.isSystem = isSystem;
+    }
+
+    public String getLandingPage() {
+        return landingPage;
+    }
+
+    public void setLandingPage(String landingPage) {
+        this.landingPage = landingPage;
     }
 }

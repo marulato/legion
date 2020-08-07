@@ -5,19 +5,19 @@ import java.util.Date;
 
 public class AjaxResponseBody implements Serializable {
 
-    private int code;
+    private int status;
     private Object data;
     private Date requestAt;
     private Date respondAt;
 
     AjaxResponseBody(){}
 
-    public int getCode() {
-        return code;
+    public int getStatus() {
+        return status;
     }
 
-    public void setCode(int code) {
-        this.code = code;
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public Object getData() {

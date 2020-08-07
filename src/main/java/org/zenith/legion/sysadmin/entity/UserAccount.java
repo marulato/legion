@@ -3,17 +3,21 @@ package org.zenith.legion.sysadmin.entity;
 import org.zenith.legion.common.base.BasePO;
 import org.zenith.legion.common.persistant.annotation.Persistant;
 import org.zenith.legion.common.persistant.annotation.PrimaryKey;
+import org.zenith.legion.common.validation.NotEmpty;
 
 import java.util.Date;
 
 @Persistant(tableName = "AC_USER_ACCT")
 public class UserAccount extends BasePO {
     @PrimaryKey(autoIncrement = false)
+    @NotEmpty(message = "请输入学号/工号")
     private String userId;
+    @PrimaryKey(autoIncrement = false)
     private String domain;
     private String name;
     private String displayName;
     private String type;
+    @NotEmpty(message = "请输入密码")
     private String password;
     private String email;
     private String phoneNo;
@@ -32,14 +36,6 @@ public class UserAccount extends BasePO {
     }
 
     public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getIdNo() {
-        return userId;
-    }
-
-    public void setIdNo(String userId) {
         this.userId = userId;
     }
 

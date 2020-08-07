@@ -13,6 +13,7 @@ public class AppContext implements Serializable {
     private String userType;
     private boolean isAdminRole;
     private boolean hasAdminRole;
+    private boolean loggedIn;
     private UserRole currentRole;
     private List<UserRole> allRoles;
 
@@ -92,6 +93,14 @@ public class AppContext implements Serializable {
 
     public boolean isHasAdminRole() {
         return hasAdminRole;
+    }
+
+    public boolean isLoggedIn() {
+        return loggedIn;
+    }
+
+    public void setLoggedIn(boolean loggedIn) {
+        this.loggedIn = loggedIn;
     }
 
     public void setHasAdminRole(boolean hasAdminRole) {

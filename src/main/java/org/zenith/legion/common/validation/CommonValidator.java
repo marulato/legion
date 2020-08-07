@@ -72,6 +72,9 @@ public class CommonValidator {
                         checkValidateWithMethod(field, validateWithMethod, value, obj, objClass, validationMap, profile);
                     }
                 }
+                if (validationMap.get(field.getName()).isEmpty()) {
+                    validationMap.remove(field.getName());
+                }
             }
             return validationMap;
         }

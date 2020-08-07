@@ -43,13 +43,11 @@ public class PermissionAspect {
                     hasPermission = false;
                 }
             } else if (logical == Logical.OR) {
-                allRoles.retainAll(roleIds);
-                if (allRoles.isEmpty()) {
+                if (!roleIds.contains(context.getCurrentRole().getRoleId())) {
                     hasPermission = false;
                 }
             } else if(logical == Logical.NONE) {
-                allRoles.retainAll(roleIds);
-                if (!allRoles.isEmpty()) {
+                if (roleIds.contains(context.getCurrentRole().getRoleId())) {
                     hasPermission = false;
                 }
             }

@@ -19,9 +19,14 @@ public class MasterCodeCache implements ICache<String, MasterCode>{
         return cache.getIfPresent(key);
     }
 
+    public MasterCode get(String type, String key) {
+        return get(type + ":" + key);
+    }
+
     @Override
     public void set(String key, MasterCode value) {
         cache.put(key, value);
 
     }
+
 }

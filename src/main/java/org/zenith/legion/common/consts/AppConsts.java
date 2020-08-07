@@ -18,12 +18,18 @@ public class AppConsts {
     public static final String ACCOUNT_STATUS_LOCKED    = "L";
     public static final String ACCOUNT_STATUS_FROZEN    = "F";
 
+    public static final String USER_TYPE_STUDENT          = "STUDENT";
+    public static final String USER_TYPE_TEACHER          = "TEACHER";
+    public static final String USER_TYPE_DEVELOPER        = "DEV";
+    public static final String USER_TYPE_CONTRACT_STAFF   = "CONSTAFF";
+    public static final String USER_TYPE_SYSTEM_ADMIN     = "SYSADM";
 
-    public static final String RESPONSE_VALIDATION_NOT_PASS  = "221";
-    public static final String RESPONSE_ALL_PASSED           = "200";
-    public static final String RESPONSE_SERVER_ERROR         = "500";
-    public static final String RESPONSE_PERMISSION_DENIED    = "502";
-    public static final String RESPONSE_MAPPING_NOT_FOUND    = "404";
+
+    public static final int RESPONSE_VALIDATION_NOT_PASS  = 221;
+    public static final int RESPONSE_ALL_PASSED           = 200;
+    public static final int RESPONSE_SERVER_ERROR         = 500;
+    public static final int RESPONSE_PERMISSION_DENIED    = 502;
+    public static final int RESPONSE_MAPPING_NOT_FOUND    = 404;
 
     public static final String BATCH_JOB_SUCCESS    = "SUCCESS";
     public static final String BATCH_JOB_PROCESSING = "PROCESSING";

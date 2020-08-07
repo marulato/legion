@@ -13,4 +13,8 @@
     <select id="getActiveUserRoleAssignment" parameterType="string" resultType="org.zenith.legion.sysadmin.entity.UserRoleAssign">
         SELECT * FROM AC_USER_ROLE_ASSIGN WHERE USER_ID = #{idNo} AND DEACTIVATED_AT >= NOW()
     </select>
+
+    <select id="getRoleById" parameterType="string" resultType="org.zenith.legion.sysadmin.entity.UserRole">
+        SELECT * FROM AC_ROLE WHERE ROLE_ID = #{roleId}
+    </select>
 </mapper>

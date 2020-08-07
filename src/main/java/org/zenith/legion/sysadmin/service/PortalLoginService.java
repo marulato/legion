@@ -3,6 +3,8 @@ package org.zenith.legion.sysadmin.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.zenith.legion.common.AppContext;
+import org.zenith.legion.common.SessionManager;
 import org.zenith.legion.common.consts.AppConsts;
 import org.zenith.legion.common.persistant.exec.SQLExecutor;
 import org.zenith.legion.common.utils.ConfigUtils;
@@ -11,6 +13,12 @@ import org.zenith.legion.common.utils.StringUtils;
 import org.zenith.legion.sysadmin.consts.LoginStatus;
 import org.zenith.legion.sysadmin.entity.UserAccount;
 import org.zenith.legion.sysadmin.entity.UserLoginHistory;
+import org.zenith.legion.sysadmin.entity.UserRole;
+import org.zenith.legion.sysadmin.entity.UserRoleAssign;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class PortalLoginService {
@@ -23,16 +31,29 @@ public class PortalLoginService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public LoginStatus login(UserAccount webUser) {
+    public LoginStatus login(UserAccount webUser, HttpServletRequest request) {
         LoginStatus status = null;
         if (webUser != null) {
-            UserAccount user = userAcctService.getUserAccountByIdNo(webUser.getIdNo());
+            UserAccount user = userAcctService.getUserAccountByIdNo(webUser.getUserId());
             if (user != null) {
+                SessionManager.setSession(request);
+                AppContext appContext = new AppContext();
+                appContext.setLoginId(user.getUserId());
+                appContext.setDomain(user.getDomain());
+                AppContext.setWebThreadAppContext(appContext);
                 boolean isPwdMatch = userAcctService.isPasswordMatch(webUser.getPassword(), user.getPassword());
                 if (isPwdMatch) {
                     String accountStatus = checkStatus(user);
                     if (AppConsts.ACCOUNT_STATUS_ACTIVE.equals(accountStatus)) {
                         status = LoginStatus.SUCCESS;
+                        appContext.setLoggedIn(true);
+                        List<UserRoleAssign> userRoleAssigns = userAcctService.getActiveRoleAssignByIdNo(user.getUserId());
+                        List<UserRole> roles = new ArrayList<>();
+                        for (UserRoleAssign userRoleAssign : userRoleAssigns) {
+                            UserRole role = userAcctService.getRoleById(userRoleAssign.getRoleId());
+                            roles.add(role);
+                        }
+                        appContext.setAllRoles(roles);
                     } else if (AppConsts.ACCOUNT_STATUS_INACTIVE.equals(accountStatus)) {
                         status = LoginStatus.ACCOUNT_INACTIVE;
                     } else if (AppConsts.ACCOUNT_STATUS_EXPIRED.equals(accountStatus)) {
