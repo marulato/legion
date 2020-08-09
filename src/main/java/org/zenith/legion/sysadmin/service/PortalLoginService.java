@@ -68,7 +68,7 @@ public class PortalLoginService {
                 } else {
                     status = LoginStatus.INVALID_PASS;
                 }
-                logLogin(user, status);
+                logLogin(user, status, request);
             } else {
                 status = LoginStatus.ACCOUNT_NOT_EXIST;
             }
@@ -77,11 +77,12 @@ public class PortalLoginService {
     }
 
 
-    public void logLogin(UserAccount user, LoginStatus status) {
+    public void logLogin(UserAccount user, LoginStatus status, HttpServletRequest request) {
         if (user != null && status != null) {
             user.setLastLoginAttemptDt(DateUtils.now());
             user.setLastLoginIp(user.getLastLoginIp());
             if (status == LoginStatus.SUCCESS) {
+                user.setLastLoginIp(SessionManager.getIpAddress(request));
                 user.setLastLoginSuccessDt(user.getLastLoginAttemptDt());
                 user.setLoginFailedTimes(0);
                 if (StringUtils.isBlank(user.getIsFirstLogin())) {
@@ -89,7 +90,13 @@ public class PortalLoginService {
                 }
             } else if (status == LoginStatus.INVALID_PASS) {
                 user.setLoginFailedTimes(user.getLoginFailedTimes() + 1);
-                if (user.getLoginFailedTimes() >= Integer.parseInt(ConfigUtils.get("security.login.failedTimes"))) {
+                int maxFailedTimes = 0;
+                String maxFailedTimesStr = ConfigUtils.get("security.login.maxFailedTimes");
+                if (StringUtils.isBlank(maxFailedTimesStr) || !StringUtils.isInteger(maxFailedTimesStr)
+                        || Integer.parseInt(maxFailedTimesStr) <= 1 ) {
+                    maxFailedTimes = 10;
+                }
+                if (user.getLoginFailedTimes() >= maxFailedTimes) {
                     user.setStatus(AppConsts.ACCOUNT_STATUS_LOCKED);
                 }
             } else {
@@ -101,6 +108,7 @@ public class PortalLoginService {
             loginHistory.setIpAddress(user.getLastLoginIp());
             loginHistory.setLoginAt(user.getLastLoginAttemptDt());
             loginHistory.setLoginStatus(status.getValue());
+            loginHistory.setIpAddress(SessionManager.getIpAddress(request));
             SQLExecutor.save(loginHistory);
             SQLExecutor.update(user);
         }

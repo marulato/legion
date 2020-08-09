@@ -12,6 +12,7 @@ public class UserLoginHistory extends BasePO {
     private Date loginAt;
     private Integer loginStatus;
     private String ipAddress;
+    private String browser;
 
     public String getUserId() {
         return userId;
@@ -51,5 +52,13 @@ public class UserLoginHistory extends BasePO {
 
     public void setIpAddress(String ipAddress) {
         this.ipAddress = ipAddress;
+    }
+
+    public String getBrowser() {
+        return browser;
+    }
+
+    public void setBrowser(String browser) {
+        this.browser = browser;
     }
 }
