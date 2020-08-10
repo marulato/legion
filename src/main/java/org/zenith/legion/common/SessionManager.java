@@ -18,6 +18,10 @@ public class SessionManager {
         return threadSession.get();
     }
 
+    public static HttpSession getSession(HttpServletRequest request) {
+        return request.getSession(false);
+    }
+
     public static void clear() {
         threadSession.remove();
     }

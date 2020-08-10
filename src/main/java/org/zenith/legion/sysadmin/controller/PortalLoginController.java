@@ -79,7 +79,7 @@ public class PortalLoginController {
         } else {
             LoginStatus loginStatus = loginService.login(webUser, request);
             if (loginStatus == LoginStatus.SUCCESS) {
-                AppContext context = AppContext.getAppContextFromCurrentThread();
+                AppContext context = AppContext.getAppContext(request);
                 //user has multiple roles, should choose a role manually to proceed
                 if (context.getAllRoles().size() > 1) {
                     responseMgr.addDataObjects(context.getAllRoles());
@@ -104,7 +104,7 @@ public class PortalLoginController {
 
     @GetMapping("/web/index/{roleId}")
     public String getLandingPage(@PathVariable String roleId, HttpServletRequest request) {
-        AppContext context = AppContext.getAppContextFromCurrentThread();
+        AppContext context = AppContext.getAppContext(request);
         if (context == null) {
             return "redirect:/web/login";
         }

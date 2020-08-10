@@ -2,6 +2,7 @@ package org.zenith.legion.common;
 
 import org.zenith.legion.sysadmin.entity.UserRole;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.Serializable;
 import java.util.List;
@@ -35,10 +36,20 @@ public class AppContext implements Serializable {
         }
         if (context == null && flag) {
             context = new AppContext();
-            context.setLoginId("Dummy User");
+            context.setLoginId("Virtual User Account");
             localThreadContext.set(context);
         }
         return context;
+    }
+
+    public static AppContext getAppContext(HttpServletRequest request) {
+        if (request != null) {
+            Object obj = request.getSession().getAttribute(APP_CONTEXT_KEY);
+            if (obj != null) {
+                return (AppContext) obj;
+            }
+        }
+        return null;
     }
 
     public static AppContext getAppContextFromCurrentThread() {
