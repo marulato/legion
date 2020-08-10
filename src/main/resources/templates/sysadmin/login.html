@@ -26,6 +26,7 @@
               <form id="mainForm">
                 <div class="form-group">
                   <label class="label">学号/工号</label>
+                  <input type="hidden" name="browser" id="browser">
                   <input type="text" class="form-control" placeholder="" name="userId" id="userId">
                   <!--                    <div class="input-group-append">-->
                   <!--                      <span class="input-group-text">-->
@@ -88,6 +89,7 @@
   <script th:src="@{/js/bootstrap.min.js}"></script>
   <script>
     function login() {
+        $("#browser").val(navigator.userAgent);
         $.ajax({
             url: "/web/login/landing",
             type: "post",
@@ -97,11 +99,11 @@
                 var obj = res.data;
                 if (res.status === 200) {
                     if (obj[0] === 0) {
-                        window.location.href = "/web/index";
+                        land(1);
                     } else {
                         //select role;
                         $.each(obj, function (index, element) {
-                            $("#roleModalBody").append('<div class="row">' + '<div class="col-md-12">' + element.description + '</div></div>');
+                            $("#roleModalBody").append('<div class="row" onmouseover="modalMouseOver(this)" onmouseleave="modalMouseLeave(this)"><span onclick="land(\'' + element.roleId + '\')" style="text-align: center; width: 100%; height: 100%; line-height: 3em">' + element.description + '</span></div>');
                         });
                         $("#roleModal").modal({backdrop: 'static', show: true})
                     }
@@ -114,6 +116,24 @@
             }
         });
     }
+
+    function modalMouseOver(div) {
+      $(div).css("background-color", "#f6f6f6");
+      $(div).css("cursor", "pointer");
+    }
+
+    function modalMouseLeave(div) {
+        $(div).css("background-color", "#fff");
+        $(div).css("cursor", "default");
+    }
+
+    function land(roleId) {
+        var role = "";
+      if (roleId !== 1) {
+          role = roleId;
+      }
+      location.href = "/web/index/" + roleId;
+    }
   </script>
   <!-- endinject -->
 
@@ -124,14 +144,10 @@
           <h4 class="modal-title" id="event_title">请选择要登录的类型</h4>
         </div>
         <div class="modal-body" id="roleModalBody" style="background-color: white">
-          <div class="row">
-            <div class="col-md-12">
-            </div>
-          </div>
         </div>
-        <div class="modal-footer">
+<!--        <div class="modal-footer">
           <button type="button" class="btn btn-primary" >确认</button>
-        </div>
+        </div>-->
       </div>
     </div>
   </div>

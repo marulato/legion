@@ -22,8 +22,7 @@ public class PermissionAspect {
 
     private static final Logger log = LoggerFactory.getLogger(PermissionAspect.class);
     @Around("@annotation(org.zenith.legion.common.aop.permission.RequiresRoles)")
-    public Object checkPermission(ProceedingJoinPoint joinPoint) throws Throwable {
-        Object result = null;
+    public Object checkRequiresRoles(ProceedingJoinPoint joinPoint) throws Throwable {
         boolean hasPermission = true;
         Class<?> targetType = joinPoint.getTarget().getClass();
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
@@ -52,13 +51,26 @@ public class PermissionAspect {
                 }
             }
             if (hasPermission) {
-                result = joinPoint.proceed();
+                return joinPoint.proceed();
             } else {
                 throw new PermissionDeniedException();
             }
         } else {
             throw new PermissionDeniedException();
         }
-        return result;
+    }
+
+    @Around("@annotation(org.zenith.legion.common.aop.permission.RequiresLogin)")
+    public Object checkRequiresLogin(ProceedingJoinPoint joinPoint) throws Throwable {
+        Class<?> targetType = joinPoint.getTarget().getClass();
+        MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
+        Method method = targetType.getMethod(methodSignature.getName(), methodSignature.getParameterTypes());
+        RequiresLogin requiresLogin = method.getAnnotation(RequiresLogin.class);
+        AppContext context = AppContext.getAppContextFromCurrentThread();
+        if (context == null || !context.isLoggedIn()) {
+            throw new PermissionDeniedException();
+        } else {
+            return joinPoint.proceed();
+        }
     }
 }

@@ -8,9 +8,9 @@
                         <img th:src="@{/images/faces/face4.jpg}" alt="profile image">
                     </div>
                     <div class="text-wrapper">
-                        <p class="profile-name">小黄人宝宝</p>
+                        <p class="profile-name" id="lm_name" name="lm_name" th:text="${session.profileName}"></p>
                         <div>
-                            <small class="designation text-muted">Developer</small>
+                            <small class="designation text-muted"></small>
                             <span class="status-indicator online"></span>
                         </div>
                     </div>

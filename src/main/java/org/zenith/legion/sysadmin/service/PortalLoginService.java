@@ -46,7 +46,6 @@ public class PortalLoginService {
                     String accountStatus = checkStatus(user);
                     if (AppConsts.ACCOUNT_STATUS_ACTIVE.equals(accountStatus)) {
                         status = LoginStatus.SUCCESS;
-                        appContext.setLoggedIn(true);
                         List<UserRoleAssign> userRoleAssigns = userAcctService.getActiveRoleAssignByIdNo(user.getUserId());
                         List<UserRole> roles = new ArrayList<>();
                         for (UserRoleAssign userRoleAssign : userRoleAssigns) {
@@ -109,6 +108,7 @@ public class PortalLoginService {
             loginHistory.setLoginAt(user.getLastLoginAttemptDt());
             loginHistory.setLoginStatus(status.getValue());
             loginHistory.setIpAddress(SessionManager.getIpAddress(request));
+            loginHistory.setBrowser(request.getParameter("browser"));
             SQLExecutor.save(loginHistory);
             SQLExecutor.update(user);
         }
