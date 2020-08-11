@@ -12,6 +12,11 @@ public abstract class BasePO implements Serializable, Cloneable {
     private Date updatedAt;
     private String updatedBy;
 
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
     public final void createAuditValues(AppContext context) {
         if (context != null) {
             Date now = new Date();

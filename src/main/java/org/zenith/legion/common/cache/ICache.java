@@ -9,7 +9,4 @@ public interface ICache <K, V> {
 
     void set(K key, V value);
 
-    default List<?> getList(String key){
-        return null;
-    }
 }

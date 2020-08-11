@@ -4,7 +4,7 @@ import org.zenith.legion.common.persistant.annotation.Persistant;
 import org.zenith.legion.common.persistant.annotation.PrimaryKey;
 
 @Persistant(tableName = "CM_MASTERCODE")
-public class MasterCode {
+public class MasterCode extends BasePO {
 
     @PrimaryKey(autoIncrement = true)
     private Integer mastercodeId;
@@ -16,6 +16,11 @@ public class MasterCode {
     private String isSystem;
     private Integer displayOrder;
     private String isAdminable;
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 
     public Integer getMastercodeId() {
         return mastercodeId;
