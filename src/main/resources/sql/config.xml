@@ -4,4 +4,12 @@
     <select id="getConfig" parameterType="string" resultType="org.zenith.legion.sysadmin.entity.Config">
         SELECT * FROM CM_CONFIG WHERE CONFIG_KEY = #{key}
     </select>
+
+    <select id="getMasterCode" parameterType="string" resultType="org.zenith.legion.common.base.MasterCode">
+        SELECT * FROM CM_MASTERCODE WHERE CODE_TYPE = #{param1} AND CODE_VALUE = #{param2}
+    </select>
+
+    <select id="getMasterCodeByType" parameterType="string" resultType="org.zenith.legion.common.base.MasterCode">
+        SELECT * FROM CM_MASTERCODE WHERE CODE_TYPE = #{type}
+    </select>
 </mapper>

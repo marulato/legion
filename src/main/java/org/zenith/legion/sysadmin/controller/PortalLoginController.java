@@ -131,6 +131,18 @@ public class PortalLoginController {
         }
     }
 
+    @GetMapping("/web/index/selectRole")
+    @ResponseBody
+    @RequiresLogin
+    public AjaxResponseBody selectRole(HttpServletRequest request) {
+        AppContext appContext = AppContext.getAppContext(request);
+        AjaxResponseManager responseMgr = AjaxResponseManager.create(AppConsts.RESPONSE_ALL_PASSED);
+        if (appContext != null) {
+            responseMgr.addDataObjects(appContext.getAllRoles());
+        }
+        return responseMgr.respond();
+    }
+
     @GetMapping("/web/logout")
     @RequiresLogin
     public String logout(HttpServletRequest request) {

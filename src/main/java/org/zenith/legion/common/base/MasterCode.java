@@ -7,46 +7,46 @@ import org.zenith.legion.common.persistant.annotation.PrimaryKey;
 public class MasterCode {
 
     @PrimaryKey(autoIncrement = true)
-    private Integer codeId;
-    private String codeType;
-    private String codeValue;
-    private String profile;
+    private Integer mastercodeId;
+    private String type;
+    private String code;
+    private String value;
     private String description;
     private String isCached;
     private String isSystem;
     private Integer displayOrder;
     private String isAdminable;
 
-    public Integer getCodeId() {
-        return codeId;
+    public Integer getMastercodeId() {
+        return mastercodeId;
     }
 
-    public void setCodeId(Integer codeId) {
-        this.codeId = codeId;
+    public void setMastercodeId(Integer mastercodeId) {
+        this.mastercodeId = mastercodeId;
     }
 
-    public String getCodeType() {
-        return codeType;
+    public String getType() {
+        return type;
     }
 
-    public void setCodeType(String codeType) {
-        this.codeType = codeType;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public String getCodeValue() {
-        return codeValue;
+    public String getCode() {
+        return code;
     }
 
-    public void setCodeValue(String codeValue) {
-        this.codeValue = codeValue;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public String getProfile() {
-        return profile;
+    public String getValue() {
+        return value;
     }
 
-    public void setProfile(String profile) {
-        this.profile = profile;
+    public void setValue(String value) {
+        this.value = value;
     }
 
     public String getDescription() {

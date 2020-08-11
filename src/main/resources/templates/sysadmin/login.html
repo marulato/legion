@@ -136,21 +136,7 @@
     }
   </script>
   <!-- endinject -->
-
-  <div class="modal fade" id="roleModal">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header" style="background-color: rgb(231,234,237)">
-          <h4 class="modal-title" id="event_title">请选择要登录的类型</h4>
-        </div>
-        <div class="modal-body" id="roleModalBody" style="background-color: white">
-        </div>
-<!--        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" >确认</button>
-        </div>-->
-      </div>
-    </div>
-  </div>
+<div th:replace="/sysadmin/selectRoleModal::selectRole"></div>
 </body>
 
 </html>
