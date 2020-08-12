@@ -4,6 +4,7 @@ import org.zenith.legion.common.cache.CachePool;
 import org.zenith.legion.common.cache.ICache;
 import org.zenith.legion.common.cache.MasterCodeCache;
 import org.zenith.legion.common.utils.StringUtils;
+import org.zenith.legion.sysadmin.entity.MasterCode;
 
 import java.util.*;
 

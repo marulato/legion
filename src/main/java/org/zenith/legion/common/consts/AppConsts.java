@@ -65,6 +65,11 @@ public class AppConsts {
     public static final String CM_DOC_CAT_OTHER               = "OTHER";
     public static final String CM_DOC_TYPE_USER_ATTACHMENT    = "USER_ATTA";
 
+    public static final Integer MC_DISTRICT_PROVINCE_LEVEL = 1;
+    public static final Integer MC_DISTRICT_PREFECTURE_LEVEL = 2;
+    public static final Integer MC_DISTRICT_COUNTY_LEVEL = 3;
+    public static final Integer MC_DISTRICT_TOWN_LEVEL = 4;
+
     public static final List<String> ALL_DOC_CATEGORIES = List.of();
 
 

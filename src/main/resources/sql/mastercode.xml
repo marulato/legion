@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.zenith.legion.sysadmin.dao.MasterCodeDAO">
+    <select id="getConfig" parameterType="string" resultType="org.zenith.legion.sysadmin.entity.Config">
+        SELECT * FROM CM_CONFIG WHERE CONFIG_KEY = #{key}
+    </select>
+
+    <select id="getMasterCode" parameterType="string" resultType="org.zenith.legion.sysadmin.entity.MasterCode">
+        SELECT * FROM CM_MASTERCODE WHERE CODE_TYPE = #{param1} AND CODE_VALUE = #{param2}
+    </select>
+
+    <select id="getMasterCodeByType" parameterType="string" resultType="org.zenith.legion.sysadmin.entity.MasterCode">
+        SELECT * FROM CM_MASTERCODE WHERE CODE_TYPE = #{type}
+    </select>
+
+    <select id="getProvinces" resultType="org.zenith.legion.sysadmin.entity.District">
+        SELECT * FROM MC_DISTRICT WHERE PARENT_ID = 0 AND LEVEL = 1 AND STATUS = 1 ORDER BY SORT
+    </select>
+
+    <select id="getCitiesUnderProvince" parameterType="java.lang.Integer" resultType="org.zenith.legion.sysadmin.entity.District">
+        SELECT * FROM MC_DISTRICT WHERE PARENT_ID = #{provinceId} AND STATUS = 1 ORDER BY SORT
+    </select>
+
+    <select id="getCitiesByLevel" parameterType="java.lang.Integer" resultType="org.zenith.legion.sysadmin.entity.District">
+        SELECT * FROM MC_DISTRICT WHERE LEVEL = #{level}
+    </select>
+
+    <select id="getDistrictById" parameterType="java.lang.Integer" resultType="org.zenith.legion.sysadmin.entity.District">
+        SELECT * FROM MC_DISTRICT WHERE ID = #{id}
+    </select>
+
+    <select id="getSubjectById" parameterType="string" resultType="org.zenith.legion.sysadmin.entity.Subject">
+        SELECT * FROM MC_SUBJECT WHERE SUBJECT_ID = #{id}
+    </select>
+
+    <select id="getLevel2Subjects" parameterType="string" resultType="org.zenith.legion.sysadmin.entity.Subject">
+        SELECT * FROM MC_SUBJECT WHERE LEVEL1_ID = #{level1} AND SUBJECT_ID = LEVEL2_ID AND SUBJECT_ID != LEVEL1_ID
+    </select>
+
+    <select id="getLevel3Subjects" parameterType="string" resultType="org.zenith.legion.sysadmin.entity.Subject">
+        SELECT * FROM MC_SUBJECT WHERE LEVEL2_ID = #{level2} AND SUBJECT_ID != LEVEL2_ID AND SUBJECT_ID != LEVEL1_ID
+    </select>
+</mapper>

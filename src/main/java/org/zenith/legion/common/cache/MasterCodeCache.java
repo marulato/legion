@@ -4,8 +4,7 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
-import org.zenith.legion.common.base.MasterCode;
+import org.zenith.legion.sysadmin.entity.MasterCode;
 import org.zenith.legion.common.utils.StringUtils;
 
 import java.util.*;

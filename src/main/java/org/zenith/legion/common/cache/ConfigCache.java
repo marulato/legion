@@ -12,9 +12,8 @@ import org.zenith.legion.common.utils.LogUtils;
 import org.zenith.legion.common.utils.SpringUtils;
 import org.zenith.legion.common.utils.StringUtils;
 import org.zenith.legion.general.ex.InitializationException;
-import org.zenith.legion.sysadmin.dao.ConfigDAO;
+import org.zenith.legion.sysadmin.dao.MasterCodeDAO;
 import org.zenith.legion.sysadmin.entity.Config;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.*;
@@ -84,7 +83,7 @@ public class ConfigCache implements ICache<String, String> {
                 }
                 if (value == null) {
                     log.info(LogUtils.around("Properties missed, try database"));
-                    ConfigDAO configDAO = SpringUtils.getBean(ConfigDAO.class);
+                    MasterCodeDAO configDAO = SpringUtils.getBean(MasterCodeDAO.class);
                     Config config= configDAO.getConfig(key);
                     if (config != null && StringUtils.parseBoolean(config.getIsNeedRestart())) {
                         value = config.getConfigValue();
