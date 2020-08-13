@@ -11,6 +11,9 @@ public class AppConsts {
     public static final String TRUE_SHORT  = "T";
     public static final String FALSE_SHORT = "F";
 
+    public static final String GENDER_MALE    = "M";
+    public static final String GENDER_FEMALE  = "F";
+
     public static final String ACCOUNT_STATUS_ACTIVE    = "A";
     public static final String ACCOUNT_STATUS_INACTIVE  = "I";
     public static final String ACCOUNT_STATUS_EXPIRED   = "E";

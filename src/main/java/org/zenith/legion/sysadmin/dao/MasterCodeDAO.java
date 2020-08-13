@@ -25,10 +25,5 @@ public interface MasterCodeDAO {
 
     District getDistrictById(Integer id);
 
-    Subject getSubjectById(String id);
-
-    List<Subject> getLevel2Subjects(String level1);
-
-    List<Subject> getLevel3Subjects(String level2);
 
 }

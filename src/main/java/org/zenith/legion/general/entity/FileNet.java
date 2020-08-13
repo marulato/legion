@@ -18,6 +18,7 @@ public class FileNet extends BasePO {
     private String fileUuid;
     private String path;
     private String sha512;
+    private byte[] data;
 
     public Long getFileNetId() {
         return fileNetId;
@@ -97,5 +98,13 @@ public class FileNet extends BasePO {
 
     public void setSha512(String sha512) {
         this.sha512 = sha512;
+    }
+
+    public byte[] getData() {
+        return data;
+    }
+
+    public void setData(byte[] data) {
+        this.data = data;
     }
 }

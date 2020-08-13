@@ -82,6 +82,15 @@ public class DateUtils {
         return new Date();
     }
 
+    public static Date parseDate(String dateStr, String format) {
+        try {
+            SimpleDateFormat dateFormatter = new SimpleDateFormat(format);
+            return dateFormatter.parse(dateStr);
+        } catch (ParseException e) {
+            return null;
+        }
+    }
+
     public static Date today() {
         Date date = null;
         try {

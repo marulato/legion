@@ -29,15 +29,4 @@
         SELECT * FROM MC_DISTRICT WHERE ID = #{id}
     </select>
 
-    <select id="getSubjectById" parameterType="string" resultType="org.zenith.legion.sysadmin.entity.Subject">
-        SELECT * FROM MC_SUBJECT WHERE SUBJECT_ID = #{id}
-    </select>
-
-    <select id="getLevel2Subjects" parameterType="string" resultType="org.zenith.legion.sysadmin.entity.Subject">
-        SELECT * FROM MC_SUBJECT WHERE LEVEL1_ID = #{level1} AND SUBJECT_ID = LEVEL2_ID AND SUBJECT_ID != LEVEL1_ID
-    </select>
-
-    <select id="getLevel3Subjects" parameterType="string" resultType="org.zenith.legion.sysadmin.entity.Subject">
-        SELECT * FROM MC_SUBJECT WHERE LEVEL2_ID = #{level2} AND SUBJECT_ID != LEVEL2_ID AND SUBJECT_ID != LEVEL1_ID
-    </select>
 </mapper>

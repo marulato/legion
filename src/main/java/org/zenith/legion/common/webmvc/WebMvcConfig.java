@@ -11,7 +11,6 @@ import org.zenith.legion.common.utils.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-@Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
     @Autowired
