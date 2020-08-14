@@ -16,6 +16,7 @@ public class Staff extends BasePO {
     private String positionLevel;
     private Integer entryNo;
     private Date joinedDate;
+    private Date resignDate;
     private String name;
     private String nickname;
     private String gender;
@@ -27,6 +28,8 @@ public class Staff extends BasePO {
     private String wechat;
     private String profile;
     private String status;
+    private byte[] portrait;
+    private String portraitExt;
 
     public String getStaffId() {
         return staffId;
@@ -162,5 +165,29 @@ public class Staff extends BasePO {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Date getResignDate() {
+        return resignDate;
+    }
+
+    public void setResignDate(Date resignDate) {
+        this.resignDate = resignDate;
+    }
+
+    public byte[] getPortrait() {
+        return portrait;
+    }
+
+    public void setPortrait(byte[] portrait) {
+        this.portrait = portrait;
+    }
+
+    public String getPortraitExt() {
+        return portraitExt;
+    }
+
+    public void setPortraitExt(String portraitExt) {
+        this.portraitExt = portraitExt;
     }
 }

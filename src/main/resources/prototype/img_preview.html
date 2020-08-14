@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+
+<body>
+    <div>
+        <img id="imgBox" style="max-width: 50px; max-height: 50px;">
+        <input id="imgFile" type="file" accept="image/jpg" onchange="viewImage()">
+    </div>
+</body>
+<script src="jquery.min.js"></script>
+<script>
+    function viewImage() {
+    var file = $("#imgFile").prop('files')[0];
+    if (file) {
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = function (even) {
+            $('#imgBox').attr("src", even.currentTarget.result);
+            console.log(even.currentTarget.result);
+        }
+    }
+}
+</script>
+
+</html>
