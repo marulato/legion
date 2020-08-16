@@ -86,6 +86,8 @@ spring:
     password: 123456
     default-encoding: UTF-8
     port: 80
+  thymeleaf:
+    cache: false
 
 
 

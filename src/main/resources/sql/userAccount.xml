@@ -3,7 +3,7 @@
 <mapper namespace="org.zenith.legion.sysadmin.dao.UserAccountDAO">
 
     <select id="getUserByIdNo" parameterType="string" resultType="org.zenith.legion.sysadmin.entity.UserAccount">
-        SELECT * FROM AC_USER_ACCT WHERE USER_ID = #{idNo}
+        SELECT * FROM AC_USER_ACCT WHERE USER_ID = BINARY #{idNo}
     </select>
 
     <select id="getUserRoleAssignment" parameterType="string" resultType="org.zenith.legion.sysadmin.entity.UserRoleAssign">

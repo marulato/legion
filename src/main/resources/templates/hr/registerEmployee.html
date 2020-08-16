@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>LEGION企业管理平台</title>
+
+
+  <link rel="stylesheet" th:href="@{/vendors/iconfonts/mdi/css/materialdesignicons.min.css}">
+<!--      <link rel="stylesheet" th:href="@{/vendors/css/vendor.bundle.base.css}">-->
+<!--      <link rel="stylesheet" th:href="@{/vendors/css/vendor.bundle.addons.css}">-->
+
+  <link rel="stylesheet" th:href="@{/css/bootstrap-datetimepicker.min.css}"/>
+  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <link rel="stylesheet" th:href="@{/css/main.css}">
+  <!-- endinject -->
+  <link rel="shortcut icon" th:href="@{/images/favicon.png}"/>
+  <style>
+
+    /*body {*/
+    /*  margin: 40px 10px;*/
+    /*  padding: 0;*/
+    /*  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;*/
+    /*  font-size: 14px;*/
+    /*}*/
+
+    #calendar {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+
+
+
+  </style>
+</head>
+
+<body>
+<div class="container-scroller">
+  <!--top menu-->
+  <nav th:replace="/topmenu::topbar"></nav>
+  <div class="container-fluid page-body-wrapper" style="padding-left: 0px; padding-right: 0px">
+    <!-- left menu -->
+    <nav th:replace="/leftmenu::sidebar"></nav>
+    <!-- main -->
+    <div class="main-panel">
+      <div class="content-wrapper">
+        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="5000" style="position: absolute; right:0; z-index: 999">
+          <div class="toast-header" id="toastHeader" style="background-color: #00bf60">
+            <strong class="mr-auto" id="hint" style="color: white">提示</strong>
+            <small id="justNow" style="color: white">刚刚</small>
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close" style="color: white">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="toast-body" id="toastContent" style="color: white; background-color: #00bf60">
+            加载成功！&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 d-flex align-items-stretch grid-margin" style="margin-left: 25%">
+            <div class="row flex-grow">
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-body">
+                    <h3 style="text-align: center">添加新员工</h3>
+                    <h4 class="card-description">基本信息</h4>
+                    <form class="form-sample" id="mainForm" enctype="multipart/form-data" method="post">
+
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="employeeName">姓名</label>
+                            <input type="text" class="form-control" name="employeeName" id="employeeName" placeholder="请输入姓名" />
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="idNo">18位身份证号码</label>
+                            <input type="text" name="idNo" id="idNo" class="form-control" onblur="autoFillBasicContent(this)">
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="gender">性别</label>
+                            <select class="form-control" name="gender" id="gender">
+                              <option value="M">男</option>
+                              <option value="F">女</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="dob">出生日期</label>
+                            <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-format="yyyy-mm-dd">
+                              <input type='text' class="form-control" name="dob" id="dob"/>
+                              <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="age">年龄</label>
+                            <input type="number" name="age" id="age" class="form-control">
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="phoneNo">手机</label>
+                            <input type="text" name="phoneNo" id="phoneNo" class="form-control">
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="emailAddress">邮箱</label>
+                            <input type="email" name="emailAddress" id="emailAddress" class="form-control">
+                          </div>
+                        </div>
+                      </div>
+
+                      <h4 class="card-description">现居地</h4>
+
+                      <div class="row">
+                        <div class="col-md-3">
+                          <div class="form-group">
+                            <label for="province">省/直辖市/自治区</label>
+                            <select class="custom-select mr-md-3" name="province" id="province" onchange="prepareDistricts('2', this.value, null)">
+                              <option value="">请选择</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <div class="form-group">
+                            <label for="prefecture">地级市</label>
+                            <select class="custom-select mr-md-3" name="prefecture" id="prefecture" onchange="prepareDistricts('3', this.value, null)">
+                              <option value="">请选择</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <div class="form-group">
+                            <label for="county">县</label>
+                            <select class="custom-select mr-md-3" name="county" id="county" onchange="prepareDistricts('4', this.value, null)">
+                              <option value="">请选择</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <div class="form-group">
+                            <label for="town">区域/乡镇/街道</label>
+                            <select class="custom-select mr-md-3" name="town" id="town">
+                              <option value="">请选择</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="form-group">
+                            <label for="address">详细地址</label>
+                            <input type="text" name="address" id="address" class="form-control">
+                          </div>
+                        </div>
+                      </div>
+
+                      <h4 class="card-description">职位信息</h4>
+
+                      <div class="row">
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label for="department">部门</label>
+                            <select class="custom-select mr-md-3" name="department" id="department" onchange="preparePositions(this.value)">
+                              <option value="">请选择</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label for="position">职位</label>
+                            <select class="custom-select mr-md-3" name="position" id="position" onchange="prepareLevels(this.value)">
+                              <option value="">请选择</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label for="level">级别</label>
+                            <select class="custom-select mr-md-3" name="level" id="level">
+                              <option value="">请选择</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="baseSalary">基本薪资</label>
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text">￥</span>
+                              </div>
+                              <input type="text" name="baseSalary" id="baseSalary" class="form-control">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="positionSubsidies">职位补贴</label>
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text">￥</span>
+                              </div>
+                              <input type="text" name="positionSubsidies" id="positionSubsidies" class="form-control">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <h4 class="card-description">入职前信息</h4>
+
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="method">招聘方式</label>
+                            <select class="custom-select mr-md-3" name="method" id="method">
+                              <option value="">请选择</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-md-6" id="recommendedBy" style="display: none">
+                          <div class="form-group">
+                            <label for="recommended">推荐单位/个人</label>
+                            <input type="text" class="form-control" id="recommended" name="recommended">
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="form-group">
+                            <label for="writeScore">笔试得分</label>
+                            <input type="text" name="writeScore" id="writeScore" class="form-control">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-3">
+                          <div class="form-group">
+                            <label for="interviewedAt">面试时间</label>
+                            <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-format="yyyy-mm-dd">
+                              <input type='text' class="form-control" name="interviewedAt" id="interviewedAt"/>
+                              <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <div class="form-group">
+                            <label for="interviewedBy">面试人</label>
+                            <input type="text" name="interviewedBy" id="interviewedBy" class="form-control">
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <div class="form-group">
+                            <label for="interviewType">面试类型</label>
+                            <select class="custom-select mr-md-3" name="interviewType" id="interviewType">
+                              <option value="">请选择</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <div class="form-group">
+                            <label for="interviewScore">面试得分</label>
+                            <input type="text" class="form-control" name="interviewScore" id="interviewScore">
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-3">
+                          <div class="form-group">
+                            <label for="offerSentAt">offer日期</label>
+                            <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-format="yyyy-mm-dd">
+                              <input type='text' class="form-control" name="offerSentAt" id="offerSentAt"/>
+                              <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <div class="form-group">
+                            <label for="requiredEntryDate">应入职时间</label>
+                            <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-format="yyyy-mm-dd">
+                              <input type='text' class="form-control" name="requiredEntryDate" id="requiredEntryDate"/>
+                              <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <div class="form-group">
+                            <label for="actualEntryDate">实际入职时间</label>
+                            <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-format="yyyy-mm-dd">
+                              <input type='text' class="form-control" name="actualEntryDate" id="actualEntryDate"/>
+                              <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <div class="form-group">
+                            <label for="probationUntilDate">试用期至</label>
+                            <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-format="yyyy-mm-dd">
+                              <input type='text' class="form-control" name="probationUntilDate" id="probationUntilDate"/>
+                              <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <h4 class="card-description">文档</h4>
+
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="form-group">
+                            <label for="offerDoc">录用通知书</label>
+                            <div class="custom-file">
+                              <input type="file" class="custom-file-input" name="offerDoc" id="offerDoc" onchange="showFileName(this, 'offerDocLabel')">
+                              <label class="custom-file-label" id="offerDocLabel" for="offerDoc" aria-describedby="offerDoc">选择文件...</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="form-group">
+                            <label for="resumeDoc">简历</label>
+                            <div class="custom-file">
+                              <input type="file" class="custom-file-input" name="resumeDoc" id="resumeDoc" onchange="showFileName(this, 'resumeDocLabel')">
+                              <label class="custom-file-label" id="resumeDocLabel" for="offerDoc" aria-describedby="resumeDoc">选择文件...</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="form-group">
+                            <label for="merDoc">体检报告</label>
+                            <div class="custom-file">
+                              <input type="file" class="custom-file-input" name="merDoc" id="merDoc" onchange="showFileName(this, 'merDocLabel')">
+                              <label class="custom-file-label" id="merDocLabel" for="offerDoc" aria-describedby="resumeDoc">选择文件...</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="form-group">
+                            <label for="graduationDoc">毕业证书</label>
+                            <div class="custom-file">
+                              <input type="file" class="custom-file-input" name="graduationDoc" id="graduationDoc" onchange="showFileName(this, 'graduationDocLabel')">
+                              <label class="custom-file-label" id="graduationDocLabel" for="offerDoc" aria-describedby="resumeDoc">选择文件...</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="form-group">
+                            <label for="diplomaDoc">学位证书</label>
+                            <div class="custom-file">
+                              <input type="file" class="custom-file-input" name="diplomaDoc" id="diplomaDoc" onchange="showFileName(this, 'diplomaDocLabel')">
+                              <label class="custom-file-label" id="diplomaDocLabel" for="offerDoc" aria-describedby="resumeDoc">选择文件...</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="form-group">
+                            <label for="contractDoc">劳动合同</label>
+                            <div class="custom-file">
+                              <input type="file" class="custom-file-input" name="contractDoc" id="contractDoc" onchange="showFileName(this, 'contractDocLabel')">
+                              <label class="custom-file-label" id="contractDocLabel" for="offerDoc" aria-describedby="resumeDoc">选择文件...</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <br/>
+                    </form>
+                    <button type="button" class="btn btn-success" style="margin-left: 45%" onclick="submit()">提交</button>
+                    <button type="button" class="btn btn-light">取消</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- content-wrapper ends -->
+      <!-- partial:partials/_footer.html -->
+      <footer th:replace="/footer::foot"></footer>
+      <!-- main -->
+    </div>
+    <!-- main-panel ends -->
+  </div>
+  <!-- page-body-wrapper ends -->
+</div>
+<!-- container-scroller -->
+
+<script th:src="@{/js/jquery.min.js}"></script>
+<!--<script th:src="@{/vendors/js/vendor.bundle.base.js}"></script>-->
+<!--<script th:src="@{/vendors/js/vendor.bundle.addons.js}"></script>-->
+
+<script th:src="@{/js/off-canvas.js}"></script>
+<script th:src="@{/js/misc.js}"></script>
+<script th:src="@{/js/main.min.js}"></script>
+<script th:src="@{/js/zh-cn.js}"></script>
+<!-- endinject -->
+<!-- Custom js for this page-->
+<script th:src="@{/js/legion.js}"></script>
+<script th:src="@{/js/dashboard.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/bootstrap-datetimepicker.min.js}"></script>
+<script th:src="@{/js/bootstrap-datetimepicker.zh-CN.js}"></script>
+
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+       $("#sidebar").css("background-color", "white");
+       $(".content-wrapper").css("background-color", "#f2f8f9");
+        prepareDistricts('1', null, null);
+        prepareDepartments();
+    });
+
+    $('.form_date').datetimepicker({
+        pickerPosition: 'bottom-left',
+        language:  'zh-CN',
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 2,
+        forceParse: 0
+    });
+
+    function showFileName(fileinput, labelId) {
+      var file = $(fileinput)[0].files[0];
+      $("#" + labelId).html(file.name);
+    }
+
+    function prepareDistricts(level, id, selected) {
+        var area = '1';
+        if (id != null) {
+            area = id;
+        }
+      $.ajax({
+          url: "/web/hr/registration/district/" + level + "/" + area,
+          type: "get",
+          dataType: "json",
+          success: function (res) {
+            var data = res.data;
+            if (res.status === 200) {
+                if (level == '1') {
+                    $("#province").empty();
+                    $("#prefecture").empty();
+                    $("#county").empty();
+                    $("#town").empty();
+                } else if (level == '2') {
+                    $("#prefecture").empty();
+                    if (selected == null) {
+                        $("#county").empty();
+                        $("#town").empty();
+                    }
+                } else if (level == '3') {
+                    $("#county").empty();
+                    if (selected == null) {
+                        $("#town").empty();
+                    }
+                } else if (level == '4') {
+                    $("#town").empty();
+                }
+                $.each(data, function (idx, obj) {
+                    if (level == '1') {
+                        $("#province").append("<option value='" + obj.id + "'>" + obj.name + "</option>");
+                    } else if (level == '2') {
+                        $("#prefecture").append("<option value='" + obj.id + "'>" + obj.name + "</option>");
+                    } else if (level == '3') {
+                        $("#county").append("<option value='" + obj.id + "'>" + obj.name + "</option>");
+                    } else if (level == '4') {
+                        $("#town").append("<option value='" + obj.id + "'>" + obj.name + "</option>");
+                    }
+                });
+                if (selected != null) {
+                    if (level == '2') {
+                        $("#prefecture").val(selected);
+                    } else if (level == '3') {
+                        $("#county").val(selected);
+                    }
+                }
+            }
+          }
+      });
+    }
+
+    function autoFillBasicContent(element) {
+      if ($(element).val().length == 18) {
+          $.ajax({
+            url: "/web/hr/registration/base/" + $(element).val(),
+            type: "get",
+            dataType: "json",
+            success: function (res) {
+                legion.clearErrors();
+                if (res.status === 200) {
+                    var obj = res.data[0];
+                    $("#age").val(obj.age);
+                    $("#dob").val(obj.dob);
+                    $("#gender").val(obj.gender);
+                    $("#province").val(obj.province.id);
+                    prepareDistricts(2, obj.province.id, obj.prefecture.id );
+                    prepareDistricts(3, obj.prefecture.id, obj.county.id);
+                    prepareDistricts(4, obj.county.id, null);
+
+                } else {
+                    legion.showErrors(res.data);
+                }
+            }
+          });
+      }
+    }
+
+    function prepareDepartments() {
+      $.ajax({
+          url: "/web/hr/registration/base/department/0",
+          type: "get",
+          dataType: "json",
+          success: function (res) {
+              if (res.status === 200) {
+                  var data = res.data;
+                  $.each(data, function (idx, obj) {
+                      $("#department").append("<option value='" + obj.departmentId + "'>" + obj.departmentName + "</option>");
+                  });
+              }
+          }
+      });
+    }
+
+    function preparePositions(deptId) {
+        $.ajax({
+            url: "/web/hr/registration/base/department/" + deptId,
+            type: "get",
+            dataType: "json",
+            success: function (res) {
+                if (res.status === 200) {
+                    $("#position").empty();
+                    $("#level").empty();
+                    var data = res.data;
+                    $.each(data, function (idx, obj) {
+                        $("#position").append("<option value='" + obj.positionId + "'>" + obj.positionName + "</option>");
+                    });
+                }
+            }
+        });
+    }
+
+    function prepareLevels(positionId) {
+        $.ajax({
+            url: "/web/hr/registration/base/position/" + positionId,
+            type: "get",
+            dataType: "json",
+            success: function (res) {
+                if (res.status === 200) {
+                    $("#level").empty();
+                    var data = res.data;
+                    $.each(data, function (idx, obj) {
+                        $("#level").append("<option value='" + obj + "'>" + obj + "</option>");
+                    });
+                }
+            }
+        });
+    }
+
+    function submit() {
+      var formData = new FormData($("#mainForm")[0]);
+      $.ajax({
+          url: "/web/hr/registration/submit",
+          type: "post",
+          data: formData,
+          contentType:false,
+          processData:false,
+          cache: false,
+          dataType: "json",
+          success: function (res) {
+            console.log(res.data);
+          }
+      });
+    }
+
+</script>
+<!-- End custom js for this page-->
+
+<div class="modal fade" id="eventModal">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <div class="modal-header" style="background-color: rgb(231,234,237)">
+        <h4 class="modal-title" id="event_title"></h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      </div>
+
+      <div class="modal-body" style="background-color: white">
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="title" class="control-label">标题</label>
+              <input type="text" class="form-control" name="title" id="title" placeholder="事件标题">
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="start" class="control-label">开始时间</label>
+              <input type="text" class="form-control" name="start" id="start" placeholder="">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="end" class="control-label">结束时间</label>
+              <input type="text" class="form-control" name="end" id="end" placeholder="">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="content" class="control-label">内容</label>
+              <textarea class="form-control" name="content" id="content" placeholder="Boston" style="height: 8em"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="type" class="control-label">类型</label>
+              <select class="form-control" name="type" id="type">
+                <option>默认</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group" style="padding-top: 1.2em; padding-left: 1em">
+              <div class="form-check form-check-flat">
+                <label class="form-check-label">
+                  <input type="checkbox" class="form-check-input"> 接收邮件通知
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-danger">删除</button>
+        <button type="button" class="btn btn-primary" >保存</button>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+
+</html>

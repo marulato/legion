@@ -29,7 +29,7 @@ public class AppConsts {
 
 
     public static final int RESPONSE_VALIDATION_NOT_PASS  = 221;
-    public static final int RESPONSE_ALL_PASSED           = 200;
+    public static final int RESPONSE_SUCCESS          = 200;
     public static final int RESPONSE_SERVER_ERROR         = 500;
     public static final int RESPONSE_PERMISSION_DENIED    = 502;
     public static final int RESPONSE_MAPPING_NOT_FOUND    = 404;

@@ -4,6 +4,8 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.zenith.legion.hr.entity.Department;
+import org.zenith.legion.hr.entity.Position;
 import org.zenith.legion.sysadmin.entity.MasterCode;
 import org.zenith.legion.common.utils.StringUtils;
 
@@ -12,6 +14,8 @@ import java.util.*;
 public class MasterCodeCache implements ICache<String, MasterCode> {
 
     private static final Cache<String, Map<String, MasterCode>> cache = CacheBuilder.newBuilder().build();
+    private static final Cache<String, Department> deptCache = CacheBuilder.newBuilder().build();
+    private static final Cache<String, Position> positionCache = CacheBuilder.newBuilder().build();
     public static final String KEY = "org.zenith.legion.common.cache.MasterCodeCache";
     private static final Logger log = LoggerFactory.getLogger(MasterCodeCache.class);
 
@@ -66,6 +70,36 @@ public class MasterCodeCache implements ICache<String, MasterCode> {
         return List.copyOf(list);
     }
 
+    public Department getDepartment(String deptId) {
+        return deptCache.getIfPresent(deptId);
+    }
+
+    public List<Department> getAllDepartments() {
+        Map<String, Department> map = deptCache.asMap();
+        List<Department> list = new ArrayList<>();
+        map.forEach((k, v) -> {
+            list.add(v);
+        });
+        return list;
+    }
+
+    public Position getPosition(String positionId) {
+        return positionCache.getIfPresent(positionId);
+    }
+
+    public List<Position> getPositionsByDepartmentId(String deptId) {
+        Map<String, Position> positionMap = positionCache.asMap();
+        Set<String> pId = positionMap.keySet();
+        List<Position> list = new ArrayList<>();
+        for (String id : pId) {
+            Position position = positionMap.get(id);
+            if (position != null && position.getDepartmentId().equals(deptId)) {
+                list.add(position);
+            }
+        }
+        return list;
+    }
+
     @Override
     public void set(String key, MasterCode value) {
 
@@ -80,6 +114,22 @@ public class MasterCodeCache implements ICache<String, MasterCode> {
                 cache.put(masterCode.getType(), map);
             } else {
                 map.put(masterCode.getCode(), masterCode);
+            }
+        }
+    }
+
+    public void setDepartments(List<Department> list) {
+        if (list != null) {
+            for (Department department : list) {
+                deptCache.put(department.getDepartmentId(), department);
+            }
+        }
+    }
+
+    public void setPositions(List<Position> list) {
+        if (list != null) {
+            for (Position position : list) {
+                positionCache.put(position.getPositionId(), position);
             }
         }
     }

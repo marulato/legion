@@ -22,11 +22,22 @@
     </select>
 
     <select id="getCitiesByLevel" parameterType="java.lang.Integer" resultType="org.zenith.legion.sysadmin.entity.District">
-        SELECT * FROM MC_DISTRICT WHERE LEVEL = #{level}
+        SELECT * FROM MC_DISTRICT WHERE LEVEL = #{level} AND STATUS = 1 ORDER BY SORT
     </select>
 
     <select id="getDistrictById" parameterType="java.lang.Integer" resultType="org.zenith.legion.sysadmin.entity.District">
-        SELECT * FROM MC_DISTRICT WHERE ID = #{id}
+        SELECT * FROM MC_DISTRICT WHERE ID = #{id} AND STATUS = 1 ORDER BY SORT
     </select>
 
+    <select id="getCitiesByLevelAndParent" parameterType="java.lang.Integer" resultType="org.zenith.legion.sysadmin.entity.District">
+        SELECT * FROM MC_DISTRICT WHERE LEVEL = #{param1} AND PARENT_ID = #{param2} AND STATUS = 1 ORDER BY SORT
+    </select>
+
+    <select id="getAllDepartments" resultType="org.zenith.legion.hr.entity.Department">
+        SELECT * FROM MC_DEPARTMENT
+    </select>
+
+    <select id="getAllPositions" resultType="org.zenith.legion.hr.entity.Position">
+        SELECT * FROM MC_POSITION
+    </select>
 </mapper>

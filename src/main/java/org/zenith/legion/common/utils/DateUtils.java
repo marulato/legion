@@ -277,6 +277,13 @@ public class DateUtils {
         return between;
     }
 
+    public static String getDateString(Date date, String format) {
+        if (date == null)
+            return null;
+        SimpleDateFormat dateFormat = new SimpleDateFormat(format);
+        return dateFormat.format(date);
+    }
+
     public static String getLogDate(Date date) {
         if (date == null)
             return null;

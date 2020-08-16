@@ -1,5 +1,7 @@
 package org.zenith.legion.routine.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.zenith.legion.common.AppContext;
@@ -17,6 +19,7 @@ import java.io.OutputStream;
 @Controller
 public class StreamSourceController {
 
+    private static final Logger log = LoggerFactory.getLogger(StreamSourceController.class);
     @GetMapping("/web/data/portrait")
     @RequiresLogin
     public void getUserPortrait(HttpServletRequest request, HttpServletResponse response)  {
@@ -32,7 +35,11 @@ public class StreamSourceController {
                 } else if ("png".equals(staff.getPortraitExt())) {
                     response.setContentType(ContentConsts.MT_PNG);
                 }
-
+                try(OutputStream outputStream = response.getOutputStream()) {
+                    outputStream.write(staff.getPortrait());
+                }  catch (Exception e) {
+                    log.error("", e);
+                }
             }
         }
     }

@@ -11,7 +11,7 @@ public class Staff extends BasePO {
 
     @PrimaryKey(autoIncrement = false)
     private String staffId;
-    private String deptId;
+    private String departmentId;
     private String positionId;
     private String positionLevel;
     private Integer entryNo;
@@ -39,12 +39,12 @@ public class Staff extends BasePO {
         this.staffId = staffId;
     }
 
-    public String getDeptId() {
-        return deptId;
+    public String getDepartmentId() {
+        return departmentId;
     }
 
-    public void setDeptId(String deptId) {
-        this.deptId = deptId;
+    public void setDepartmentId(String departmentId) {
+        this.departmentId = departmentId;
     }
 
     public String getPositionId() {

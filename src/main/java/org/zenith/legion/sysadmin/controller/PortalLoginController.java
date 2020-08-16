@@ -71,7 +71,7 @@ public class PortalLoginController {
     @PostMapping("/web/login/landing")
     @ResponseBody
     public AjaxResponseBody login(UserAccount webUser, HttpServletRequest request) throws Exception {
-        AjaxResponseManager responseMgr = AjaxResponseManager.create(AppConsts.RESPONSE_ALL_PASSED);
+        AjaxResponseManager responseMgr = AjaxResponseManager.create(AppConsts.RESPONSE_VALIDATION_NOT_PASS);;
         Map<String, List<String>> errorMap = CommonValidator.doValidation(webUser, null);
         if (errorMap != null && !errorMap.isEmpty()) {
             responseMgr = AjaxResponseManager.create(AppConsts.RESPONSE_VALIDATION_NOT_PASS);
@@ -79,6 +79,7 @@ public class PortalLoginController {
         } else {
             LoginStatus loginStatus = loginService.login(webUser, request);
             if (loginStatus == LoginStatus.SUCCESS) {
+                responseMgr = AjaxResponseManager.create(AppConsts.RESPONSE_SUCCESS);
                 AppContext context = AppContext.getAppContext(request);
                 //user has multiple roles, should choose a role manually to proceed
                 if (context.getAllRoles().size() > 1) {
@@ -136,7 +137,7 @@ public class PortalLoginController {
     @RequiresLogin
     public AjaxResponseBody selectRole(HttpServletRequest request) {
         AppContext appContext = AppContext.getAppContext(request);
-        AjaxResponseManager responseMgr = AjaxResponseManager.create(AppConsts.RESPONSE_ALL_PASSED);
+        AjaxResponseManager responseMgr = AjaxResponseManager.create(AppConsts.RESPONSE_SUCCESS);
         if (appContext != null) {
             responseMgr.addDataObjects(appContext.getAllRoles());
         }

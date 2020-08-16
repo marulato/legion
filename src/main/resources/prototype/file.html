@@ -1,0 +1,24 @@
+<html> 
+
+<body> 
+    <form id="form1"> 
+        <div> 
+            <input type="file" name="f" id="f" /> 
+            <input type="button" name="aa" id="aa" value="测试" onclick="javascript: _s();" /> 
+        </div> 
+    </form> 
+</body> 
+</html> 
+<script type="text/javascript"> 
+    function _s() { 
+        var f = document.getElementById("f").files; 
+        //上次修改时间 
+        alert(f[0].lastModifiedDate); 
+        //名称 
+        alert(f[0].name); 
+        //大小 字节 
+        alert(f[0].size); 
+        //类型 
+        alert(f[0].type); 
+    } 
+</script>
