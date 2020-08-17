@@ -88,11 +88,15 @@
                       <div class="row">
                         <div class="col-md-6">
                           <div class="form-group">
-                            <label for="gender">性别</label>
-                            <select class="form-control" name="gender" id="gender">
+                            <label for="genderM">性别</label>
+                            <div class="input-group">
+                              <input type="radio" class="form-control" name="gender" id="genderM" value="M">男
+                              <input type="radio" class="form-control" name="gender" id="genderF" value="F">女
+                            </div>
+                            <!--<select class="form-control" name="gender" id="gender">
                               <option value="M">男</option>
                               <option value="F">女</option>
-                            </select>
+                            </select>-->
                           </div>
                         </div>
                         <div class="col-md-6">
@@ -262,7 +266,7 @@
                           <div class="form-group">
                             <label for="interviewedAt">面试时间</label>
                             <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-format="yyyy-mm-dd">
-                              <input type='text' class="form-control" name="interviewedAt" id="interviewedAt"/>
+                              <input type='text' class="form-control" name=" " id="interviewedAt"/>
                               <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
                             </div>
                           </div>
@@ -402,6 +406,100 @@
                         </div>
                       </div>
 
+                      <h4 class="card-description">学历信息</h4>
+                      <div class="row">
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label for="graduatedFromUni">毕业院校</label>
+                            <input type="text" class="form-control" name="graduatedFromUni" id="graduatedFromUni">
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label for="graduatedDate">毕业年份</label>
+                            <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-format="yyyy-mm-dd">
+                            <input type='text' class="form-control" name="graduatedDate" id="graduatedDate"/>
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
+                          </div>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label for="major">专业</label>
+                            <input type="text" class="form-control" name="major" id="major">
+                          </div>
+                        </div>
+                      </div>
+
+                      <h4 class="card-description">户口与个人信息</h4>
+                      <div class="row">
+                        <div class="col-md-3">
+                          <div class="form-group">
+                            <label for="domicileProvince">省/直辖市/自治区</label>
+                            <select class="custom-select mr-md-3" name="domicileProvince" id="domicileProvince" onchange="preparedDomicileDistricts('2', this.value, null)">
+                              <option value="">请选择</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <div class="form-group">
+                            <label for="domicilePrefecture">地级市</label>
+                            <select class="custom-select mr-md-3" name="domicilePrefecture" id="domicilePrefecture" onchange="preparedDomicileDistricts('3', this.value, null)">
+                              <option value="">请选择</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <div class="form-group">
+                            <label for="domicileCounty">县</label>
+                            <select class="custom-select mr-md-3" name="domicileCounty" id="domicileCounty" onchange="preparedDomicileDistricts('4', this.value, null)">
+                              <option value="">请选择</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <div class="form-group">
+                            <label for="domicileTown">区域/乡镇/街道</label>
+                            <select class="custom-select mr-md-3" name="domicileTown" id="domicileTown">
+                              <option value="">请选择</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="form-group">
+                            <label for="domicileAddress">详细地址</label>
+                            <select class="custom-select mr-md-3" name="domicileAddress" id="domicileAddress">
+                              <option value="">请选择</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="nation">民族</label>
+                            <select class="custom-select mr-md-3" name="nation" id="nation">
+                              <option value="">请选择</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="politicalStatus">政治面貌</label>
+                            <select class="custom-select mr-md-3" name="politicalStatus" id="politicalStatus">
+                              <option value="">请选择</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+
                       <br/>
                     </form>
                     <button type="button" class="btn btn-success" style="margin-left: 45%" onclick="submit()">提交</button>
@@ -447,6 +545,7 @@
        $("#sidebar").css("background-color", "white");
        $(".content-wrapper").css("background-color", "#f2f8f9");
         prepareDistricts('1', null, null);
+        preparedDomicileDistricts('1', null, null);
         prepareDepartments();
     });
 
@@ -521,6 +620,60 @@
       });
     }
 
+    function preparedDomicileDistricts(level, id, selected) {
+        var area = '1';
+        if (id != null) {
+            area = id;
+        }
+        $.ajax({
+            url: "/web/hr/registration/district/" + level + "/" + area,
+            type: "get",
+            dataType: "json",
+            success: function (res) {
+                var data = res.data;
+                if (res.status === 200) {
+                    if (level == '1') {
+                        $("#domicileProvince").empty();
+                        $("#domicilePrefecture").empty();
+                        $("#domicileCounty").empty();
+                        $("#domicileTown").empty();
+                    } else if (level == '2') {
+                        $("#domicilePrefecture").empty();
+                        if (selected == null) {
+                            $("#domicileCounty").empty();
+                            $("#domicileTown").empty();
+                        }
+                    } else if (level == '3') {
+                        $("#domicileCounty").empty();
+                        if (selected == null) {
+                            $("#domicileTown").empty();
+                        }
+                    } else if (level == '4') {
+                        $("#domicileTown").empty();
+                    }
+                    $.each(data, function (idx, obj) {
+                        if (level == '1') {
+                            $("#domicileProvince").append("<option value='" + obj.id + "'>" + obj.name + "</option>");
+                        } else if (level == '2') {
+                            $("#domicilePrefecture").append("<option value='" + obj.id + "'>" + obj.name + "</option>");
+                        } else if (level == '3') {
+                            $("#domicileCounty").append("<option value='" + obj.id + "'>" + obj.name + "</option>");
+                        } else if (level == '4') {
+                            $("#domicileTown").append("<option value='" + obj.id + "'>" + obj.name + "</option>");
+                        }
+                    });
+                    if (selected != null) {
+                        if (level == '2') {
+                            $("#domicilePrefecture").val(selected);
+                        } else if (level == '3') {
+                            $("#domicileCounty").val(selected);
+                        }
+                    }
+                }
+            }
+        });
+    }
+
     function autoFillBasicContent(element) {
       if ($(element).val().length == 18) {
           $.ajax({
@@ -533,11 +686,19 @@
                     var obj = res.data[0];
                     $("#age").val(obj.age);
                     $("#dob").val(obj.dob);
-                    $("#gender").val(obj.gender);
+                    if ("M" === obj.gender) {
+                        $("#genderM").attr("checked", true);
+                    } else {
+                        $("#genderF").attr("checked", true);
+                    }
                     $("#province").val(obj.province.id);
+                    $("#domicileProvince").val(obj.province.id);
                     prepareDistricts(2, obj.province.id, obj.prefecture.id );
                     prepareDistricts(3, obj.prefecture.id, obj.county.id);
                     prepareDistricts(4, obj.county.id, null);
+                    preparedDomicileDistricts(2, obj.province.id, obj.prefecture.id );
+                    preparedDomicileDistricts(3, obj.prefecture.id, obj.county.id);
+                    preparedDomicileDistricts(4, obj.county.id, null);
 
                 } else {
                     legion.showErrors(res.data);
