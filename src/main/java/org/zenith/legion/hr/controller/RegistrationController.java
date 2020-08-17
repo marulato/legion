@@ -9,12 +9,15 @@ import org.zenith.legion.common.base.AjaxResponseBody;
 import org.zenith.legion.common.base.AjaxResponseManager;
 import org.zenith.legion.common.consts.AppConsts;
 import org.zenith.legion.common.utils.*;
+import org.zenith.legion.common.validation.CommonValidator;
+import org.zenith.legion.hr.dto.EmployeeRegistrationDto;
 import org.zenith.legion.hr.entity.Position;
 import org.zenith.legion.sysadmin.entity.District;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.FileOutputStream;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class RegistrationController {
@@ -130,12 +133,15 @@ public class RegistrationController {
     public AjaxResponseBody submit(HttpServletRequest request) throws Exception {
         StandardMultipartHttpServletRequest multipartRequest = (StandardMultipartHttpServletRequest) request;
         AjaxResponseManager responseMgr = AjaxResponseManager.create(AppConsts.RESPONSE_SUCCESS);
-        responseMgr.addDataObject(request.getParameter("employeeName"));
-        responseMgr.addDataObject(request.getParameter("age"));
-        responseMgr.addDataObject(request.getParameter("prefecture"));
-        System.out.println(multipartRequest.getFile("offerDoc").getOriginalFilename());
-        System.out.println(request.getClass().getName());
-        //System.out.println(file2.getOriginalFilename());
+        EmployeeRegistrationDto dto = new EmployeeRegistrationDto(request);
+        Map<String, List<String>> errorMap = CommonValidator.doValidation(dto,null);
+        if (!errorMap.isEmpty()) {
+            responseMgr = AjaxResponseManager.create(AppConsts.RESPONSE_VALIDATION_NOT_PASS);
+            responseMgr.addValidations(errorMap);
+        } else {
+
+        }
+
 
         return responseMgr.respond();
     }

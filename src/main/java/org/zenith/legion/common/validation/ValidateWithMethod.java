@@ -7,7 +7,10 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidateWithMethod {
 
+
     String method();
+
+    String[] parameters() default {};
 
     String message();
 

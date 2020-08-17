@@ -4,20 +4,17 @@ import org.zenith.legion.common.utils.StringUtils;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CommonValidator {
 
     public static Map<String, List<String>> doValidation(Object obj, String profile) throws Exception {
+        Map<String, List<String>> validationMap = new HashMap<>();
         if (obj != null) {
             Class<?> objClass = obj.getClass();
             Field[] allFileds = objClass.getDeclaredFields();
-            Map<String, List<String>> validationMap = new HashMap<>();
             for (Field field : allFileds) {
                 field.setAccessible(true);
                 validationMap.put(field.getName(), new ArrayList<>());
@@ -76,9 +73,8 @@ public class CommonValidator {
                     validationMap.remove(field.getName());
                 }
             }
-            return validationMap;
         }
-        return null;
+        return validationMap;
     }
 
     private static boolean isProfileMatch(String profile, String annoProfile) {
@@ -113,10 +109,16 @@ public class CommonValidator {
                                                 Class<?> objClass, Map<String, List<String>> validationMap, String profile) throws Exception {
         if (isProfileMatch(profile, anno.profile())) {
             String methodName = anno.method();
-            Method method = objClass.getDeclaredMethod(methodName, field.getType());
+            String[] parameters = anno.parameters();
+            Object[] argsArray = new String[parameters.length + 1];
+            Class<?>[] argTypesArray = new Class[parameters.length + 1];
+            Arrays.fill(argTypesArray, String.class);
+            Method method = objClass.getDeclaredMethod(methodName, argTypesArray);
             if (method.getReturnType() == boolean.class || method.getReturnType() == Boolean.class) {
                 method.setAccessible(true);
-                boolean result = (boolean) method.invoke(obj, value);
+                argsArray[0] = String.valueOf(value);
+                System.arraycopy(parameters, 0, argsArray, 1, parameters.length);
+                boolean result = (boolean) method.invoke(obj, argsArray);
                 if (!result) {
                     validationMap.get(field.getName()).add(anno.message());
                 }

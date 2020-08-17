@@ -1,23 +1,40 @@
 package org.zenith.legion.hr.dto;
 
+import org.apache.commons.lang3.math.NumberUtils;
 import org.zenith.legion.common.base.BaseDto;
+import org.zenith.legion.common.consts.AppConsts;
+import org.zenith.legion.common.utils.*;
 import org.zenith.legion.common.validation.NotNull;
 import org.zenith.legion.common.validation.ValidateWithMethod;
+import org.zenith.legion.common.validation.ValidateWithMethodList;
 import org.zenith.legion.common.validation.ValidateWithRegex;
+import org.zenith.legion.sysadmin.entity.District;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 
 public class EmployeeRegistrationDto extends BaseDto {
 
-    @ValidateWithRegex(regex = "[\u4E00-\u9FA5]{2,16}(?:·[\u4E00-\u9FA5]{2,16})*", message = "")
+    @ValidateWithRegex(regex = "[\u4E00-\u9FA5]{2,16}(?:·[\u4E00-\u9FA5]{2,16})*", message = "姓名为2-16个汉字")
     private String employeeName;
     private String idNo;
+    @ValidateWithMethod(method = "validateGender", message = "请选择性别")
     private String gender;
+    @ValidateWithMethod(method = "validateDob", message = "请输入正确的出生日期，格式为yyyy-mm-dd")
     private String dob;
+    @ValidateWithMethod(method = "validateAge", message = "请输入正确年龄，其应该与生日相符")
     private String age;
+    @ValidateWithRegex(regex = "^1[0-9]{10}", message = "请输入11位的手机号码")
     private String phoneNo;
+    @ValidateWithMethod(method = "validateEmailAddress", message = "请输入正确的电子邮件地址")
     private String emailAddress;
+    @ValidateWithMethod(method = "validateDistrict", parameters = {"1"}, message = "请选择正确的地区")
     private String province;
+    @ValidateWithMethod(method = "validateDistrict", parameters = {"2"}, message = "请选择正确的地区")
     private String prefecture;
+    @ValidateWithMethod(method = "validateDistrict", parameters = {"3"}, message = "请选择正确的地区")
     private String county;
+    @ValidateWithMethod(method = "validateDistrict", parameters = {"4"}, message = "请选择正确的地区")
     private String town;
     private String address;
     private String department;
@@ -39,13 +56,66 @@ public class EmployeeRegistrationDto extends BaseDto {
     private String graduatedFromUni;
     private String graduatedDate;
     private String major;
+    @ValidateWithMethodList(methodList = {
+            @ValidateWithMethod(method = "validateDistrict", parameters = {"1"}, message = "请选择正确的地区"),
+            @ValidateWithMethod(method = "validateMatchIdNo", message = "选择的地址与身份证不匹配")
+    })
     private String domicileProvince;
+    @ValidateWithMethod(method = "validateDistrict", parameters = {"2"}, message = "请选择正确的地区")
     private String domicilePrefecture;
+    @ValidateWithMethod(method = "validateDistrict", parameters = {"3"}, message = "请选择正确的地区")
     private String domicileCounty;
+    @ValidateWithMethod(method = "validateDistrict", parameters = {"4"}, message = "请选择正确的地区")
     private String domicileTown;
     private String domicileAddress;
     private String nation;
     private String politicalStatus;
+
+    public EmployeeRegistrationDto(HttpServletRequest request) throws Exception{
+        mapParameters(request, this);
+    }
+
+    public EmployeeRegistrationDto() {}
+
+    private boolean validateGender(String gender) {
+        return AppConsts.GENDER_MALE.equals(gender) || AppConsts.GENDER_FEMALE.equals(gender);
+    }
+
+    private boolean validateDob(String dob) {
+        return DateUtils.parseDate(dob) != null;
+
+    }
+
+    private boolean validateAge(String age) {
+        return StringUtils.isInteger(age) && Integer.parseInt(age) == DateUtils.getAge(DateUtils.parseDate(getDob()));
+    }
+
+    private boolean validateEmailAddress(String emailAddress) {
+        return ValidationUtils.isValidEmail(emailAddress);
+    }
+
+    private boolean validateDistrict(String district, String level) {
+        if (StringUtils.isInteger(district)) {
+            District area = MasterCodeUtils.getDistrictById(Integer.parseInt(district));
+            return area != null && area.getLevel().equals(Integer.parseInt(level));
+        }
+        return false;
+    }
+
+    private boolean validateMatchIdNo(String province) {
+        String areaCode = IDNoUtils.getDistrictCode(idNo);
+        if (StringUtils.isNotBlank(areaCode)) {
+            District district = MasterCodeUtils.getDistrictById(Integer.parseInt(areaCode));
+            if (district != null && domicileCounty.equals(String.valueOf(district.getId()))) {
+                District level2 = MasterCodeUtils.getDistrictById(district.getParentId());
+                if (level2 != null && domicilePrefecture.equals(String.valueOf(level2.getId()))) {
+                    District level1 = MasterCodeUtils.getDistrictById(level2.getParentId());
+                    return level1 != null && domicileProvince.equals(String.valueOf(level1.getId()));
+                }
+            }
+        }
+        return false;
+    }
 
     public String getEmployeeName() {
         return employeeName;
