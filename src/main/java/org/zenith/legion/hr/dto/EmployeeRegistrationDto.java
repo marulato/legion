@@ -4,14 +4,14 @@ import org.apache.commons.lang3.math.NumberUtils;
 import org.zenith.legion.common.base.BaseDto;
 import org.zenith.legion.common.consts.AppConsts;
 import org.zenith.legion.common.utils.*;
-import org.zenith.legion.common.validation.NotNull;
-import org.zenith.legion.common.validation.ValidateWithMethod;
-import org.zenith.legion.common.validation.ValidateWithMethodList;
-import org.zenith.legion.common.validation.ValidateWithRegex;
+import org.zenith.legion.common.validation.*;
+import org.zenith.legion.hr.entity.Department;
+import org.zenith.legion.hr.entity.Position;
 import org.zenith.legion.sysadmin.entity.District;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.List;
 
 public class EmployeeRegistrationDto extends BaseDto {
 
@@ -20,7 +20,7 @@ public class EmployeeRegistrationDto extends BaseDto {
     private String idNo;
     @ValidateWithMethod(method = "validateGender", message = "请选择性别")
     private String gender;
-    @ValidateWithMethod(method = "validateDob", message = "请输入正确的出生日期，格式为yyyy-mm-dd")
+    @ValidateWithMethod(method = "validateDate", message = "请输入正确的日期，格式为yyyy-mm-dd")
     private String dob;
     @ValidateWithMethod(method = "validateAge", message = "请输入正确年龄，其应该与生日相符")
     private String age;
@@ -28,7 +28,10 @@ public class EmployeeRegistrationDto extends BaseDto {
     private String phoneNo;
     @ValidateWithMethod(method = "validateEmailAddress", message = "请输入正确的电子邮件地址")
     private String emailAddress;
-    @ValidateWithMethod(method = "validateDistrict", parameters = {"1"}, message = "请选择正确的地区")
+    @ValidateWithMethodList(methodList = {
+            @ValidateWithMethod(method = "validateDistrict",parameters = {"1"}, message = "请选择正确的地区"),
+            @ValidateWithMethod(method = "validateAreaMatches", message = "选择的地址不在同一行政区域内")
+    })
     private String province;
     @ValidateWithMethod(method = "validateDistrict", parameters = {"2"}, message = "请选择正确的地区")
     private String prefecture;
@@ -37,6 +40,7 @@ public class EmployeeRegistrationDto extends BaseDto {
     @ValidateWithMethod(method = "validateDistrict", parameters = {"4"}, message = "请选择正确的地区")
     private String town;
     private String address;
+    @ValidateWithMethod(method = "validateDept", message = "请选择正确的部门，职位和级别")
     private String department;
     private String position;
     private String level;
@@ -45,15 +49,21 @@ public class EmployeeRegistrationDto extends BaseDto {
     private String method;
     private String recommended;
     private String writeScore;
+    @ValidateWithMethod(method = "validateDate", message = "请输入正确的日期，格式为yyyy-mm-dd")
     private String interviewedAt;
     private String interviewedBy;
     private String interviewType;
     private String interviewScore;
+    @ValidateWithMethod(method = "validateDate", message = "请输入正确的日期，格式为yyyy-mm-dd")
     private String offerSentAt;
+    @ValidateWithMethod(method = "validateDate", message = "请输入正确的日期，格式为yyyy-mm-dd")
     private String requiredEntryDate;
+    @ValidateWithMethod(method = "validateDate", message = "请输入正确的日期，格式为yyyy-mm-dd")
     private String actualEntryDate;
+    @ValidateWithMethod(method = "validateDate", message = "请输入正确的日期，格式为yyyy-mm-dd")
     private String probationUntilDate;
     private String graduatedFromUni;
+    @ValidateWithMethod(method = "validateDate", message = "请输入正确的日期，格式为yyyy-mm-dd")
     private String graduatedDate;
     private String major;
     @ValidateWithMethodList(methodList = {
@@ -81,8 +91,8 @@ public class EmployeeRegistrationDto extends BaseDto {
         return AppConsts.GENDER_MALE.equals(gender) || AppConsts.GENDER_FEMALE.equals(gender);
     }
 
-    private boolean validateDob(String dob) {
-        return DateUtils.parseDate(dob) != null;
+    private boolean validateDate(String date) {
+        return DateUtils.parseDate(date) != null;
 
     }
 
@@ -113,6 +123,36 @@ public class EmployeeRegistrationDto extends BaseDto {
                     return level1 != null && domicileProvince.equals(String.valueOf(level1.getId()));
                 }
             }
+        }
+        return false;
+    }
+
+    private boolean validateAreaMatches(String province) {
+        if (StringUtils.isInteger(province) && StringUtils.isInteger(prefecture)
+                && StringUtils.isInteger(county) && StringUtils.isInteger(town)) {
+            District prov = MasterCodeUtils.getDistrictById(Integer.parseInt(province));
+            if (prov != null) {
+                District level2 = MasterCodeUtils.getDistrictById(Integer.parseInt(prefecture));
+                if (level2 != null && level2.getParentId().equals(prov.getId())) {
+                    District level3 = MasterCodeUtils.getDistrictById(Integer.parseInt(county));
+                    if (level3 != null && level3.getParentId().equals(level2.getId())) {
+                        District level4 = MasterCodeUtils.getDistrictById(Integer.parseInt(town));
+                        return level4 != null && level4.getParentId().equals(level3.getId());
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean validateDept(String dept) {
+        Department department = MasterCodeUtils.getDepartment(dept);
+        if (department != null) {
+            Position position = MasterCodeUtils.getPosition(getPosition());
+            if (position != null && position.getDepartmentId().equals(dept) && StringUtils.isNotBlank(level)) {
+                return position.getAppraisePrefix().equals(level.substring(0, 1))
+                        && Integer.parseInt(level.substring(1)) <= position.getAppraiseLevel()
+;            }
         }
         return false;
     }

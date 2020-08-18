@@ -8,7 +8,7 @@ import org.zenith.legion.routine.dto.CalendarEvent;
 @RestController
 public class EventController {
 
-    @GetMapping("/web/events")
+
     public AjaxResponseBody getEvents() {
         return null;
     }

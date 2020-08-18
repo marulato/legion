@@ -266,7 +266,7 @@
                           <div class="form-group">
                             <label for="interviewedAt">面试时间</label>
                             <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-format="yyyy-mm-dd">
-                              <input type='text' class="form-control" name=" " id="interviewedAt"/>
+                              <input type='text' class="form-control" name="interviewedAt" id="interviewedAt"/>
                               <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
                             </div>
                           </div>
@@ -770,7 +770,9 @@
           cache: false,
           dataType: "json",
           success: function (res) {
-            console.log(res.data);
+            if(res.status === 221) {
+                legion.showErrors(res.data);
+            }
           }
       });
     }
