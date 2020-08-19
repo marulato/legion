@@ -14,7 +14,6 @@ public class FileNet extends BasePO {
     private Long size;
     private String status;
     private String storageType;
-    private String sourceType;
     private String fileUuid;
     private String path;
     private String sha512;
@@ -66,14 +65,6 @@ public class FileNet extends BasePO {
 
     public void setStorageType(String storageType) {
         this.storageType = storageType;
-    }
-
-    public String getSourceType() {
-        return sourceType;
-    }
-
-    public void setSourceType(String sourceType) {
-        this.sourceType = sourceType;
     }
 
     public String getFileUuid() {
