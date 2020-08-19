@@ -2,6 +2,7 @@ package org.zenith.legion.hr.dto;
 
 import org.apache.commons.lang3.math.NumberUtils;
 import org.zenith.legion.common.base.BaseDto;
+import org.zenith.legion.common.base.PropertyMapping;
 import org.zenith.legion.common.consts.AppConsts;
 import org.zenith.legion.common.utils.*;
 import org.zenith.legion.common.validation.*;
@@ -16,70 +17,123 @@ import java.util.List;
 public class EmployeeRegistrationDto extends BaseDto {
 
     @ValidateWithRegex(regex = "[\u4E00-\u9FA5]{2,16}(?:·[\u4E00-\u9FA5]{2,16})*", message = "姓名为2-16个汉字")
+    @PropertyMapping("name")
     private String employeeName;
+
     private String idNo;
+
     @ValidateWithMethod(method = "validateGender", message = "请选择性别")
     private String gender;
+
     @ValidateWithMethod(method = "validateDate", message = "请输入正确的日期，格式为yyyy-mm-dd")
     private String dob;
+
     @ValidateWithMethod(method = "validateAge", message = "请输入正确年龄，其应该与生日相符")
     private String age;
+
     @ValidateWithRegex(regex = "^1[0-9]{10}", message = "请输入11位的手机号码")
     private String phoneNo;
+
     @ValidateWithMethod(method = "validateEmailAddress", message = "请输入正确的电子邮件地址")
     private String emailAddress;
+
     @ValidateWithMethodList(methodList = {
             @ValidateWithMethod(method = "validateDistrict",parameters = {"1"}, message = "请选择正确的地区"),
             @ValidateWithMethod(method = "validateAreaMatches", message = "选择的地址不在同一行政区域内")
     })
+    @PropertyMapping("currentProvince")
     private String province;
+
     @ValidateWithMethod(method = "validateDistrict", parameters = {"2"}, message = "请选择正确的地区")
+    @PropertyMapping("currentPrefecture")
     private String prefecture;
+
     @ValidateWithMethod(method = "validateDistrict", parameters = {"3"}, message = "请选择正确的地区")
+    @PropertyMapping("currentCounty")
     private String county;
+
     @ValidateWithMethod(method = "validateDistrict", parameters = {"4"}, message = "请选择正确的地区")
+    @PropertyMapping("currentTown")
     private String town;
+
+    @PropertyMapping("currentDetail")
     private String address;
+
     @ValidateWithMethod(method = "validateDept", message = "请选择正确的部门，职位和级别")
+    @PropertyMapping("departmentId")
     private String department;
+
+    @PropertyMapping("positionId")
     private String position;
+
+    @PropertyMapping("positionLevel")
     private String level;
+
     private String baseSalary;
     private String positionSubsidies;
+
+    @PropertyMapping("recruitmentMethod")
     private String method;
+
+    @PropertyMapping("recommendedBy")
     private String recommended;
+
+    @PropertyMapping("writtenExamScore")
     private String writeScore;
+
     @ValidateWithMethod(method = "validateDate", message = "请输入正确的日期，格式为yyyy-mm-dd")
     private String interviewedAt;
     private String interviewedBy;
     private String interviewType;
     private String interviewScore;
+
     @ValidateWithMethod(method = "validateDate", message = "请输入正确的日期，格式为yyyy-mm-dd")
     private String offerSentAt;
+
     @ValidateWithMethod(method = "validateDate", message = "请输入正确的日期，格式为yyyy-mm-dd")
     private String requiredEntryDate;
+
     @ValidateWithMethod(method = "validateDate", message = "请输入正确的日期，格式为yyyy-mm-dd")
     private String actualEntryDate;
+
     @ValidateWithMethod(method = "validateDate", message = "请输入正确的日期，格式为yyyy-mm-dd")
     private String probationUntilDate;
     private String graduatedFromUni;
+
     @ValidateWithMethod(method = "validateDate", message = "请输入正确的日期，格式为yyyy-mm-dd")
     private String graduatedDate;
+
     private String major;
+
     @ValidateWithMethodList(methodList = {
             @ValidateWithMethod(method = "validateDistrict", parameters = {"1"}, message = "请选择正确的地区"),
             @ValidateWithMethod(method = "validateMatchIdNo", message = "选择的地址与身份证不匹配")
     })
     private String domicileProvince;
+
     @ValidateWithMethod(method = "validateDistrict", parameters = {"2"}, message = "请选择正确的地区")
     private String domicilePrefecture;
+
     @ValidateWithMethod(method = "validateDistrict", parameters = {"3"}, message = "请选择正确的地区")
     private String domicileCounty;
+
     @ValidateWithMethod(method = "validateDistrict", parameters = {"4"}, message = "请选择正确的地区")
     private String domicileTown;
+
+    @PropertyMapping("domicileDetail")
     private String domicileAddress;
+
     private String nation;
     private String politicalStatus;
+    private String education;
+
+    //
+    private Long resumeCmDocumentId;
+    private Long merCmDocumentId;
+    private Long graduationCmDocumentId;
+    private Long diplomaCmDocumentId;
+    private Long contractCmDocumentId;
+    private Long offerCmDocumentId;
 
     public EmployeeRegistrationDto(HttpServletRequest request) throws Exception{
         mapParameters(request, this);
@@ -459,5 +513,61 @@ public class EmployeeRegistrationDto extends BaseDto {
 
     public void setPoliticalStatus(String politicalStatus) {
         this.politicalStatus = politicalStatus;
+    }
+
+    public Long getResumeCmDocumentId() {
+        return resumeCmDocumentId;
+    }
+
+    public void setResumeCmDocumentId(Long resumeCmDocumentId) {
+        this.resumeCmDocumentId = resumeCmDocumentId;
+    }
+
+    public Long getMerCmDocumentId() {
+        return merCmDocumentId;
+    }
+
+    public void setMerCmDocumentId(Long merCmDocumentId) {
+        this.merCmDocumentId = merCmDocumentId;
+    }
+
+    public Long getGraduationCmDocumentId() {
+        return graduationCmDocumentId;
+    }
+
+    public void setGraduationCmDocumentId(Long graduationCmDocumentId) {
+        this.graduationCmDocumentId = graduationCmDocumentId;
+    }
+
+    public Long getDiplomaCmDocumentId() {
+        return diplomaCmDocumentId;
+    }
+
+    public void setDiplomaCmDocumentId(Long diplomaCmDocumentId) {
+        this.diplomaCmDocumentId = diplomaCmDocumentId;
+    }
+
+    public Long getContractCmDocumentId() {
+        return contractCmDocumentId;
+    }
+
+    public void setContractCmDocumentId(Long contractCmDocumentId) {
+        this.contractCmDocumentId = contractCmDocumentId;
+    }
+
+    public Long getOfferCmDocumentId() {
+        return offerCmDocumentId;
+    }
+
+    public void setOfferCmDocumentId(Long offerCmDocumentId) {
+        this.offerCmDocumentId = offerCmDocumentId;
+    }
+
+    public String getEducation() {
+        return education;
+    }
+
+    public void setEducation(String education) {
+        this.education = education;
     }
 }

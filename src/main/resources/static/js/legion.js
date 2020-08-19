@@ -24,3 +24,13 @@ legion.clearErrors = function () {
         $(ele).removeClass("is-invalid");
     });
 }
+
+legion.required = function () {
+    $("#mainForm").find("label").each(function (idx, ele) {
+        if ($(ele).attr("data-required") == 'true') {
+            var text = $(ele).html();
+            text += "<span style='color: red'>&nbsp;*</span>";
+            $(ele).html(text);
+        }
+    });
+}

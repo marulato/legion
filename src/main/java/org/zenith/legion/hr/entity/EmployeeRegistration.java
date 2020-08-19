@@ -26,8 +26,8 @@ public class EmployeeRegistration extends BasePO {
     private String interviewedBy;
     private Date offerSentAt;
     private Long offerCmDocumentId;
-    private Date requiredEntryTime;
-    private Date actualEntryTime;
+    private Date requiredEntryDate;
+    private Date actualEntryDate;
     private Date probationUntilDate;
     private String graduatedFromUni;
     private String major;
@@ -161,20 +161,20 @@ public class EmployeeRegistration extends BasePO {
         this.offerCmDocumentId = offerCmDocumentId;
     }
 
-    public Date getRequiredEntryTime() {
-        return requiredEntryTime;
+    public Date getRequiredEntryDate() {
+        return requiredEntryDate;
     }
 
-    public void setRequiredEntryTime(Date requiredEntryTime) {
-        this.requiredEntryTime = requiredEntryTime;
+    public void setRequiredEntryDate(Date requiredEntryDate) {
+        this.requiredEntryDate = requiredEntryDate;
     }
 
-    public Date getActualEntryTime() {
-        return actualEntryTime;
+    public Date getActualEntryDate() {
+        return actualEntryDate;
     }
 
-    public void setActualEntryTime(Date actualEntryTime) {
-        this.actualEntryTime = actualEntryTime;
+    public void setActualEntryDate(Date actualEntryDate) {
+        this.actualEntryDate = actualEntryDate;
     }
 
     public Date getProbationUntilDate() {

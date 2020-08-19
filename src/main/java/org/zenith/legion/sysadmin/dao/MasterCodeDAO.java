@@ -17,6 +17,8 @@ public interface MasterCodeDAO {
 
     MasterCode getMasterCode(String type, String value);
 
+    List<MasterCode> getAllMasterCodes();
+
     List<MasterCode> getMasterCodeByType(String type);
 
     List<District> getProvinces();

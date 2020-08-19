@@ -1,5 +1,6 @@
 package org.zenith.legion.common.validation;
 
+import org.zenith.legion.common.utils.BeanUtils;
 import org.zenith.legion.common.utils.StringUtils;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -20,13 +21,13 @@ public class CommonValidator {
                 validationMap.put(field.getName(), new ArrayList<>());
                 if (field.isAnnotationPresent(NotNull.class)) {
                     NotNull anno = field.getAnnotation(NotNull.class);
-                    if (getValue(field, objClass, obj) == null && isProfileMatch(profile, anno.profile())) {
+                    if (BeanUtils.getValue(field, objClass, obj) == null && isProfileMatch(profile, anno.profile())) {
                         validationMap.get(field.getName()).add(field.getAnnotation(NotNull.class).message());
                     }
                 }
 
                 if (field.isAnnotationPresent(NotEmpty.class)) {
-                    Object value = getValue(field, objClass, obj);
+                    Object value = BeanUtils.getValue(field, objClass, obj);
                     NotEmpty anno = field.getAnnotation(NotEmpty.class);
                     if (isProfileMatch(profile, anno.profile())) {
                         if (value == null || value instanceof String && ((String) value).isEmpty()) {
@@ -36,7 +37,7 @@ public class CommonValidator {
                 }
 
                 if (field.isAnnotationPresent(ValidateWithRegex.class)) {
-                    Object value = getValue(field, objClass, obj);
+                    Object value = BeanUtils.getValue(field, objClass, obj);
                     ValidateWithRegex anno = field.getAnnotation(ValidateWithRegex.class);
                     if (isProfileMatch(profile, anno.profile())) {
                         if (!(field.getType() == String.class)) {
@@ -57,12 +58,12 @@ public class CommonValidator {
 
                 if (field.isAnnotationPresent(ValidateWithMethod.class)) {
                     ValidateWithMethod anno = field.getAnnotation(ValidateWithMethod.class);
-                    Object value = getValue(field, objClass, obj);
+                    Object value = BeanUtils.getValue(field, objClass, obj);
                     checkValidateWithMethod(field, anno, value, obj, objClass, validationMap, profile);
                 }
 
                 if (field.isAnnotationPresent(ValidateWithMethodList.class)) {
-                    Object value = getValue(field, objClass, obj);
+                    Object value = BeanUtils.getValue(field, objClass, obj);
                     ValidateWithMethodList anno = field.getAnnotation(ValidateWithMethodList.class);
                     ValidateWithMethod[] validateWithMethods = anno.methodList();
                     for (ValidateWithMethod validateWithMethod : validateWithMethods) {
@@ -85,25 +86,6 @@ public class CommonValidator {
         return !StringUtils.isEmpty(profile) || !StringUtils.isNotEmpty(annoProfile);
     }
 
-    private static Object getValue(Field field, Class<?> objClass, Object instance) throws Exception {
-        String getter = "get";
-        Object value = null;
-        field.setAccessible(true);
-        if (field.getType() == boolean.class) {
-            getter = "is";
-        }
-        getter += StringUtils.capitalCharacter(field.getName(), 0);
-        Method getterMethod = objClass.getDeclaredMethod(getter);
-        int modifer = getterMethod.getModifiers();
-        if (Modifier.isPublic(modifer) && !Modifier.isAbstract(modifer)
-                && !Modifier.isStatic(modifer) && getterMethod.getReturnType() == field.getType()) {
-            getterMethod.setAccessible(true);
-            value = getterMethod.invoke(instance);
-        } else {
-            value = field.get(instance);
-        }
-        return value;
-    }
 
     private static void checkValidateWithMethod(Field field, ValidateWithMethod anno, Object value, Object obj,
                                                 Class<?> objClass, Map<String, List<String>> validationMap, String profile) throws Exception {

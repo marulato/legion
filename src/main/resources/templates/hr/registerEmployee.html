@@ -73,13 +73,13 @@
                       <div class="row">
                         <div class="col-md-6">
                           <div class="form-group">
-                            <label for="employeeName">姓名</label>
+                            <label for="employeeName" data-required="true">姓名</label>
                             <input type="text" class="form-control" name="employeeName" id="employeeName" placeholder="请输入姓名" />
                           </div>
                         </div>
                         <div class="col-md-6">
                           <div class="form-group">
-                            <label for="idNo">18位身份证号码</label>
+                            <label for="idNo" data-required="true">18位身份证号码</label>
                             <input type="text" name="idNo" id="idNo" class="form-control" onblur="autoFillBasicContent(this)">
                           </div>
                         </div>
@@ -89,10 +89,8 @@
                         <div class="col-md-6">
                           <div class="form-group">
                             <label for="genderM">性别</label>
-                            <div class="form-radio">
-                              <input type="radio" class="form-control" name="gender" id="genderM" value="M">男
-                              <input type="radio" class="form-control" name="gender" id="genderF" value="F">女
-                            </div>
+                            <input type="radio" class="form-radio" name="gender" id="genderM" value="M">男
+                            <input type="radio" class="form-radio" name="gender" id="genderF" value="F">女
                             <!--<select class="form-control" name="gender" id="gender">
                               <option value="M">男</option>
                               <option value="F">女</option>
@@ -101,7 +99,7 @@
                         </div>
                         <div class="col-md-6">
                           <div class="form-group">
-                            <label for="dob">出生日期</label>
+                            <label for="dob" data-required="true">出生日期</label>
                             <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-format="yyyy-mm-dd">
                               <input type='text' class="form-control" name="dob" id="dob"/>
                               <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
@@ -113,7 +111,7 @@
                       <div class="row">
                         <div class="col-md-6">
                           <div class="form-group">
-                            <label for="age">年龄</label>
+                            <label for="age" data-required="true">年龄</label>
                             <input type="number" name="age" id="age" class="form-control">
                           </div>
                         </div>
@@ -240,7 +238,7 @@
                         <div class="col-md-6">
                           <div class="form-group">
                             <label for="method">招聘方式</label>
-                            <select class="custom-select mr-md-3" name="method" id="method">
+                            <select class="custom-select mr-md-3" name="method" id="method" onchange="showOrHideRec(this.value)">
                               <option value="">请选择</option>
                             </select>
                           </div>
@@ -547,6 +545,9 @@
         prepareDistricts('1', null, null);
         preparedDomicileDistricts('1', null, null);
         prepareDepartments();
+        prepareMethod();
+        preparePoliticalStatus();
+       legion.required();
     });
 
     $('.form_date').datetimepicker({
@@ -775,6 +776,44 @@
             }
           }
       });
+    }
+
+    function prepareMethod() {
+      $.ajax({
+          url: "/web/mastercode/cm.recruitment.type",
+          type: "get",
+          dataType: "json",
+          success: function (res) {
+              if (res.status === 200) {
+                  $.each(res.data[0], function (code, value) {
+                    $("#method").append("<option value='" + code + "'>" + value + "</option>");
+                  });
+              }
+          }
+      });
+    }
+
+    function preparePoliticalStatus() {
+        $.ajax({
+            url: "/web/mastercode/cm.political.status",
+            type: "get",
+            dataType: "json",
+            success: function (res) {
+                if (res.status === 200) {
+                    $.each(res.data[0], function (code, value) {
+                        $("#politicalStatus").append("<option value='" + code + "'>" + value + "</option>");
+                    });
+                }
+            }
+        });
+    }
+
+    function showOrHideRec(value) {
+      if (value == 'REC') {
+          $("#recommendedBy").show();
+      } else {
+          $("#recommendedBy").hide();
+      }
     }
 
 </script>

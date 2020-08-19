@@ -40,4 +40,8 @@
     <select id="getAllPositions" resultType="org.zenith.legion.hr.entity.Position">
         SELECT * FROM MC_POSITION
     </select>
+
+    <select id="getAllMasterCodes" resultType="org.zenith.legion.sysadmin.entity.MasterCode">
+        SELECT * FROM CM_MASTERCODE
+    </select>
 </mapper>
