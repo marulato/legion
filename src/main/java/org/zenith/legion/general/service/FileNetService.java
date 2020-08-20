@@ -61,7 +61,8 @@ public class FileNetService {
             inputStream.close();
             if (isUploaded) {
                 fileNet.createAuditValues(AppContext.getFromWebThread());
-                return fileNetDAO.create(fileNet);
+                fileNetDAO.create(fileNet);
+                return fileNet.getFileNetId();
             } else {
                 throw new FTPUploadException("Upload file to FTP FAILED");
             }
@@ -83,7 +84,8 @@ public class FileNetService {
             fileNet.setFileType(StringUtils.isNotBlank(extension) ? extension : AppConsts.FILE_NET_FILE_TYPE_UNKNOWN);
             fileNet.setMimeType(getMimeType(extension));
             fileNet.createAuditValues(AppContext.getFromWebThread());
-            return fileNetDAO.create(fileNet);
+            fileNetDAO.create(fileNet);
+            return fileNet.getFileNetId();
 
         }
         return 0L;

@@ -1,5 +1,6 @@
 package org.zenith.legion.hr.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,6 +13,7 @@ import org.zenith.legion.common.utils.*;
 import org.zenith.legion.common.validation.CommonValidator;
 import org.zenith.legion.hr.dto.EmployeeRegistrationDto;
 import org.zenith.legion.hr.entity.Position;
+import org.zenith.legion.hr.service.RegistrationService;
 import org.zenith.legion.sysadmin.entity.District;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +23,13 @@ import java.util.Map;
 
 @Controller
 public class RegistrationController {
+
+    private final RegistrationService registrationService;
+
+    @Autowired
+    public RegistrationController(RegistrationService registrationService) {
+        this.registrationService = registrationService;
+    }
 
     @GetMapping("/web/hr/registration")
     public String getRegistrationPage() {
@@ -66,7 +75,7 @@ public class RegistrationController {
         AjaxResponseManager responseMgr = AjaxResponseManager.create(AppConsts.RESPONSE_SUCCESS);
         JsonMapper jsonMapper = new JsonMapper();
         if (IDNoUtils.isValidIDNo(idNo)) {
-            jsonMapper.addJson("dob", DateUtils.getDateString(IDNoUtils.getBirthday(idNo), "yyyy-mm-dd"));
+            jsonMapper.addJson("dob", DateUtils.getDateString(IDNoUtils.getBirthday(idNo), "yyyy-MM-dd"));
             jsonMapper.addJson("age", DateUtils.getAge(IDNoUtils.getBirthday(idNo)));
             jsonMapper.addJson("gender", IDNoUtils.getGender(idNo));
             String areaCode = IDNoUtils.getDistrictCode(idNo);
@@ -139,7 +148,7 @@ public class RegistrationController {
             responseMgr = AjaxResponseManager.create(AppConsts.RESPONSE_VALIDATION_NOT_PASS);
             responseMgr.addValidations(errorMap);
         } else {
-
+            registrationService.registerEmployee(dto, request);
         }
 
 

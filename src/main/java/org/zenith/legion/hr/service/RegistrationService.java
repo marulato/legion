@@ -48,13 +48,26 @@ public class RegistrationService {
             EmployeeRegistration registration = BeanUtils.mapFromDto(dto, EmployeeRegistration.class);
             staff.setJoinedDate(registration.getActualEntryDate());
             staff.setStaffId(MiscGenerator.getNextStaffId(staff.getJoinedDate(), staff.getDepartmentId()));
+            staff.setStatus(AppConsts.ACCOUNT_STATUS_ACTIVE);
             long entryNo = MiscGenerator.getNextSequenceValue("ENTRY_NO");
             staff.setEntryNo((int) entryNo);
             demographic.setStaffId(staff.getStaffId());
             registration.setStaffId(staff.getStaffId());
             Long resumeDocId = saveRegDocument(request, "resumeDoc", DocumentConsts.DOC_TYPE_REG_RESUME);
             Long merDocId = saveRegDocument(request, "merDoc", DocumentConsts.DOC_TYPE_REG_MER);
+            Long offerDocId = saveRegDocument(request, "offerDoc", DocumentConsts.DOC_TYPE_REG_OFFER);
+            Long graduationDocId = saveRegDocument(request, "graduationDoc", DocumentConsts.DOC_TYPE_REG_GRADUATION);
+            Long diplomaDocId = saveRegDocument(request, "diplomaDoc", DocumentConsts.DOC_TYPE_REG_DIPLOMA);
+            Long contractDoc = saveRegDocument(request, "contractDoc", DocumentConsts.DOC_TYPE_REG_CONTRACT);
             registration.setResumeCmDocumentId(resumeDocId);
+            registration.setMerCmDocumentId(merDocId);
+            registration.setOfferCmDocumentId(offerDocId);
+            registration.setGraduationCmDocumentId(graduationDocId);
+            registration.setDiplomaCmDocumentId(diplomaDocId);
+            registration.setContractCmDocumentId(contractDoc);
+            SQLExecutor.save(staff);
+            SQLExecutor.save(demographic);
+            SQLExecutor.save(registration);
 
 
         }

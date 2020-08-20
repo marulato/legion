@@ -54,7 +54,7 @@ public class IDNoUtils {
 
     public static Date getBirthday(String idNo) {
         if (StringUtils.isNotBlank(idNo)) {
-            return DateUtils.parseDate(idNo.substring(6, 14), "yyyymmdd");
+            return DateUtils.parseDate(idNo.substring(6, 14), "yyyyMMdd");
         }
         return null;
     }

@@ -21,13 +21,14 @@ public class DocumentConsts {
     public static final String DOC_CATEGORY_APPLICATION     = "APP";
     public static final String DOC_CATEGORY_CERTIFICATION   = "CERT";
 
-    public static final String DOC_TYPE_REG_RESUME = "REG_RESUME";
-    public static final String DOC_TYPE_REG_MER = "REG_MER";
-    public static final String DOC_TYPE_REG_GRADUATION = "REG_GRAD";
-    public static final String DOC_TYPE_REG_DIPLOMA = "REG_DIPLOMA";
-    public static final String DOC_TYPE_REG_CONTRACT = "REG_CONTRACT";
+    public static final String DOC_TYPE_REG_RESUME      = "REG_RESUME";
+    public static final String DOC_TYPE_REG_OFFER       = "REG_OFFER";
+    public static final String DOC_TYPE_REG_MER         = "REG_MER";
+    public static final String DOC_TYPE_REG_GRADUATION  = "REG_GRAD";
+    public static final String DOC_TYPE_REG_DIPLOMA     = "REG_DIPLOMA";
+    public static final String DOC_TYPE_REG_CONTRACT    = "REG_CONTRACT";
 
-    public static final String DOC_UPLOADED_FOR_NEW_EMP = "New Employee Registration";
+    public static final String DOC_UPLOADED_FOR_NEW_EMP      = "New Employee Registration";
     public static final String DOC_UPLOADED_FOR_PERSONAL_APP = "Personal Application";
 
 }

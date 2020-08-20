@@ -65,10 +65,10 @@ public class MiscGenerator {
         Sequence sequence = sequenceDAO.getSequence(name);
         if (sequence != null) {
             value = sequence.getValue() + sequence.getStep();
-            if (sequence.getMaxValue() > 0 && value > sequence.getMaxValue()) {
+            if (sequence.getMaxValue()!= null && sequence.getMaxValue() > 0 && value > sequence.getMaxValue()) {
                 value = sequence.getMaxValue();
                 sequence.setValue(value);
-            } else if (sequence.getMinValue() >=0 && value < sequence.getMinValue()) {
+            } else if (sequence.getMinValue() != null && sequence.getMinValue() >=0 && value < sequence.getMinValue()) {
                 sequence.setValue(value);
                 value = sequence.getMinValue();
             } else {

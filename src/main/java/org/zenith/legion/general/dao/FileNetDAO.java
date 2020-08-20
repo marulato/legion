@@ -11,7 +11,7 @@ public interface FileNetDAO {
 
     @InsertProvider(type = SimpleSQLGenerator.class, method = "insert")
     @Options(useGeneratedKeys = true, keyProperty = "fileNetId", keyColumn = "FILE_NET_ID")
-    Long create(FileNet fileNet);
+    void create(FileNet fileNet);
 
     FileNet getFileNetById(Long id);
 }

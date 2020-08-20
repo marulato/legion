@@ -145,7 +145,7 @@ public class EmployeeRegistrationDto extends BaseDto {
     public EmployeeRegistrationDto() {}
 
     private boolean validateGender(String gender) {
-        return StringUtils.isNotBlank(gender) ? gender.equals(IDNoUtils.getGender(idNo)) : false;
+        return StringUtils.isNotBlank(gender) && gender.equals(IDNoUtils.getGender(idNo));
     }
 
     private boolean validateIdNo(String idNo) {

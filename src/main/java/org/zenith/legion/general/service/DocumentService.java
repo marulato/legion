@@ -30,7 +30,8 @@ public class DocumentService {
                 return document.getCmDocumentId();
             } else {
                 document.createAuditValues(AppContext.getFromWebThread());
-                return documentDAO.create(document);
+                documentDAO.create(document);
+                return document.getCmDocumentId();
             }
         }
         return 0L;
