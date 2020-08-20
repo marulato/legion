@@ -30,7 +30,7 @@ public class PermissionAspect {
         RequiresRoles requiresRoles = method.getAnnotation(RequiresRoles.class);
         List<String> roleIds = Arrays.asList(requiresRoles.value());
         Logical logical = requiresRoles.logical();
-        AppContext context = AppContext.getAppContextFromCurrentThread();
+        AppContext context = AppContext.getFromWebThread();
         if (context != null) {
             log.info("Checking User -> " + context.getLoginId());
             List<String> allRoles = new ArrayList<>();
@@ -66,7 +66,7 @@ public class PermissionAspect {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         Method method = targetType.getMethod(methodSignature.getName(), methodSignature.getParameterTypes());
         RequiresLogin requiresLogin = method.getAnnotation(RequiresLogin.class);
-        AppContext context = AppContext.getAppContextFromCurrentThread();
+        AppContext context = AppContext.getFromWebThread();
         if (context == null || !context.isLoggedIn()) {
             throw new PermissionDeniedException();
         } else {

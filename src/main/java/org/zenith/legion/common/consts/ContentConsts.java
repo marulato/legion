@@ -1,5 +1,8 @@
 package org.zenith.legion.common.consts;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ContentConsts {
 
     public static final String MT_PDF                               = "application/pdf";
@@ -36,4 +39,28 @@ public class ContentConsts {
     public static final String TK_MP3                               = "audio/mpeg3";
     public static final String TK_TRM                               = "application/x-msterminal";
     public static final String TK_CSV                               = "text/csv";
+
+    public static Map<String, String> getExtensionMimeMap() {
+        Map<String, String> map = new HashMap<>(20);
+        map.put("PDF", MT_PDF);
+        map.put("DOC", MT_DOC);
+        map.put("DOCX", MT_DOCX);
+        map.put("XLS", MT_XLS);
+        map.put("XLSX", MT_XLSX);
+        map.put("JPG", MT_JPG);
+        map.put("JPEG", MT_JPEG);
+        map.put("PNG", MT_PNG);
+        map.put("ZIP", MT_ZIP);
+        map.put("MP4", MT_MP4);
+        map.put("MOV", MT_MOV);
+        map.put("AVI", MT_AVI);
+        map.put("WMV", MT_WMV);
+        map.put("WAV", MT_WAV);
+        map.put("MP3", MT_MP3);
+        map.put("TRM", MT_TRM);
+        map.put("MP3", MT_MP3);
+        map.put(AppConsts.FILE_NET_FILE_TYPE_UNKNOWN, "application/text");
+        return map;
+    }
+
 }

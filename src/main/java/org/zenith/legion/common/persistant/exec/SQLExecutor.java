@@ -13,7 +13,7 @@ public class SQLExecutor {
     public static void save(BasePO entity) {
         if (entity != null) {
             Date now = new Date();
-            AppContext appContext = AppContext.getAppContextFromCurrentThread();
+            AppContext appContext = AppContext.getFromWebThread();
             entity.setCreatedAt(now);
             entity.setUpdatedAt(now);
             entity.setCreatedBy(appContext.getLoginId());
@@ -25,7 +25,7 @@ public class SQLExecutor {
     public static void update(BasePO entity) {
         if (entity != null) {
             Date now = new Date();
-            AppContext appContext = AppContext.getAppContextFromCurrentThread();
+            AppContext appContext = AppContext.getFromWebThread();
             entity.setUpdatedAt(now);
             entity.setUpdatedBy(appContext.getLoginId());
             executor.update(entity);

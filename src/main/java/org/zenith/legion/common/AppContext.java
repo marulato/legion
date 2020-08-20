@@ -22,7 +22,7 @@ public class AppContext implements Serializable {
     private static final ThreadLocal<AppContext> webThreadContext = new ThreadLocal<>();
     private static final ThreadLocal<AppContext> localThreadContext = new ThreadLocal<>();
 
-    public static AppContext getAppContextFromCurrentThread(boolean flag) {
+    public static AppContext getFromWebThread(boolean flag) {
         AppContext context = webThreadContext.get();
         if (context == null) {
             HttpSession session = SessionManager.getSession();
@@ -52,8 +52,8 @@ public class AppContext implements Serializable {
         return null;
     }
 
-    public static AppContext getAppContextFromCurrentThread() {
-        return getAppContextFromCurrentThread(false);
+    public static AppContext getFromWebThread() {
+        return getFromWebThread(false);
     }
 
     public static void setLocalThreadAppContext(AppContext context) {

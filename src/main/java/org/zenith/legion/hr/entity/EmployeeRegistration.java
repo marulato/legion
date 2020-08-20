@@ -3,11 +3,12 @@ package org.zenith.legion.hr.entity;
 import org.zenith.legion.common.base.BasePO;
 import org.zenith.legion.common.persistant.annotation.Persistant;
 import org.zenith.legion.common.persistant.annotation.PrimaryKey;
-
 import java.util.Date;
 
 @Persistant(tableName = "STA_STAFF_REGISTRATION")
 public class EmployeeRegistration extends BasePO {
+
+    public static final String TABLE_NAME = "STA_STAFF_REGISTRATION";
 
     @PrimaryKey(autoIncrement = false)
     private String staffId;

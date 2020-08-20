@@ -11,9 +11,10 @@ public class FileNet extends BasePO {
     private Long fileNetId;
     private String fileName;
     private String fileType;
-    private Long size;
+    private Integer size;
     private String status;
     private String storageType;
+    private String mimeType;
     private String fileUuid;
     private String path;
     private String sha512;
@@ -43,11 +44,11 @@ public class FileNet extends BasePO {
         this.fileType = fileType;
     }
 
-    public Long getSize() {
+    public Integer getSize() {
         return size;
     }
 
-    public void setSize(Long size) {
+    public void setSize(Integer size) {
         this.size = size;
     }
 
@@ -61,6 +62,14 @@ public class FileNet extends BasePO {
 
     public String getStorageType() {
         return storageType;
+    }
+
+    public String getMimeType() {
+        return mimeType;
+    }
+
+    public void setMimeType(String mimeType) {
+        this.mimeType = mimeType;
     }
 
     public void setStorageType(String storageType) {

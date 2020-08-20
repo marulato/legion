@@ -56,6 +56,22 @@ public class CommonValidator {
                     }
                 }
 
+                if (field.isAnnotationPresent(IsIn.class)) {
+                    Object value = BeanUtils.getValue(field, objClass, obj);
+                    IsIn isIn = field.getAnnotation(IsIn.class);
+                    if (isProfileMatch(profile, isIn.profile())) {
+                        if (!(field.getType() == String.class)) {
+                            throw new ClassCastException("Can NOT convert the type of " + field.getName() + ": "
+                                    + field.getType() + " to java.lang.String");
+                        }
+                        String[] array = isIn.value();
+                        List<String> list = Arrays.asList(array);
+                        if (!list.contains((String) value)) {
+                            validationMap.get(field.getName()).add(isIn.message());
+                        }
+                    }
+                }
+
                 if (field.isAnnotationPresent(ValidateWithMethod.class)) {
                     ValidateWithMethod anno = field.getAnnotation(ValidateWithMethod.class);
                     Object value = BeanUtils.getValue(field, objClass, obj);

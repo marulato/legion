@@ -152,7 +152,7 @@ public class ExternalEmailService {
 
     public void saveFailedEmail(FailedEmail failedEmail) {
         if (failedEmail != null) {
-            failedEmail.createAuditValues(AppContext.getAppContextFromCurrentThread());
+            failedEmail.createAuditValues(AppContext.getFromWebThread());
             externalEmailDAO.saveFailedEmail(failedEmail);
         }
     }

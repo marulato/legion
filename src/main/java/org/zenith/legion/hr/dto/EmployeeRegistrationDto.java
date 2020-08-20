@@ -20,12 +20,14 @@ public class EmployeeRegistrationDto extends BaseDto {
     @PropertyMapping("name")
     private String employeeName;
 
+    @PropertyMapping("idCardNo")
+    @ValidateWithMethod(method = "validateIdNo", message = "请输入正确的身份证号码")
     private String idNo;
 
-    @ValidateWithMethod(method = "validateGender", message = "请选择性别")
+    @ValidateWithMethod(method = "validateGender", message = "请选择与身份证标识相符的性别")
     private String gender;
 
-    @ValidateWithMethod(method = "validateDate", message = "请输入正确的日期，格式为yyyy-mm-dd")
+    @ValidateWithMethod(method = "validateDob", message = "请输入与身份证标识相符的日期，格式为yyyy-mm-dd")
     private String dob;
 
     @ValidateWithMethod(method = "validateAge", message = "请输入正确年龄，其应该与生日相符")
@@ -38,7 +40,7 @@ public class EmployeeRegistrationDto extends BaseDto {
     private String emailAddress;
 
     @ValidateWithMethodList(methodList = {
-            @ValidateWithMethod(method = "validateDistrict",parameters = {"1"}, message = "请选择正确的地区"),
+            @ValidateWithMethod(method = "validateDistrict", parameters = {"1"}, message = "请选择正确的地区"),
             @ValidateWithMethod(method = "validateAreaMatches", message = "选择的地址不在同一行政区域内")
     })
     @PropertyMapping("currentProvince")
@@ -69,7 +71,9 @@ public class EmployeeRegistrationDto extends BaseDto {
     @PropertyMapping("positionLevel")
     private String level;
 
+    @ValidateWithRegex(regex = "^[1-9][0-9]{2,5}", message = "请输入3-6位数的金额")
     private String baseSalary;
+    @ValidateWithRegex(regex = "^[1-9][0-9]{2,5}", message = "请输入3-6位数的金额")
     private String positionSubsidies;
 
     @PropertyMapping("recruitmentMethod")
@@ -83,6 +87,7 @@ public class EmployeeRegistrationDto extends BaseDto {
 
     @ValidateWithMethod(method = "validateDate", message = "请输入正确的日期，格式为yyyy-mm-dd")
     private String interviewedAt;
+    @NotEmpty(message = "请输入面试人")
     private String interviewedBy;
     private String interviewType;
     private String interviewScore;
@@ -120,9 +125,7 @@ public class EmployeeRegistrationDto extends BaseDto {
     @ValidateWithMethod(method = "validateDistrict", parameters = {"4"}, message = "请选择正确的地区")
     private String domicileTown;
 
-    @PropertyMapping("domicileDetail")
-    private String domicileAddress;
-
+    private String domicileDetail;
     private String nation;
     private String politicalStatus;
     private String education;
@@ -142,12 +145,23 @@ public class EmployeeRegistrationDto extends BaseDto {
     public EmployeeRegistrationDto() {}
 
     private boolean validateGender(String gender) {
-        return AppConsts.GENDER_MALE.equals(gender) || AppConsts.GENDER_FEMALE.equals(gender);
+        return StringUtils.isNotBlank(gender) ? gender.equals(IDNoUtils.getGender(idNo)) : false;
+    }
+
+    private boolean validateIdNo(String idNo) {
+        return IDNoUtils.isValidIDNo(idNo);
     }
 
     private boolean validateDate(String date) {
         return DateUtils.parseDate(date) != null;
 
+    }
+
+    private boolean validateDob(String dob) {
+        if (StringUtils.isNotBlank(dob)) {
+            return DateUtils.isSame(DateUtils.parseDate(dob), IDNoUtils.getBirthday(idNo));
+        }
+        return false;
     }
 
     private boolean validateAge(String age) {
@@ -491,12 +505,12 @@ public class EmployeeRegistrationDto extends BaseDto {
         this.domicileTown = domicileTown;
     }
 
-    public String getDomicileAddress() {
-        return domicileAddress;
+    public String getDomicileDetail() {
+        return domicileDetail;
     }
 
-    public void setDomicileAddress(String domicileAddress) {
-        this.domicileAddress = domicileAddress;
+    public void setDomicileDetail(String domicileDetail) {
+        this.domicileDetail = domicileDetail;
     }
 
     public String getNation() {

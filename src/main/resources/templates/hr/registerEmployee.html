@@ -89,13 +89,30 @@
                         <div class="col-md-6">
                           <div class="form-group">
                             <label for="genderM">性别</label>
-                            <input type="radio" class="form-radio" name="gender" id="genderM" value="M">男
-                            <input type="radio" class="form-radio" name="gender" id="genderF" value="F">女
-                            <!--<select class="form-control" name="gender" id="gender">
-                              <option value="M">男</option>
-                              <option value="F">女</option>
-                            </select>-->
+                            <div class="form-group row">
+                              <div class="col-sm-6">
+                                <div class="form-radio">
+                                  <label class="form-check-label">
+                                    <input type="radio" class="form-check-input" name="gender" id="genderM" value="M">
+                                    男
+                                  </label>
+                                </div>
+                              </div>
+                              <div class="col-sm-6">
+                                <div class="form-radio">
+                                  <label class="form-check-label">
+                                    <input type="radio" class="form-check-input" name="gender" id="genderF" value="F">
+                                    女
+                                  </label>
+                                </div>
+                              </div>
+                            </div>
                           </div>
+                          <!--<select class="form-control" name="gender" id="gender">
+                            <option value="M">男</option>
+                            <option value="F">女</option>
+                          </select>-->
+
                         </div>
                         <div class="col-md-6">
                           <div class="form-group">
@@ -350,7 +367,7 @@
                             <label for="resumeDoc">简历</label>
                             <div class="custom-file">
                               <input type="file" class="custom-file-input" name="resumeDoc" id="resumeDoc" onchange="showFileName(this, 'resumeDocLabel')">
-                              <label class="custom-file-label" id="resumeDocLabel" for="offerDoc" aria-describedby="resumeDoc">选择文件...</label>
+                              <label class="custom-file-label" id="resumeDocLabel" for="resumeDoc" aria-describedby="resumeDoc">选择文件...</label>
                             </div>
                           </div>
                         </div>
@@ -362,7 +379,7 @@
                             <label for="merDoc">体检报告</label>
                             <div class="custom-file">
                               <input type="file" class="custom-file-input" name="merDoc" id="merDoc" onchange="showFileName(this, 'merDocLabel')">
-                              <label class="custom-file-label" id="merDocLabel" for="offerDoc" aria-describedby="resumeDoc">选择文件...</label>
+                              <label class="custom-file-label" id="merDocLabel" for="merDoc" aria-describedby="resumeDoc">选择文件...</label>
                             </div>
                           </div>
                         </div>
@@ -374,7 +391,7 @@
                             <label for="graduationDoc">毕业证书</label>
                             <div class="custom-file">
                               <input type="file" class="custom-file-input" name="graduationDoc" id="graduationDoc" onchange="showFileName(this, 'graduationDocLabel')">
-                              <label class="custom-file-label" id="graduationDocLabel" for="offerDoc" aria-describedby="resumeDoc">选择文件...</label>
+                              <label class="custom-file-label" id="graduationDocLabel" for="graduationDoc" aria-describedby="resumeDoc">选择文件...</label>
                             </div>
                           </div>
                         </div>
@@ -386,7 +403,7 @@
                             <label for="diplomaDoc">学位证书</label>
                             <div class="custom-file">
                               <input type="file" class="custom-file-input" name="diplomaDoc" id="diplomaDoc" onchange="showFileName(this, 'diplomaDocLabel')">
-                              <label class="custom-file-label" id="diplomaDocLabel" for="offerDoc" aria-describedby="resumeDoc">选择文件...</label>
+                              <label class="custom-file-label" id="diplomaDocLabel" for="diplomaDoc" aria-describedby="resumeDoc">选择文件...</label>
                             </div>
                           </div>
                         </div>
@@ -398,7 +415,7 @@
                             <label for="contractDoc">劳动合同</label>
                             <div class="custom-file">
                               <input type="file" class="custom-file-input" name="contractDoc" id="contractDoc" onchange="showFileName(this, 'contractDocLabel')">
-                              <label class="custom-file-label" id="contractDocLabel" for="offerDoc" aria-describedby="resumeDoc">选择文件...</label>
+                              <label class="custom-file-label" id="contractDocLabel" for="contractDoc" aria-describedby="resumeDoc">选择文件...</label>
                             </div>
                           </div>
                         </div>
@@ -406,13 +423,13 @@
 
                       <h4 class="card-description">学历信息</h4>
                       <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                           <div class="form-group">
                             <label for="graduatedFromUni">毕业院校</label>
                             <input type="text" class="form-control" name="graduatedFromUni" id="graduatedFromUni">
                           </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                           <div class="form-group">
                             <label for="graduatedDate">毕业年份</label>
                             <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-format="yyyy-mm-dd">
@@ -421,10 +438,16 @@
                           </div>
                           </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                           <div class="form-group">
                             <label for="major">专业</label>
                             <input type="text" class="form-control" name="major" id="major">
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <div class="form-group">
+                            <label for="education">学历</label>
+                            <input type="text" class="form-control" name="education" id="education">
                           </div>
                         </div>
                       </div>
@@ -468,10 +491,8 @@
                       <div class="row">
                         <div class="col-md-12">
                           <div class="form-group">
-                            <label for="domicileAddress">详细地址</label>
-                            <select class="custom-select mr-md-3" name="domicileAddress" id="domicileAddress">
-                              <option value="">请选择</option>
-                            </select>
+                            <label for="domicileDetail">详细地址</label>
+                            <input type="text" class="form-control" name="domicileDetail" id="domicileDetail">
                           </div>
                         </div>
                       </div>
@@ -689,8 +710,10 @@
                     $("#dob").val(obj.dob);
                     if ("M" === obj.gender) {
                         $("#genderM").attr("checked", true);
+                        $("#genderF").removeAttr("checked");
                     } else {
                         $("#genderF").attr("checked", true);
+                        $("#genderM").removeAttr("checked");
                     }
                     $("#province").val(obj.province.id);
                     $("#domicileProvince").val(obj.province.id);
