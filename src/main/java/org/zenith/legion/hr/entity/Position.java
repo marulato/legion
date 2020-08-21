@@ -7,27 +7,36 @@ import org.zenith.legion.common.persistant.annotation.PrimaryKey;
 @Persistant(tableName = "MC_POSITION")
 public class Position extends BasePO {
 
-    @PrimaryKey(autoIncrement = false)
-    private String positionId;
-    private String departmentId;
+    @PrimaryKey(autoIncrement = true)
+    private Integer id;
+    private Integer departmentId;
+    private String roleId;
     private String positionName;
     private String description;
     private String appraisePrefix;
     private Integer appraiseLevel;
 
-    public String getPositionId() {
-        return positionId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setPositionId(String positionId) {
-        this.positionId = positionId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getDepartmentId() {
+    public Integer getDepartmentId() {
         return departmentId;
     }
 
-    public void setDepartmentId(String departmentId) {
+    public String getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(String roleId) {
+        this.roleId = roleId;
+    }
+
+    public void setDepartmentId(Integer departmentId) {
         this.departmentId = departmentId;
     }
 

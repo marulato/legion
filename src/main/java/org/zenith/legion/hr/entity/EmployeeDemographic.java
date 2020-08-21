@@ -8,7 +8,7 @@ import org.zenith.legion.common.persistant.annotation.PrimaryKey;
 public class EmployeeDemographic extends BasePO {
 
     @PrimaryKey(autoIncrement = false)
-    private String staffId;
+    private Long staffId;
     private String nationality;
     private String idCardNo;
     private String politicalStatus;
@@ -29,11 +29,11 @@ public class EmployeeDemographic extends BasePO {
     private String isEthnicMinority;
     private String maritalStatus;
 
-    public String getStaffId() {
+    public Long getStaffId() {
         return staffId;
     }
 
-    public void setStaffId(String staffId) {
+    public void setStaffId(Long staffId) {
         this.staffId = staffId;
     }
 

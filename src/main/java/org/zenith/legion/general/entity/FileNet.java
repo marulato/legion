@@ -8,7 +8,7 @@ import org.zenith.legion.common.persistant.annotation.PrimaryKey;
 public class FileNet extends BasePO {
 
     @PrimaryKey(autoIncrement = true)
-    private Long fileNetId;
+    private Long id;
     private String fileName;
     private String fileType;
     private Integer size;
@@ -20,12 +20,12 @@ public class FileNet extends BasePO {
     private String sha512;
     private byte[] data;
 
-    public Long getFileNetId() {
-        return fileNetId;
+    public Long getId() {
+        return id;
     }
 
-    public void setFileNetId(Long fileNetId) {
-        this.fileNetId = fileNetId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFileName() {

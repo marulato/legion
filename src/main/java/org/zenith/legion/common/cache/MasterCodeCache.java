@@ -8,14 +8,16 @@ import org.zenith.legion.hr.entity.Department;
 import org.zenith.legion.hr.entity.Position;
 import org.zenith.legion.sysadmin.entity.MasterCode;
 import org.zenith.legion.common.utils.StringUtils;
+import org.zenith.legion.sysadmin.entity.UserRole;
 
 import java.util.*;
 
 public class MasterCodeCache implements ICache<String, MasterCode> {
 
     private static final Cache<String, Map<String, MasterCode>> cache = CacheBuilder.newBuilder().build();
-    private static final Cache<String, Department> deptCache = CacheBuilder.newBuilder().build();
-    private static final Cache<String, Position> positionCache = CacheBuilder.newBuilder().build();
+    private static final Cache<Integer, Department> deptCache = CacheBuilder.newBuilder().build();
+    private static final Cache<Integer, Position> positionCache = CacheBuilder.newBuilder().build();
+    private static final Cache<String, UserRole> roleCache = CacheBuilder.newBuilder().build();
     public static final String KEY = "org.zenith.legion.common.cache.MasterCodeCache";
     private static final Logger log = LoggerFactory.getLogger(MasterCodeCache.class);
 
@@ -70,12 +72,12 @@ public class MasterCodeCache implements ICache<String, MasterCode> {
         return List.copyOf(list);
     }
 
-    public Department getDepartment(String deptId) {
+    public Department getDepartment(Integer deptId) {
         return deptCache.getIfPresent(deptId);
     }
 
     public List<Department> getAllDepartments() {
-        Map<String, Department> map = deptCache.asMap();
+        Map<Integer, Department> map = deptCache.asMap();
         List<Department> list = new ArrayList<>();
         map.forEach((k, v) -> {
             list.add(v);
@@ -83,21 +85,25 @@ public class MasterCodeCache implements ICache<String, MasterCode> {
         return list;
     }
 
-    public Position getPosition(String positionId) {
+    public Position getPosition(Integer positionId) {
         return positionCache.getIfPresent(positionId);
     }
 
-    public List<Position> getPositionsByDepartmentId(String deptId) {
-        Map<String, Position> positionMap = positionCache.asMap();
-        Set<String> pId = positionMap.keySet();
+    public List<Position> getPositionsByDepartmentId(Integer deptId) {
+        Map<Integer, Position> positionMap = positionCache.asMap();
+        Set<Integer> pId = positionMap.keySet();
         List<Position> list = new ArrayList<>();
-        for (String id : pId) {
+        for (Integer id : pId) {
             Position position = positionMap.get(id);
             if (position != null && position.getDepartmentId().equals(deptId)) {
                 list.add(position);
             }
         }
         return list;
+    }
+
+    public UserRole getUserRole(String roleId) {
+        return roleCache.getIfPresent(roleId);
     }
 
     @Override
@@ -121,7 +127,7 @@ public class MasterCodeCache implements ICache<String, MasterCode> {
     public void setDepartments(List<Department> list) {
         if (list != null) {
             for (Department department : list) {
-                deptCache.put(department.getDepartmentId(), department);
+                deptCache.put(department.getId(), department);
             }
         }
     }
@@ -129,7 +135,7 @@ public class MasterCodeCache implements ICache<String, MasterCode> {
     public void setPositions(List<Position> list) {
         if (list != null) {
             for (Position position : list) {
-                positionCache.put(position.getPositionId(), position);
+                positionCache.put(position.getId(), position);
             }
         }
     }

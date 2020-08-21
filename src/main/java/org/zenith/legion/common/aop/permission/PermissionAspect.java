@@ -35,18 +35,18 @@ public class PermissionAspect {
             log.info("Checking User -> " + context.getLoginId());
             List<String> allRoles = new ArrayList<>();
             for (UserRole role : context.getAllRoles()) {
-                allRoles.add(role.getRoleId());
+                allRoles.add(role.getId());
             }
             if (logical == Logical.AND) {
                 if (!allRoles.containsAll(roleIds)) {
                     hasPermission = false;
                 }
             } else if (logical == Logical.OR) {
-                if (!roleIds.contains(context.getCurrentRole().getRoleId())) {
+                if (!roleIds.contains(context.getCurrentRole().getId())) {
                     hasPermission = false;
                 }
             } else if(logical == Logical.NONE) {
-                if (roleIds.contains(context.getCurrentRole().getRoleId())) {
+                if (roleIds.contains(context.getCurrentRole().getId())) {
                     hasPermission = false;
                 }
             }

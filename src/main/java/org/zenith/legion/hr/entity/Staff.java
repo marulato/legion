@@ -1,6 +1,7 @@
 package org.zenith.legion.hr.entity;
 
 import org.zenith.legion.common.base.BasePO;
+import org.zenith.legion.common.persistant.annotation.NotColumn;
 import org.zenith.legion.common.persistant.annotation.Persistant;
 import org.zenith.legion.common.persistant.annotation.PrimaryKey;
 
@@ -9,11 +10,13 @@ import java.util.Date;
 @Persistant(tableName = "STA_STAFF")
 public class Staff extends BasePO {
 
-    @PrimaryKey(autoIncrement = false)
-    private String staffId;
-    private String departmentId;
-    private String positionId;
+    @PrimaryKey(autoIncrement = true)
+    private Long id;
+    private String staffNo;
+    private Integer departmentId;
+    private Integer positionId;
     private String positionLevel;
+    private Integer projectId;
     private Integer entryNo;
     private Date joinedDate;
     private Date resignDate;
@@ -31,28 +34,47 @@ public class Staff extends BasePO {
     private byte[] portrait;
     private String portraitExt;
 
-    public String getStaffId() {
-        return staffId;
+    @NotColumn
+    private String password;
+
+    public Long getId() {
+        return id;
     }
 
-    public void setStaffId(String staffId) {
-        this.staffId = staffId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getDepartmentId() {
+    public String getStaffNo() {
+        return staffNo;
+    }
+
+    public void setStaffNo(String staffNo) {
+        this.staffNo = staffNo;
+    }
+
+    public Integer getDepartmentId() {
         return departmentId;
     }
 
-    public void setDepartmentId(String departmentId) {
+    public void setDepartmentId(Integer departmentId) {
         this.departmentId = departmentId;
     }
 
-    public String getPositionId() {
+    public Integer getPositionId() {
         return positionId;
     }
 
-    public void setPositionId(String positionId) {
+    public void setPositionId(Integer positionId) {
         this.positionId = positionId;
+    }
+
+    public Integer getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Integer projectId) {
+        this.projectId = projectId;
     }
 
     public String getPositionLevel() {

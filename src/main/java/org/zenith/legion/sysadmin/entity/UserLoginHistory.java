@@ -7,19 +7,19 @@ import java.util.Date;
 @Persistant(tableName = "AC_USER_LOGIN_HIS")
 public class UserLoginHistory extends BasePO {
 
-    private String userId;
+    private Long userAcctId;
     private String acctStatus;
     private Date loginAt;
     private Integer loginStatus;
     private String ipAddress;
     private String browser;
 
-    public String getUserId() {
-        return userId;
+    public Long getUserAcctId() {
+        return userAcctId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUserAcctId(Long userAcctId) {
+        this.userAcctId = userAcctId;
     }
 
     public String getAcctStatus() {

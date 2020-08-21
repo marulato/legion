@@ -8,7 +8,7 @@ import org.zenith.legion.common.persistant.annotation.PrimaryKey;
 public class UserRole extends BasePO {
 
     @PrimaryKey(autoIncrement = false)
-    private String roleId;
+    private String id;
     private String roleName;
     private String type;
     private String profile;
@@ -16,12 +16,12 @@ public class UserRole extends BasePO {
     private String isSystem;
     private String landingPage;
 
-    public String getRoleId() {
-        return roleId;
+    public String getId() {
+        return id;
     }
 
-    public void setRoleId(String roleId) {
-        this.roleId = roleId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getRoleName() {

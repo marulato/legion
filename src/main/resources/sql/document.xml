@@ -3,6 +3,6 @@
 <mapper namespace="org.zenith.legion.general.dao.DocumentDAO">
 
     <select id="getDocumentById" parameterType="long" resultType="org.zenith.legion.general.entity.Document">
-        SELECT * FROM CM_DOCUMENT WHERE CM_DOCUMENT_ID = #{id}
+        SELECT * FROM CM_DOCUMENT WHERE ID = #{id}
     </select>
 </mapper>

@@ -62,7 +62,7 @@ public class FileNetService {
             if (isUploaded) {
                 fileNet.createAuditValues(AppContext.getFromWebThread());
                 fileNetDAO.create(fileNet);
-                return fileNet.getFileNetId();
+                return fileNet.getId();
             } else {
                 throw new FTPUploadException("Upload file to FTP FAILED");
             }
@@ -85,7 +85,7 @@ public class FileNetService {
             fileNet.setMimeType(getMimeType(extension));
             fileNet.createAuditValues(AppContext.getFromWebThread());
             fileNetDAO.create(fileNet);
-            return fileNet.getFileNetId();
+            return fileNet.getId();
 
         }
         return 0L;

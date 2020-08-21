@@ -24,14 +24,14 @@ public class DocumentService {
 
     public Long saveDocument(Document document) {
         if (document != null) {
-            Document existsDoc = documentDAO.getDocumentById(document.getCmDocumentId());
+            Document existsDoc = documentDAO.getDocumentById(document.getId());
             if (existsDoc != null) {
                 SQLExecutor.update(document);
-                return document.getCmDocumentId();
+                return document.getId();
             } else {
                 document.createAuditValues(AppContext.getFromWebThread());
                 documentDAO.create(document);
-                return document.getCmDocumentId();
+                return document.getId();
             }
         }
         return 0L;
@@ -39,7 +39,7 @@ public class DocumentService {
 
     public void updateDocument(Document document, boolean increaseVersion) {
         if (document != null) {
-            Document existsDoc = documentDAO.getDocumentById(document.getCmDocumentId());
+            Document existsDoc = documentDAO.getDocumentById(document.getId());
             if (existsDoc != null && !DocumentConsts.DOC_STATUS_DELETED.equals(existsDoc.getStatus())) {
                 if (existsDoc.getVersion().equals(document.getVersion()) && increaseVersion) {
                     document.setVersion(document.getVersion() + 1);

@@ -10,7 +10,7 @@ import org.zenith.legion.general.entity.Document;
 public interface DocumentDAO {
 
     @InsertProvider(type = SimpleSQLGenerator.class, method = "insert")
-    @Options(useGeneratedKeys = true, keyProperty = "cmDocumentId", keyColumn = "CM_DOCUMENT_ID")
+    @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "ID")
     Long create(Document document);
 
     Document getDocumentById(Long id);

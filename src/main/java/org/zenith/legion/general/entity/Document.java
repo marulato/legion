@@ -10,7 +10,7 @@ import java.util.Date;
 public class Document extends BasePO {
 
     @PrimaryKey(autoIncrement = true)
-    private Long cmDocumentId;
+    private Long id;
     private String fileName;
     private String docType;
     private String docRefNo;
@@ -38,12 +38,12 @@ public class Document extends BasePO {
     private String referenceTbl;
     private Long referenceId;
 
-    public Long getCmDocumentId() {
-        return cmDocumentId;
+    public Long getId() {
+        return id;
     }
 
-    public void setCmDocumentId(Long cmDocumentId) {
-        this.cmDocumentId = cmDocumentId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFileName() {

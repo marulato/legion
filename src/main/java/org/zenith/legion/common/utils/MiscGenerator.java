@@ -26,18 +26,20 @@ public class MiscGenerator {
 
 
 
-    public static String getNextStaffId(Date joinedDate, String deptId) {
-        if (joinedDate != null) {
-            SequenceDAO sequenceDAO = SpringUtils.getBean(SequenceDAO.class);
+    public static String getNextStaffId(Date joinedDate, Integer deptId) {
+        if (joinedDate != null && deptId != null) {
+            String deptIdStr = String.valueOf(deptId);
+            if (deptIdStr.length() == 1) {
+                deptIdStr = "0" + deptIdStr;
+            }
             String yy =DateUtils.getDateString(joinedDate, "yy");
-            String dpt = deptId.substring(deptId.length() - 2);
             String nextSeq = String.valueOf(getNextSequenceValue(SEQ_STAFF_ID));
             if (nextSeq.length() == 1) {
                 nextSeq = "00" + nextSeq;
             } else if (nextSeq.length() == 2) {
                 nextSeq = "0" + nextSeq;
             }
-            return yy + dpt + nextSeq;
+            return yy + deptIdStr + nextSeq;
         }
         return null;
     }
@@ -68,7 +70,7 @@ public class MiscGenerator {
             if (sequence.getMaxValue()!= null && sequence.getMaxValue() > 0 && value > sequence.getMaxValue()) {
                 value = sequence.getMaxValue();
                 sequence.setValue(value);
-            } else if (sequence.getMinValue() != null && sequence.getMinValue() >=0 && value < sequence.getMinValue()) {
+            } else if (sequence.getMinValue() != null && sequence.getMinValue() >= 0 && value < sequence.getMinValue()) {
                 sequence.setValue(value);
                 value = sequence.getMinValue();
             } else {

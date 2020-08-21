@@ -9,11 +9,13 @@ import java.util.List;
 @Mapper
 public interface UserAccountDAO {
 
-    UserAccount getUserByIdNo(String idNo);
+    UserAccount getUserByStaffNo(String staffNo);
 
-    List<UserRoleAssign> getUserRoleAssignment(String idNo);
+    UserAccount getUserById(Long id);
 
-    List<UserRoleAssign> getActiveUserRoleAssignment(String idNo);
+    List<UserRoleAssign> getUserRoleAssignment(Long userAcctId);
+
+    List<UserRoleAssign> getActiveUserRoleAssignment(Long userAcctId);
 
     UserRole getRoleById(String roleId);
 }

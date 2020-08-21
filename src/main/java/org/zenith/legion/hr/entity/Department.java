@@ -8,16 +8,16 @@ import org.zenith.legion.common.persistant.annotation.PrimaryKey;
 public class Department extends BasePO {
 
     @PrimaryKey(autoIncrement = false)
-    private String departmentId;
+    private Integer id;
     private String departmentName;
     private String description;
 
-    public String getDepartmentId() {
-        return departmentId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setDepartmentId(String departmentId) {
-        this.departmentId = departmentId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getDepartmentName() {

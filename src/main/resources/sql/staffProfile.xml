@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="org.zenith.legion.hr.dao.StaffProfileDAO">
-    <select id="getStaffById" parameterType="string" resultType="org.zenith.legion.hr.entity.Staff">
-        SELECT * FROM STA_STAFF WHERE STAFF_ID = #{staffId}
+    <select id="getStaffById" parameterType="long" resultType="org.zenith.legion.hr.entity.Staff">
+        SELECT * FROM STA_STAFF WHERE ID = #{staffId}
     </select>
 </mapper>

@@ -32,25 +32,25 @@ public class BeanUtils {
                 }
                 if (targetField.getType() == Date.class || targetField.getType() == java.sql.Date.class) {
                     String dateString = (String) getValue(dtoField, dtoType, dto);
-                    if (dateString != null) {
+                    if (StringUtils.isNotBlank(dateString)) {
                         setValue(targetField, type, instance, DateUtils.parseDate(dateString));
                     }
                 }
                 if (targetField.getType() == int.class || targetField.getType() == Integer.class) {
                     String intString = (String) getValue(dtoField, dtoType, dto);
-                    if (intString != null) {
+                    if (StringUtils.isNotBlank(intString)) {
                         setValue(targetField, type, instance, Integer.parseInt(intString));
                     }
                 }
                 if (targetField.getType() == long.class || targetField.getType() == Long.class) {
                     String longString = (String) getValue(dtoField, dtoType, dto);
-                    if (longString != null) {
+                    if (StringUtils.isNotBlank(longString)) {
                         setValue(targetField, type, instance, Long.parseLong(longString));
                     }
                 }
                 if (targetField.getType() == double.class || targetField.getType() == Double.class) {
                     String doubleString = (String) getValue(dtoField, dtoType, dto);
-                    if (doubleString != null) {
+                    if (StringUtils.isNotBlank(doubleString)) {
                         setValue(targetField, type, instance, Double.parseDouble(doubleString));
                     }
                 }

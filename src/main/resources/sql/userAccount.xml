@@ -2,19 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="org.zenith.legion.sysadmin.dao.UserAccountDAO">
 
-    <select id="getUserByIdNo" parameterType="string" resultType="org.zenith.legion.sysadmin.entity.UserAccount">
-        SELECT * FROM AC_USER_ACCT WHERE USER_ID = BINARY #{idNo}
+    <select id="getUserByStaffNo" parameterType="string" resultType="org.zenith.legion.sysadmin.entity.UserAccount">
+        SELECT * FROM AC_USER_ACCT WHERE STAFF_NO = #{staffNo}
     </select>
 
-    <select id="getUserRoleAssignment" parameterType="string" resultType="org.zenith.legion.sysadmin.entity.UserRoleAssign">
-        SELECT * FROM AC_USER_ROLE_ASSIGN WHERE USER_ID = #{idNo}
+    <select id="getUserRoleAssignment" parameterType="long" resultType="org.zenith.legion.sysadmin.entity.UserRoleAssign">
+        SELECT * FROM AC_USER_ROLE_ASSIGN WHERE USER_ACCT_ID = #{userAcctId}
     </select>
 
-    <select id="getActiveUserRoleAssignment" parameterType="string" resultType="org.zenith.legion.sysadmin.entity.UserRoleAssign">
-        SELECT * FROM AC_USER_ROLE_ASSIGN WHERE USER_ID = #{idNo} AND DEACTIVATED_AT >= NOW()
+    <select id="getActiveUserRoleAssignment" parameterType="long" resultType="org.zenith.legion.sysadmin.entity.UserRoleAssign">
+        SELECT * FROM AC_USER_ROLE_ASSIGN WHERE USER_ACCT_ID = #{userAcctId} AND DEACTIVATED_AT >= NOW()
     </select>
 
     <select id="getRoleById" parameterType="string" resultType="org.zenith.legion.sysadmin.entity.UserRole">
-        SELECT * FROM AC_ROLE WHERE ROLE_ID = #{roleId}
+        SELECT * FROM AC_ROLE WHERE ID = #{roleId}
+    </select>
+
+    <select id="getUserById" parameterType="long" resultType="org.zenith.legion.sysadmin.entity.UserAccount">
+        SELECT * FROM AC_USER_ACCT WHERE ID = #{id}
     </select>
 </mapper>

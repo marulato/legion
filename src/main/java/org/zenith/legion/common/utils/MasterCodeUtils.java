@@ -7,6 +7,7 @@ import org.zenith.legion.sysadmin.entity.MasterCode;
 import org.zenith.legion.common.cache.CachePool;
 import org.zenith.legion.common.cache.MasterCodeCache;
 import org.zenith.legion.sysadmin.dao.MasterCodeDAO;
+import org.zenith.legion.sysadmin.entity.UserRole;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,16 +52,20 @@ public class MasterCodeUtils {
         return cache.getAllDepartments();
     }
 
-    public static List<Position> getPositionsByDepartmentId(String deptId) {
+    public static List<Position> getPositionsByDepartmentId(Integer deptId) {
         return cache.getPositionsByDepartmentId(deptId);
     }
 
-    public static Department getDepartment(String deptId) {
+    public static Department getDepartment(Integer deptId) {
         return cache.getDepartment(deptId);
     }
 
-    public static Position getPosition(String positionId) {
+    public static Position getPosition(Integer positionId) {
         return cache.getPosition(positionId);
+    }
+
+    public static UserRole getUserRole(String roleId) {
+        return cache.getUserRole(roleId);
     }
 
 }

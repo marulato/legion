@@ -71,6 +71,8 @@ public class EmployeeRegistrationDto extends BaseDto {
     @PropertyMapping("positionLevel")
     private String level;
 
+    private String project;
+
     @ValidateWithRegex(regex = "^[1-9][0-9]{2,5}", message = "请输入3-6位数的金额")
     private String baseSalary;
     @ValidateWithRegex(regex = "^[1-9][0-9]{2,5}", message = "请输入3-6位数的金额")
@@ -214,10 +216,10 @@ public class EmployeeRegistrationDto extends BaseDto {
     }
 
     private boolean validateDept(String dept) {
-        Department department = MasterCodeUtils.getDepartment(dept);
+        Department department = MasterCodeUtils.getDepartment(Integer.parseInt(dept));
         if (department != null) {
-            Position position = MasterCodeUtils.getPosition(getPosition());
-            if (position != null && position.getDepartmentId().equals(dept) && StringUtils.isNotBlank(level)) {
+            Position position = MasterCodeUtils.getPosition(Integer.parseInt(getPosition()));
+            if (position != null && position.getDepartmentId().equals(Integer.parseInt(dept)) && StringUtils.isNotBlank(level)) {
                 return position.getAppraisePrefix().equals(level.substring(0, 1))
                         && Integer.parseInt(level.substring(1)) <= position.getAppraiseLevel()
 ;            }
@@ -343,6 +345,14 @@ public class EmployeeRegistrationDto extends BaseDto {
 
     public void setLevel(String level) {
         this.level = level;
+    }
+
+    public String getProject() {
+        return project;
+    }
+
+    public void setProject(String project) {
+        this.project = project;
     }
 
     public String getBaseSalary() {

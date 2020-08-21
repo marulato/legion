@@ -9,15 +9,16 @@ import java.util.Date;
 
 @Persistant(tableName = "AC_USER_ACCT")
 public class UserAccount extends BasePO {
-    @PrimaryKey(autoIncrement = false)
-    @NotEmpty(message = "请输入学号/工号")
-    private String userId;
-    @PrimaryKey(autoIncrement = false)
+
+    @PrimaryKey(autoIncrement = true)
+    private Long id;
+    private Long staffId;
+    private String staffNo;
+    private String nickname;
     private String domain;
     private String name;
     private String displayName;
     private String type;
-    @NotEmpty(message = "请输入密码")
     private String password;
     private String email;
     private String phoneNo;
@@ -31,12 +32,36 @@ public class UserAccount extends BasePO {
     private Date activatedAt;
     private Date deactivatedAt;
 
-    public String getUserId() {
-        return userId;
+    public Long getId() {
+        return id;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getStaffId() {
+        return staffId;
+    }
+
+    public void setStaffId(Long staffId) {
+        this.staffId = staffId;
+    }
+
+    public String getStaffNo() {
+        return staffNo;
+    }
+
+    public void setStaffNo(String staffNo) {
+        this.staffNo = staffNo;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public String getDomain() {

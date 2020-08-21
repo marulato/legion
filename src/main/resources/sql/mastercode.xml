@@ -44,4 +44,8 @@
     <select id="getAllMasterCodes" resultType="org.zenith.legion.sysadmin.entity.MasterCode">
         SELECT * FROM CM_MASTERCODE
     </select>
+
+    <select id="getAllRoles" resultType="org.zenith.legion.sysadmin.entity.UserRole">
+        SELECT * FROM AC_ROLE
+    </select>
 </mapper>

@@ -12,10 +12,10 @@
 <!--      <link rel="stylesheet" th:href="@{/vendors/css/vendor.bundle.base.css}">-->
 <!--      <link rel="stylesheet" th:href="@{/vendors/css/vendor.bundle.addons.css}">-->
 
-  <link rel="stylesheet" th:href="@{/css/bootstrap-datetimepicker.min.css}"/>
   <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
   <link rel="stylesheet" th:href="@{/css/style.css}">
   <link rel="stylesheet" th:href="@{/css/main.css}">
+  <link rel="stylesheet" th:href="@{/css/bootstrap-datetimepicker.min.css}"/>
   <!-- endinject -->
   <link rel="shortcut icon" th:href="@{/images/favicon.png}"/>
   <style>
@@ -198,7 +198,7 @@
                       <h4 class="card-description">职位信息</h4>
 
                       <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                           <div class="form-group">
                             <label for="department">部门</label>
                             <select class="custom-select mr-md-3" name="department" id="department" onchange="preparePositions(this.value)">
@@ -206,7 +206,7 @@
                             </select>
                           </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                           <div class="form-group">
                             <label for="position">职位</label>
                             <select class="custom-select mr-md-3" name="position" id="position" onchange="prepareLevels(this.value)">
@@ -214,10 +214,18 @@
                             </select>
                           </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                           <div class="form-group">
                             <label for="level">级别</label>
                             <select class="custom-select mr-md-3" name="level" id="level">
+                              <option value="">请选择</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <div class="form-group">
+                            <label for="project">项目</label>
+                            <select class="custom-select mr-md-3" name="project" id="project">
                               <option value="">请选择</option>
                             </select>
                           </div>
@@ -453,6 +461,16 @@
                       </div>
 
                       <h4 class="card-description">户口与个人信息</h4>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="domicileType">户籍类型</label>
+                            <select class="custom-select mr-md-3" name="domicileType" id="domicileType">
+                              <option value="">请选择</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
                       <div class="row">
                         <div class="col-md-3">
                           <div class="form-group">
@@ -741,7 +759,7 @@
               if (res.status === 200) {
                   var data = res.data;
                   $.each(data, function (idx, obj) {
-                      $("#department").append("<option value='" + obj.departmentId + "'>" + obj.departmentName + "</option>");
+                      $("#department").append("<option value='" + obj.id + "'>" + obj.departmentName + "</option>");
                   });
               }
           }
@@ -759,7 +777,7 @@
                     $("#level").empty();
                     var data = res.data;
                     $.each(data, function (idx, obj) {
-                        $("#position").append("<option value='" + obj.positionId + "'>" + obj.positionName + "</option>");
+                        $("#position").append("<option value='" + obj.id + "'>" + obj.positionName + "</option>");
                     });
                 }
             }

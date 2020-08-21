@@ -111,9 +111,9 @@ public class RegistrationController {
             responseMgr.addDataObjects(MasterCodeUtils.getAllDepartments());
         } else {
             Position position = new Position();
-            position.setPositionId("0");
+            position.setId(0);
             position.setPositionName("请选择");
-            List<Position> positionList = MasterCodeUtils.getPositionsByDepartmentId(deptId);
+            List<Position> positionList = MasterCodeUtils.getPositionsByDepartmentId(Integer.parseInt(deptId));
             positionList.add(0, position);
             responseMgr.addDataObjects(positionList);
         }
@@ -125,7 +125,10 @@ public class RegistrationController {
     @ResponseBody
     public AjaxResponseBody preparePositionLevel(@PathVariable("id") String positionId) {
         AjaxResponseManager responseMgr = AjaxResponseManager.create(AppConsts.RESPONSE_SUCCESS);
-        Position position = MasterCodeUtils.getPosition(positionId);
+        if (!StringUtils.isInteger(positionId)) {
+            positionId = "0";
+        }
+        Position position = MasterCodeUtils.getPosition(Integer.parseInt(positionId));
         if (position != null) {
             String prefix = position.getAppraisePrefix();
             Integer maxLevel = position.getAppraiseLevel();

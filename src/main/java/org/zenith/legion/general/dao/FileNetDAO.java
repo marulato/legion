@@ -10,7 +10,7 @@ import org.zenith.legion.general.entity.FileNet;
 public interface FileNetDAO {
 
     @InsertProvider(type = SimpleSQLGenerator.class, method = "insert")
-    @Options(useGeneratedKeys = true, keyProperty = "fileNetId", keyColumn = "FILE_NET_ID")
+    @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "ID")
     void create(FileNet fileNet);
 
     FileNet getFileNetById(Long id);

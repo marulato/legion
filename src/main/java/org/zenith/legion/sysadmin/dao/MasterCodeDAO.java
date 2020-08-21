@@ -3,10 +3,7 @@ package org.zenith.legion.sysadmin.dao;
 import org.apache.ibatis.annotations.Mapper;
 import org.zenith.legion.hr.entity.Department;
 import org.zenith.legion.hr.entity.Position;
-import org.zenith.legion.sysadmin.entity.District;
-import org.zenith.legion.sysadmin.entity.MasterCode;
-import org.zenith.legion.sysadmin.entity.Config;
-import org.zenith.legion.sysadmin.entity.Subject;
+import org.zenith.legion.sysadmin.entity.*;
 
 import java.util.List;
 
@@ -34,6 +31,8 @@ public interface MasterCodeDAO {
     List<Department> getAllDepartments();
 
     List<Position> getAllPositions();
+
+    List<UserRole> getAllRoles();
 
 
 }

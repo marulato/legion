@@ -34,11 +34,11 @@ public class PortalLoginService {
     public LoginStatus login(UserAccount webUser, HttpServletRequest request) {
         LoginStatus status = null;
         if (webUser != null) {
-            UserAccount user = userAcctService.getUserAccountByIdNo(webUser.getUserId());
+            UserAccount user = userAcctService.getUserByStaffNo(webUser.getStaffNo());
             if (user != null) {
                 SessionManager.setSession(request);
                 AppContext appContext = new AppContext();
-                appContext.setLoginId(user.getUserId());
+                appContext.setLoginId(user.getStaffNo());
                 appContext.setDomain(user.getDomain());
                 AppContext.setWebThreadAppContext(appContext);
                 boolean isPwdMatch = userAcctService.isPasswordMatch(webUser.getPassword(), user.getPassword());
@@ -46,7 +46,7 @@ public class PortalLoginService {
                     String accountStatus = checkStatus(user);
                     if (AppConsts.ACCOUNT_STATUS_ACTIVE.equals(accountStatus)) {
                         status = LoginStatus.SUCCESS;
-                        List<UserRoleAssign> userRoleAssigns = userAcctService.getActiveRoleAssignByIdNo(user.getUserId());
+                        List<UserRoleAssign> userRoleAssigns = userAcctService.getActiveRoleAssignById(user.getId());
                         List<UserRole> roles = new ArrayList<>();
                         for (UserRoleAssign userRoleAssign : userRoleAssigns) {
                             UserRole role = userAcctService.getRoleById(userRoleAssign.getRoleId());
@@ -102,7 +102,7 @@ public class PortalLoginService {
                 user.setLoginFailedTimes(0);
             }
             UserLoginHistory loginHistory = new UserLoginHistory();
-            loginHistory.setUserId(user.getUserId());
+            loginHistory.setUserAcctId(user.getId());
             loginHistory.setAcctStatus(user.getStatus());
             loginHistory.setIpAddress(user.getLastLoginIp());
             loginHistory.setLoginAt(user.getLastLoginAttemptDt());

@@ -15,15 +15,20 @@ import org.zenith.legion.common.utils.*;
 import org.zenith.legion.general.entity.Document;
 import org.zenith.legion.general.service.DocumentService;
 import org.zenith.legion.general.service.FileNetService;
+import org.zenith.legion.hr.dao.StaffProfileDAO;
 import org.zenith.legion.hr.dto.EmployeeRegistrationDto;
 import org.zenith.legion.hr.entity.EmployeeDemographic;
 import org.zenith.legion.hr.entity.EmployeeRegistration;
+import org.zenith.legion.hr.entity.Position;
 import org.zenith.legion.hr.entity.Staff;
 import org.zenith.legion.sysadmin.dao.SequenceDAO;
 import org.zenith.legion.sysadmin.entity.Sequence;
+import org.zenith.legion.sysadmin.entity.UserAccount;
+import org.zenith.legion.sysadmin.service.UserAccountService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Map;
 
@@ -32,27 +37,31 @@ public class RegistrationService {
 
     private final DocumentService documentService;
     private final FileNetService fileNetService;
+    private final StaffProfileDAO staffProfileDAO;
+    private final UserAccountService accountService;
 
     private static final Logger log = LoggerFactory.getLogger(RegistrationService.class);
 
     @Autowired
-    public RegistrationService(DocumentService documentService, FileNetService fileNetService) {
+    public RegistrationService(DocumentService documentService, FileNetService fileNetService,
+                               StaffProfileDAO staffProfileDAO, UserAccountService accountService) {
         this.documentService = documentService;
         this.fileNetService = fileNetService;
+        this.staffProfileDAO = staffProfileDAO;
+        this.accountService = accountService;
     }
     @Transactional
-    public void registerEmployee(EmployeeRegistrationDto dto, HttpServletRequest request) throws Exception {
+    public Staff registerEmployee(EmployeeRegistrationDto dto, HttpServletRequest request) throws Exception {
         if (dto != null) {
             Staff staff = BeanUtils.mapFromDto(dto, Staff.class);
             EmployeeDemographic demographic = BeanUtils.mapFromDto(dto, EmployeeDemographic.class);
             EmployeeRegistration registration = BeanUtils.mapFromDto(dto, EmployeeRegistration.class);
             staff.setJoinedDate(registration.getActualEntryDate());
-            staff.setStaffId(MiscGenerator.getNextStaffId(staff.getJoinedDate(), staff.getDepartmentId()));
-            staff.setStatus(AppConsts.ACCOUNT_STATUS_ACTIVE);
+            staff.setStaffNo(MiscGenerator.getNextStaffId(staff.getJoinedDate(), staff.getDepartmentId()));
+            staff.setStatus(AppConsts.STAFF_STATUS_IN_SERVICE);
             long entryNo = MiscGenerator.getNextSequenceValue("ENTRY_NO");
             staff.setEntryNo((int) entryNo);
-            demographic.setStaffId(staff.getStaffId());
-            registration.setStaffId(staff.getStaffId());
+
             Long resumeDocId = saveRegDocument(request, "resumeDoc", DocumentConsts.DOC_TYPE_REG_RESUME);
             Long merDocId = saveRegDocument(request, "merDoc", DocumentConsts.DOC_TYPE_REG_MER);
             Long offerDocId = saveRegDocument(request, "offerDoc", DocumentConsts.DOC_TYPE_REG_OFFER);
@@ -65,10 +74,32 @@ public class RegistrationService {
             registration.setGraduationCmDocumentId(graduationDocId);
             registration.setDiplomaCmDocumentId(diplomaDocId);
             registration.setContractCmDocumentId(contractDoc);
-            SQLExecutor.save(staff);
+
+            Long staffId = createEmployee(staff);
+            demographic.setStaffId(staffId);
+            registration.setStaffId(staffId);
             SQLExecutor.save(demographic);
             SQLExecutor.save(registration);
 
+            return staff;
+        }
+        return null;
+    }
+
+    public void createUserAccount(Staff staff) {
+        if (staff != null) {
+            UserAccount userAccount = new UserAccount();
+            userAccount.setStaffId(staff.getId());
+            userAccount.setStaffNo(staff.getStaffNo());
+            userAccount.setName(staff.getName());
+            userAccount.setNickname(staff.getNickname());
+            userAccount.setEmail(staff.getEmailAddress());
+            userAccount.setPhoneNo(staff.getPhoneNo());
+            Position position = MasterCodeUtils.getPosition(staff.getPositionId());
+            if (position != null) {
+                accountService.createDefaultUser(userAccount);
+                accountService.assignRoles(userAccount, Arrays.asList(MasterCodeUtils.getUserRole(position.getRoleId())));
+            }
 
         }
     }
@@ -105,6 +136,15 @@ public class RegistrationService {
                 document.setFileNetId(fileNetId);
                 return documentService.saveDocument(document);
             }
+        }
+        return 0L;
+    }
+
+    public Long createEmployee(Staff staff) {
+        if (staff != null) {
+            staff.createAuditValues(AppContext.getFromWebThread());
+            staffProfileDAO.createEmployee(staff);
+            return staff.getId();
         }
         return 0L;
     }

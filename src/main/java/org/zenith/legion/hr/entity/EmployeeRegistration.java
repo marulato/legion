@@ -13,7 +13,7 @@ public class EmployeeRegistration extends BasePO {
     public static final String TABLE_NAME = "STA_STAFF_REGISTRATION";
 
     @PrimaryKey(autoIncrement = false)
-    private String staffId;
+    private Long staffId;
     private Long resumeCmDocumentId;
     private Long merCmDocumentId;
     private Long graduationCmDocumentId;
@@ -36,11 +36,11 @@ public class EmployeeRegistration extends BasePO {
     private String major;
     private Date graduatedDate;
 
-    public String getStaffId() {
+    public Long getStaffId() {
         return staffId;
     }
 
-    public void setStaffId(String staffId) {
+    public void setStaffId(Long staffId) {
         this.staffId = staffId;
     }
 

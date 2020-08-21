@@ -73,7 +73,7 @@ public class PortalLoginController {
     public AjaxResponseBody login(UserAccount webUser, HttpServletRequest request) throws Exception {
         AjaxResponseManager responseMgr = AjaxResponseManager.create(AppConsts.RESPONSE_VALIDATION_NOT_PASS);;
         Map<String, List<String>> errorMap = CommonValidator.doValidation(webUser, null);
-        if (errorMap != null && !errorMap.isEmpty()) {
+        if (!errorMap.isEmpty()) {
             responseMgr = AjaxResponseManager.create(AppConsts.RESPONSE_VALIDATION_NOT_PASS);
             responseMgr.addValidations(errorMap);
         } else {
@@ -113,7 +113,7 @@ public class PortalLoginController {
         if (StringUtils.isNotBlank(roleId) && context.getAllRoles() != null && context.getAllRoles().size() > 1) {
             context.setLoggedIn(true);
             for (UserRole role : context.getAllRoles()) {
-                if (roleId.equals(role.getRoleId())) {
+                if (roleId.equals(role.getId())) {
                     context.setCurrentRole(role);
                     break;
                 }
@@ -125,9 +125,9 @@ public class PortalLoginController {
         if (context.getCurrentRole() == null) {
             throw new PermissionDeniedException();
         } else {
-            UserAccount userAccount = accountService.getUserAccountByIdNo(context.getLoginId());
+            UserAccount userAccount = accountService.getUserByStaffNo(context.getLoginId());
             request.getSession().setAttribute("profileName", userAccount.getDisplayName());
-            request.getSession().setAttribute("roleId", context.getCurrentRole().getRoleId());
+            request.getSession().setAttribute("roleId", context.getCurrentRole().getId());
             return "redirect:" + context.getCurrentRole().getLandingPage();
         }
     }

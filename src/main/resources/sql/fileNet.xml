@@ -2,6 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="org.zenith.legion.general.dao.FileNetDAO">
     <select id="getFileNetById" parameterType="long" resultType="org.zenith.legion.general.entity.FileNet">
-        SELECT * FROM CM_FILE_NET WHERE FILE_NET_ID = #{id}
+        SELECT * FROM CM_FILE_NET WHERE ID = #{id}
     </select>
 </mapper>

@@ -21,12 +21,14 @@ public class AppConsts {
     public static final String ACCOUNT_STATUS_LOCKED    = "L";
     public static final String ACCOUNT_STATUS_FROZEN    = "F";
 
-    public static final String USER_TYPE_STUDENT          = "STUDENT";
-    public static final String USER_TYPE_TEACHER          = "TEACHER";
-    public static final String USER_TYPE_DEVELOPER        = "DEV";
-    public static final String USER_TYPE_CONTRACT_STAFF   = "CONSTAFF";
-    public static final String USER_TYPE_SYSTEM_ADMIN     = "SYSADM";
+    public static final String STAFF_STATUS_IN_SERVICE  = "IN-SERVICE";
+    public static final String STAFF_STATUS_RESIGNED    = "RESIGNED";
+    public static final String STAFF_STATUS_STAYED      = "STAYED";
 
+    public static final String ROLE_EMPLOYEE           = "EMP";
+    public static final String ROLE_PROJECT_LEADER     = "PL";
+    public static final String ROLE_PROJECT_MANAGER    = "PM";
+    public static final String ROLE_HUMAN_RESOURCE     = "HR";
 
     public static final int RESPONSE_VALIDATION_NOT_PASS  = 221;
     public static final int RESPONSE_SUCCESS          = 200;

@@ -7,19 +7,19 @@ import java.util.Date;
 
 @Persistant(tableName = "AC_USER_ROLE_ASSIGN")
 public class UserRoleAssign extends BasePO {
-    private String userId;
+    private Long userAcctId;
     private String roleId;
     private Date activatedAt;
     private Date deactivatedAt;
     private String approvedBy;
     private String remarks;
 
-    public String getUserId() {
-        return userId;
+    public Long getUserAcctId() {
+        return userAcctId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUserAcctId(Long userAcctId) {
+        this.userAcctId = userAcctId;
     }
 
     public String getRoleId() {
